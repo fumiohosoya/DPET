@@ -12,5 +12,9 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   
   get 'signup', to: 'users#new'
+  
+#  get 'drivers/index'
+  
+  resources :drivers
   resources :users, only: [:index, :show, :new, :create]
 end

@@ -1,9 +1,10 @@
 <% if logged_in? %>
     <p>ログイン完了ユーザ: <%=current_user.name %></p>
 <% else %>
-  <div class="center jumbotron">
+  <div class="center jumbotron bg-red">
      <div class="text-center">
-        <h1>Welcome to DPET (LOGICCS Ver3.)</h1>
+        <h1>D-PET (LOGICCS Ver3.)</h1>
+        <h2>Driver's Performance Evaluation Table</h2>
         <%= link_to 'Sign up now!', signup_path, class: 'bin btn-lg btn-primary' %>
      </div>
   </div>

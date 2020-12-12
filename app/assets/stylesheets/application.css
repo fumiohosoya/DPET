@@ -1,3 +1,60 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+
+
+
+body {background-color: darkred;
+}
+
+container {background-color:darkred;
+}
+
+text center{
+    color: darkred;
+}
+
+jumbotron {
+    background-color: darkred;
+}
+
+/*  20201205 Higuchi added */
+.bg-red {
+    background-color: darkred;
+}
+
+.bg-red form {
+    color: white;
+}
+
+.bg-red p,
+.bg-red th,
+.bg-red td{
+    color: white;
+}
+/*  added kokomade */
+
+h1{
+    font-family: Georgia;
+    line-height: 1;
+    color: yellow;
+    font-size: 5em;
+    background-color: darkred;
+}
+
+h2 {
+    font-family: Georgia;
+    line-height: 1;
+    color: yellow;
+    font-size: 3em;
+    background-color: darkred;
+}
+ 
+
+
+    
+
+
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.

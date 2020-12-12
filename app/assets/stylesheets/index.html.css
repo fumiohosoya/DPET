@@ -1,0 +1,25 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+/* universal */
+
+/*ヘッダーから、中央文字までの距離*/
+
+/*
+h1, h2, h3, h4, h5, h6 {
+    font-family: Georgia;
+    line-height: 1;
+    color: yellow;
+}
+
+
+.h1 {
+ font-family: Georgia;
+ color: yellow;
+}
+
+body {background-color: darkred;
+}
+*/
+
+
