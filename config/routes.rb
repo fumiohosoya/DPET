@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   
   get 'signup', to: 'users#new'
   
-#  get 'drivers/index'
+  get 'drivers/path'
   
   resources :drivers
   resources :users, only: [:index, :show, :new, :create]

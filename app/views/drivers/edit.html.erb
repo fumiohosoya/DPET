@@ -1,0 +1,58 @@
+     <div class="row bg-red">
+  <div class="col-sm-6 offset-sm-3">
+    
+    <%= form_for(@driver) do |f| %>
+    
+     <div class="form-group">
+         <%= f.label :name, 'Name' %>
+         <%= f.text_field :name, class: 'form-control' %>
+     </div>
+  
+     <div class="form-group">
+         <%= f.label :sex, 'Gendar' %>
+         <%= f.select :sex, {'Male': 1, 'Female': 2}, { include_blank: 'Please Select'}, { class: 'form-control' , required: true } %>
+     </div> 
+     
+     <div class="form-group">
+         <%= f.label :date_birth, 'Date of Birth' %>
+         <%= f.date_field :date_birth, class: 'form-control' %>
+     </div>
+     
+      <div class="form-group">
+         <%= f.label :age, 'Age' %>
+         <%= f.number_field :age, class: 'form-control' %>
+     </div>
+     
+     <div class="form-group">
+         <%= f.label :hire_date, 'Date of Hire' %>
+         <%= f.date_field :hire_date, class: 'form-control' %>
+     </div>
+     
+      <div class="form-group">
+         <%= f.label :blood_type, 'BloodType' %>
+         <%= f.select :blood_type, ['A(RH+)', 'B(RH+)', 'O(RH+)', 'AB(RH+)',
+         'A(RH-)', 'B(RH-)', 'O(RH-)', 'AB(RH-)', 'Unknown'], { include_blank: 'Please Select'}, { class: 'form-control' , required: true } %>
+     </div>
+     
+     <div class="form-group">
+         <%= f.label :chronic_disease, 'Chronic Disease' %>
+         <%= f.text_field :chronic_disease, class: 'form-control' %>
+     </div>
+     
+      <div class="form-group">
+         <%= f.label :accident_record, 'Accident Record' %>
+         <%= f.text_field :accident_record, class: 'form-control' %>
+     </div>
+     
+      <div class="form-group">
+         <%= f.label :vioration_record, 'Vioration Record' %>
+         <%= f.text_field :vioration_record, class: 'form-control' %>
+     </div>     
+     
+     <%= f.submit 'Regist', class: 'btn btn-primary btn-block' %>
+    <% end %>
+    
+  </div>
+</div>
+     
+     
