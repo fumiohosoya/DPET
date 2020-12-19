@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   
   get 'drivers/path'
   
+  get 'drivers/destroy'
+  
   resources :drivers
   resources :users, only: [:index, :show, :new, :create]
 end

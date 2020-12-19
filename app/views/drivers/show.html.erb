@@ -52,6 +52,7 @@
     </table>
     
     <%= link_to "Edit", edit_driver_path(@driver), class:"btn btn-primary" %>
-    
+    <%= link_to "Delete", driver_path(@driver), method: :delete, class:"btn btn-danger" %>
+    <%= link_to "Back To Index", drivers_path, class: "btn btn-success" %>
   </div>
 </div>

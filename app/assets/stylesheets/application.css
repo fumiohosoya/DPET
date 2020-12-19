@@ -21,6 +21,7 @@ jumbotron {
 /*  20201205 Higuchi added */
 .bg-red {
     background-color: darkred;
+    color: white;
 }
 
 .bg-red form {
@@ -51,7 +52,13 @@ h2 {
 }
  
 
-
+.w-10 {
+    width: 10%!important;
+}
+.w-40 {
+    width: 40%!important;
+}
+    
     
 
 
