@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_12_114250) do
+ActiveRecord::Schema.define(version: 2021_01_05_075406) do
 
   create_table "drivers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -30,6 +30,48 @@ ActiveRecord::Schema.define(version: 2020_12_12_114250) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "vehicle_sales", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "vehicle_id"
+    t.date "date"
+    t.integer "maintenance"
+    t.integer "insurance"
+    t.integer "highway"
+    t.integer "others"
+    t.float "fuel"
+    t.float "mileage"
+    t.float "fuel_consumption"
+    t.integer "direct_labor_cost"
+    t.integer "indirect_labor_cost"
+    t.integer "special_cost"
+    t.integer "other_cost"
+    t.float "sales_month"
+    t.float "profit_month"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "vehicles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "model"
+    t.string "type"
+    t.integer "cost"
+    t.integer "depreciation"
+    t.integer "maintenance"
+    t.integer "insurance"
+    t.integer "highway"
+    t.integer "others"
+    t.integer "fuel"
+    t.integer "mileage"
+    t.integer "fuel_consumption"
+    t.integer "direct_labor_cost"
+    t.integer "indirect_labor_cost"
+    t.integer "special_cost"
+    t.integer "other_cost"
+    t.integer "sales_month"
+    t.integer "profit_month"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

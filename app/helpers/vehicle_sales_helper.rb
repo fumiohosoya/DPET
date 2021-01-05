@@ -1,0 +1,2 @@
+module VehicleSalesHelper
+end
