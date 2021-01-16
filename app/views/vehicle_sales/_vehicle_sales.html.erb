@@ -1,0 +1,18 @@
+<%# if vehicle_sales.any? %>
+ <table class="table table-striped table-bordered bg-red">
+     <% vehicle_sales.each do |vehicle_sale| %>
+      <tr>
+         <td class="w-10 text-center">
+             <%= vehicle_sale.id %>:
+         </td>
+        
+         <td>
+   
+             <%= link_to 'View profile', vehicle_sale_path(vehicle_sale), class:"btn btn-primary" %>
+         </td>
+     </tr>
+      <% end %>
+     
+ </table>
+ <%#= paginate vehicle_sales %>
+<%# end %>

@@ -2,11 +2,11 @@ class VehicleSalesController < ApplicationController
  def index
      #render plain: 'ここがVehicle_sales入力画面です'
      
-     @vehicle_sales = Vehicle_sale.all.order(:id).page(params[:page])
+     @vehicle_sales = VehicleSale.all.order(:id).page(params[:page])
  end
  
  def show
-  @vehicle_sales = Vehicle_sales.find(params[:id])
+   @vehicle_sale= VehicleSale.find(params[:id])
  end
  
  def new
@@ -15,9 +15,9 @@ class VehicleSalesController < ApplicationController
  
  
  def create
-  @vehicle_sales = Vehicle_sales.new(vehicle_sales_params)
-   if (@vehicle_sales.save)
-     redirect_to @vehicle_sales
+  @vehicle_sale = VehicleSale.new(vehicle_sales_params)
+   if (@vehicle_sale.save)
+     redirect_to @vehicle_sale
    else
     flash[:error] = "Invalid Vehilce_sales Data"
     render :new
@@ -26,17 +26,17 @@ class VehicleSalesController < ApplicationController
   
   
  def edit
-   @vehicle_sales = Vehilce_sales.find(params[:id])
+   @vehicle_sale = VehicleSale.find(params[:id])
  end  
  
  def update
   
   # /vehilce_sales/1   method "PUT"
- @vehicle_sales = Vehicle_sales.find(params[:id])
-   if @vehicle_sales.update(vehicle_sales_params)
+ @vehicle_sale = VehicleSale.find(params[:id])
+   if @vehicle_sale.update(vehicle_sales_params)
     flash[:success] = 'Vehicle_sales Data was successfully updated'
     #render :edit
-    redirect_to vehicle_sales_url(@vehicle_sales)
+    redirect_to vehicle_sale_url(@vehicle_sale)
     
    else
     flash.now[:danger] = 'Update was not suucessful'
@@ -46,8 +46,8 @@ class VehicleSalesController < ApplicationController
  end 
  
  def destroy
-   @vehilce_sales = Vehicle_sales.find(params[:id])
-    @vehicle_sales.destory if (@vehicle_sales)
+   @vehicle_sale = VehicleSale.find(params[:id])
+    @vehicle_sale.destory if (@vehicle_sale)
     #redirect_to vehicle_sales_url
     render :destroy
  end
@@ -61,7 +61,7 @@ private
    
      
    def vehicle_sales_params
-    params.require(:vehicle_sales).permit(:vehicle_id,
+    params.require(:vehicle_sale).permit(:vehicle_id,
     :date, :maintenance, :insurance, :highway, :others,
     :fuel, :mileage, :fuel_consumption, :direct_labor_cost,
     :indirect_labor_cost, :special_cost, :other_cost,

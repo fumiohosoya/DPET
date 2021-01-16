@@ -17,6 +17,10 @@ Rails.application.routes.draw do
   
   get 'drivers/destroy'
   
+  get 'vehicle_sales/destroy'
+  
+  get 'vehicle_sales/path'
+  
   #get 'vehicle_sales/path'
   #get 'vehicle_sales/new', to: 'vehicle_sales#new'
   resources :drivers
