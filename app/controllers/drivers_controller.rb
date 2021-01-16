@@ -47,7 +47,7 @@ class DriversController < ApplicationController
  
  def destroy
    @driver = Driver.find(params[:id])
-    @driver.destory if (@driver)
+    @driver.destroy if (@driver)
     #redirect_to drivers_url
     render :destroy
  end

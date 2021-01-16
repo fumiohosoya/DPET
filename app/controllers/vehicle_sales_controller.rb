@@ -47,7 +47,7 @@ class VehicleSalesController < ApplicationController
  
  def destroy
    @vehicle_sale = VehicleSale.find(params[:id])
-    @vehicle_sale.destory if (@vehicle_sale)
+    @vehicle_sale.destroy if (@vehicle_sale)
     #redirect_to vehicle_sales_url
     render :destroy
  end

@@ -13,13 +13,13 @@ Rails.application.routes.draw do
   
   get 'signup', to: 'users#new'
   
-  get 'drivers/path'
+  # get 'drivers/path'
   
-  get 'drivers/destroy'
+  # get 'drivers/destroy'
   
-  get 'vehicle_sales/destroy'
+  # get 'vehicle_sales/destroy'
   
-  get 'vehicle_sales/path'
+  # get 'vehicle_sales/path'
   
   #get 'vehicle_sales/path'
   #get 'vehicle_sales/new', to: 'vehicle_sales#new'
