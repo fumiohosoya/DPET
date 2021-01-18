@@ -19,7 +19,7 @@ class VehicleSalesController < ApplicationController
    if (@vehicle_sale.save)
      redirect_to @vehicle_sale
    else
-    flash[:error] = "Invalid Vehilce_sales Data"
+    flash[:error] = "Invalid Vehicle_sales Data"
     render :new
    end
  end
