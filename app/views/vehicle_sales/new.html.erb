@@ -44,6 +44,11 @@
      </div>
      
      <div class="form-group">
+         <%= f.label :fuel_price, 'Fuel_price' %>
+         <%= f.number_field :fuel_price, class: 'form-control' %>
+     </div>
+     
+     <div class="form-group">
          <%= f.label :direct_labor_cost, 'Direct_labor_cost' %>
          <%= f.number_field :direct_labor_cost, class: 'form-control' %>
      </div>
@@ -68,14 +73,45 @@
          <%= f.number_field :sales_month, class: 'form-control' %>
      </div>
      
-      <div class="form-group">
+     <div class="form-group">
          <%= f.label :profit_month, 'Profit_month' %>
          <%= f.number_field :profit_month, class: 'form-control' %>
      </div>
      
      
+    
+    
      <%= f.submit 'Regist', class: 'btn btn-primary btn-block' %>
     <% end %>
     
   </div>
 </div>
+
+<script>
+$('input#vehicle_sale_fuel').bind('input', function() {
+
+    // alert("ここだよ");
+    var fuel = $("#vehicle_sale_fuel").val();
+    var mi =$("#vehicle_sale_mileage").val();
+    if (mi != "" && fuel != ""){
+        var fuel_consumption = Number.parseFloat(mi) / Number.parseFloat(fuel);
+        var temp = Math.round(fuel_consumption * 100) / 100.0
+        $("#vehicle_sale_fuel_consumption").val(temp);
+    }
+    
+})    
+
+$('input#vehicle_sale_mileage').bind('input', function() {
+
+    // alert("ここだよ");
+    var fuel = $("#vehicle_sale_fuel").val();
+    var mi =$("#vehicle_sale_mileage").val();
+    if (mi != "" && fuel != ""){
+        var fuel_consumption = Number.parseFloat(mi) / Number.parseFloat(fuel);
+        var temp = Math.round(fuel_consumption * 100) / 100.0
+        $("#vehicle_sale_fuel_consumption").val(temp);
+    }
+    
+})      
+    
+</script>

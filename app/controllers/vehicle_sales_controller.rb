@@ -55,6 +55,27 @@ class VehicleSalesController < ApplicationController
  
  
  
+ def fuel_consumption
+       mileage / fuel
+ end
+    
+ def fuel_cost
+       fuel_price * fuel
+ end
+    
+ def total_cost
+        puts ('maintenance + insurance + highway + others
+        + direct_labor_cost + indirect_labor_cost 
+        + special_cost + other_cost').sum
+        #puts [ "maintenance", "insurance",  "highway",  "others",
+                #"direct_labor_cost",  "indirect_labor_cost", 
+                #"special_cost",  "other_cost" ].sum
+ end
+ #def set_fuel_consumption
+     #{:fuel_consumption => fuel_consumption }
+ #end
+ 
+ 
  
 private
  
@@ -63,10 +84,12 @@ private
    def vehicle_sales_params
     params.require(:vehicle_sale).permit(:vehicle_id,
     :date, :maintenance, :insurance, :highway, :others,
-    :fuel, :mileage, :fuel_consumption, :direct_labor_cost,
-    :indirect_labor_cost, :special_cost, :other_cost,
+    :fuel, :mileage, :fuel_consumption, :fuel_price, :direct_labor_cost,
+    :indirect_labor_cost, :special_cost, :other_cost, :total_cost,
     :sales_month, :profit_month)
    end
-   
+
+ 
+
 end
     
