@@ -60,6 +60,12 @@ class VehicleSale < ApplicationRecord
     def set_total_cost
         {:total_cost => total_cost }
     end
+    
+    def profit_month
+        if self.sales_month.present? && self.total_cost.present?
+         self.sales_month - self.total_cost
+        end
+    end
          
 end 
     
