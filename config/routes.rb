@@ -26,4 +26,6 @@ Rails.application.routes.draw do
   resources :drivers
   resources :vehicle_sales
   resources :users, only: [:index, :show, :new, :create]
+  
+  resources :insurances
 end

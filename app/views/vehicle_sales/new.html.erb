@@ -14,7 +14,7 @@
      </div>
      
      <div class="form-group">
-         <%= f.label :insurance, 'Insurance' %>
+         <%= f.label :insurance, 'Insurance' %> <%= link_to "input", new_insurance_path, remote:true, class:"ml-4 btn btn-xs btn-primary" %>
          <%= f.number_field :insurance, class: 'form-control' %>
      </div>
      
@@ -40,7 +40,7 @@
      
      <div class="form-group">
          <%= f.label :fuel_consumption, 'Fuel_consumption' %>
-         <%= f.number_field :fuel_consumption, class: 'form-control' %>
+         <%= f.number_field :fuel_consumption, step:0.01, class: 'form-control' %>
      </div>
      
      <div class="form-group">

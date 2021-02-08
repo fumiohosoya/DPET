@@ -1,6 +1,8 @@
 <div class="row bg-red">
   <div class="col-sm-6 offset-sm-3">
     
+    
+    <%= render 'layouts/modal' %>
     <table class="table table-striped table-bordered bg-red">
     
      <tr>
@@ -15,28 +17,28 @@
      
      <tr>
          <th>Insurance</th>
-         <td><%= @vehicle_sale.insurance %></td>
+         <td><%= number_with_delimiter(@vehicle_sale.insurance) %></td>
      </tr>
      
      
      <tr>
          <th>Highway</th>
-         <td><%= @vehicle_sale.highway %></td>
+         <td><%= number_with_delimiter(@vehicle_sale.highway) %></td>
      </tr>
      
      <tr>
          <th>Others</th>
-         <td><%= @vehicle_sale.others %></td>
+         <td><%= number_with_delimiter(@vehicle_sale.others) %></td>
      </tr> 
      
      <tr>
          <th>Fuel</th>
-         <td><%= @vehicle_sale.fuel %></td>
+         <td><%= number_with_delimiter(@vehicle_sale.fuel) %></td>
      </tr>
      
      <tr>
          <th>Mileage</th>
-         <td><%= @vehicle_sale.mileage %></td>
+         <td><%= number_with_delimiter(@vehicle_sale.mileage) %></td>
      </tr>
     
      <tr>
@@ -46,42 +48,42 @@
      
      <tr>
          <th>fuel_cost</th>
-         <td><%= sprintf("%.2f", @vehicle_sale.fuel_cost) if @vehicle_sale.fuel_cost.present? %></td>
+         <td><%= number_with_delimiter(sprintf("%.2f", @vehicle_sale.fuel_cost)) if @vehicle_sale.fuel_cost.present? %></td>
      </tr>
      
      <tr>
          <th>Direct_labor_cost</th>
-         <td><%= @vehicle_sale.direct_labor_cost %></td>
+         <td><%= number_with_delimiter(@vehicle_sale.direct_labor_cost) %></td>
      </tr>
      
      <tr>
          <th>Indirect_labor_cost</th>
-         <td><%= @vehicle_sale.indirect_labor_cost %></td>
+         <td><%= number_with_delimiter(@vehicle_sale.indirect_labor_cost) %></td>
      </tr>
      
      <tr>
          <th>Special_cost</th>
-         <td><%= @vehicle_sale.special_cost %></td>
+         <td><%= number_with_delimiter(@vehicle_sale.special_cost) %></td>
      </tr>
      
      <tr>
          <th>Other_cost</th>
-         <td><%= @vehicle_sale.other_cost %></td>
+         <td><%= number_with_delimiter(@vehicle_sale.other_cost) %></td>
      </tr>
      
      <tr>
          <th>Total_cost</th>
-         <td><%= sprintf("%.2f", @vehicle_sale.total_cost) if @vehicle_sale.total_cost.present? %></td>
+         <td><%= number_with_delimiter(sprintf("%.2f", @vehicle_sale.total_cost)) if @vehicle_sale.total_cost.present? %></td>
      </tr>
      
      <tr>
          <th>Sales_month</th>
-         <td><%= @vehicle_sale.sales_month %></td>
+         <td><%= number_with_delimiter(@vehicle_sale.sales_month) %></td>
      </tr>
      
      <tr>
          <th>Profit_month</th>
-         <td><%= @vehicle_sale.profit_month %></td>
+         <td><%= number_with_delimiter(@vehicle_sale.profit_month) %></td>
      </tr>
      
      
