@@ -14,17 +14,17 @@
      </div>
      
      <div class="form-group">
-         <%= f.label :insurance, 'Insurance' %> <%= link_to "input", new_insurance_path, remote:true, class:"ml-4 btn btn-xs btn-primary" %>
+         <%= f.label :insurance, 'Insurance' %> <%= link_to "input", insurances_path, remote: true, class:"ml-4 btn btn-xs btn-primary"  %>
          <%= f.number_field :insurance, class: 'form-control' %>
      </div>
      
      <div class="form-group">
-         <%= f.label :highway, 'Highway' %>
+         <%= f.label :highway, 'Highway' %> <%= link_to "input", new_highway_path, remote: true, class:"ml-5 btn btn-xs btn-primary" %>
          <%= f.number_field :highway, class: 'form-control' %>
      </div>
      
       <div class="form-group">
-         <%= f.label :others, 'Others' %>
+         <%= f.label :others, 'Others' %> <%= link_to "input", new_other_path, remote: true, class:"ml-5 btn btn-xs btn-primary" %>
          <%= f.number_field :others, class: 'form-control' %>
      </div>
      
@@ -59,12 +59,12 @@
      </div>
      
      <div class="form-group">
-         <%= f.label :special_cost, 'Special_cost' %>
+         <%= f.label :special_cost, 'Special_cost' %> <%= link_to "input", new_special_cost_path, remote: true, class:"ml-4 btn btn-xs btn-primary" %>
          <%= f.number_field :special_cost, class: 'form-control' %>
      </div>
      
      <div class="form-group">
-         <%= f.label :other_cost, 'Other_cost' %>
+         <%= f.label :other_cost, 'Other_cost' %> <%= link_to "input", new_other_cost_path, remote: true, class:"ml-4 btn btn-xs btn-primary" %>
          <%= f.number_field :other_cost, class: 'form-control' %>
      </div>
      

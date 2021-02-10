@@ -1,0 +1,2 @@
+class SpecialCost < ApplicationRecord
+end

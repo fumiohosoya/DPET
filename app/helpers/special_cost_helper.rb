@@ -1,0 +1,2 @@
+module SpecialCostHelper
+end

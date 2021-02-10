@@ -28,4 +28,8 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :new, :create]
   
   resources :insurances
+  resources :highway
+  resources :others
+  resources :other_cost
+  resources :special_cost
 end
