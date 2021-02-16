@@ -1,13 +1,14 @@
 
 
-<%= form_with(model: Other_cost.find_or_create_by(vehicle_id: @vehicle_id)) do |f| %>
+<%= form_with(model: OtherCost.find_or_create_by(vehicle_id: @vehicle_id)) do |f| %>
+   
    <div class="form-group">
        <%= f.label :date, 'Date' %>
-       <%= f.date_field :date, class: 'form-control' %>
+       <%= f.date_field :date, class: "form-control" %>
    </div>
    <div class="form-group">
-       <%= f.label :total_amount, 'Total_Amount' %>
-       <%= f.text_field :total_amount, class:'form-control' %>
+       <%= f.label :total_amount, "Total_Amount" %>
+       <%= f.text_field :total_amount, class: "form-control" %>
    
 　 <div class="form-group">
     

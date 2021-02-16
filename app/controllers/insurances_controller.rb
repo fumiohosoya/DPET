@@ -5,4 +5,12 @@ class InsurancesController < ApplicationController
        #@insurances = Insurances.all
        #@insurance = Insurance.new
     end
+    
+    
+    def create
+    end
+    
+    def update
+    end
+    
 end

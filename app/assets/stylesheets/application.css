@@ -56,7 +56,13 @@ h2 {
     width: 40%!important;
 }
     
-    
+#modal-example {
+    color: #000;
+} 
+
+#modal-example form {
+    color: #000;
+}
 
 
 /*
