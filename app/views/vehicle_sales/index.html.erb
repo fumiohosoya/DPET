@@ -1,5 +1,22 @@
-<h1>VehicleSales#index</h1>
+<h1>VehicleSalesIndex</h1>
 
 <%= render 'vehicle_sales', vehicle_sales: @vehicle_sales %>
 
+
+<% @vehicle_sales.each do |vehicle_sale| %>
+ <p><%= vehicle_sale.vehicle_id %></p>
+ <p><%= vehicle_sale.insurance %></p>
+ <p><%= vehicle_sale.highway %></p>
+ <p><%= vehicle_sale.others %></p>
+ <p><%= vehicle_sale.fuel %></p>
+ <p><%= vehicle_sale.mileage%></p>
+ <p><%= vehicle_sale.fuel_consumption %></p>
+ <p><%= vehicle_sale.fuel_price %></p>
+ <p><%= vehicle_sale.direct_labor_cost%></p>
+ <p><%= vehicle_sale.indirect_labor_cost %></p>
+ <p><%= vehicle_sale.special_cost %></p>
+ <p><%= vehicle_sale.other_cost %></p>
+ <p><%= vehicle_sale.sales_month %></p>
+ <p><%= vehicle_sale.profit_month %></p>
+<% end %> 
 

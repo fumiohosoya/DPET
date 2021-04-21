@@ -5,7 +5,7 @@ class HighwayfeesController < ApplicationController
     
     def create
         
-        @highway = Highwayfee.new(params[:highwayfee])
+        @highway = Highwayfee.new(highwayfee_params)
         
         if (@highway.save)
             flash[:success] = "Highway Fee registered"

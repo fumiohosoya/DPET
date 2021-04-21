@@ -1,3 +1,5 @@
+
+<% vehicle_id = 1 %>
 <div class="row bg-red">
   <div class="col-sm-6 offset-sm-3">
       
@@ -16,17 +18,17 @@
      </div>
      
      <div class="form-group">
-         <%= f.label :insurance, 'Insurance' %> <%= link_to "input", new_insurance_path, remote: true, class:"ml-4 btn btn-xs btn-primary"  %>
+         <%= f.label :insurance, 'Insurance' %> <%= link_to "input", new_insurance_path(vehicle_id: vehicle_id), remote: true, class:"ml-4 btn btn-xs btn-primary"  %>
          <%= f.number_field :insurance, class: 'form-control' %>
      </div>
      
      <div class="form-group">
-         <%= f.label :highway, 'Highway' %> <%= link_to "input", new_highway_path, remote: true, class:"ml-4 btn btn-xs btn-primary" %>
+         <%= f.label :highway, 'Highway' %> <%= link_to "input", new_highwayfee_path(vehicle_id: vehicle_id), remote: true, class:"ml-4 btn btn-xs btn-primary" %>
          <%= f.number_field :highway, class: 'form-control' %>
      </div>
      
       <div class="form-group">
-         <%= f.label :others, 'Others' %> <%= link_to "input", new_other_path, remote: true, class:"ml-4 btn btn-xs btn-primary" %>
+         <%= f.label :others, 'Others' %> <%= link_to "input", new_other_path(vehicle_id: vehicle_id), remote: true, class:"ml-4 btn btn-xs btn-primary" %>
          <%= f.number_field :others, class: 'form-control' %>
      </div>
      

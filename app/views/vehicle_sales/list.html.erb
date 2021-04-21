@@ -1,0 +1,27 @@
+<h1>Cost&Profit of Trucks</h1>
+<table border="2">
+    <tr>
+     <th>ID</th><th>Insurance</th><th>Highway</th><th>Others</th><th>Fuel</th><th>Mileage</th>
+     <th>Km/L</th><th>Fuel Price</th><th>DirectLaborCost</th><th>Ind.LaborCost</th><th>SpecialCost</th>
+     <th>OtherCost</th><th>SalesMonth</th><th>ProfitMonth</th>
+    </tr> 
+     <% @vehicle_sales.each do |vehiclesale| %>
+     <tr>
+      <td><%= vehiclesale.vehicle_id %></td>
+      <td><%= vehiclesale.insurance %></td>
+      <td><%= vehiclesale.highway %></td>
+      <td><%= vehiclesale.others %></td>
+      <td><%= vehiclesale.fuel %></td>
+      <td><%= vehiclesale.mileage%></td>
+      <td><%= vehiclesale.fuel_consumption %></td>
+      <td><%= vehiclesale.fuel_price %></td>
+      <td><%= vehiclesale.direct_labor_cost%></td>
+      <td><%= vehiclesale.indirect_labor_cost %></td><
+      <td><%= vehiclesale.special_cost %></td>
+      <td><%= vehiclesale.other_cost %></td>
+      <td><%= vehiclesale.sales_month %></td>
+      <td><%= vehiclesale.profit_month %></td>
+    </tr>
+   <% end %>
+</table>
+

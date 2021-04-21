@@ -6,7 +6,7 @@ class VehicleSalesController < ApplicationController
  end
  
  def show
-   @vehicle_sale= VehicleSale.find(params[:id])
+   @vehicle_sale = VehicleSale.find(params[:id])
  end
  
  def new
@@ -75,7 +75,9 @@ class VehicleSalesController < ApplicationController
      #{:fuel_consumption => fuel_consumption }
  #end
  
- 
+ def list
+     @vehicle_sales = VehicleSale.all
+ end
  
 private
  

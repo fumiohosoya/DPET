@@ -1,0 +1,2 @@
+class Highwayfee < ApplicationRecord
+end

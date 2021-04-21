@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "d-pet-vision",
+  "private_key_id": "bd9b067534da062098990de3d48d1a0059214649",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC47I8E11GrseNU\nvLLLJAW8J+PUdytOpUu9UCO1GFgW4kyDja8LVin9snByrQCWWzS3hPrAbdJ8osX9\nVR6SS6cCKb+CifXHc4KvCCUU4zacoaEFKfr9OT1qKY/9kt5hjTrql6mtUeF9YWyh\nWmKkahGPcZEaF4S8K+aryBq5z7HASsDdGBUd+CIZZYQ7OQcIuytV52HQ2l5LFWdX\nBXI6Npt2vU7+fTtxZuSKuilUcHmTDrNFsb+OE11DzMtyVkzTjRrEjkp7qnSdJdxB\n1fy6jc4GWMY92q7ze/odeZwJ0mDaFjQr9p/DUFbxQR5dUDOpZQdxY+NhiV0T6ouD\nj/caLmsTAgMBAAECggEAQhYgQm2kvURUZssM5nYYKpbi3+I6st91wtEqAaUSjhMP\nnw/6V4XSedzUPNdA13r+yvsWFcDpsSsGsLNDuqqYo7hBvagKEt5f/KdfgSh2MuG8\nRrkq/mX/Ybo6wDdFi/1J6d6Lf+o8OG+hv8QqbnGNlwLSBU4UXJ8fz5Iyoubrsjkp\nLkR7RVh4ZF8uhiILGfaYmEJMpkwC1SCOhNniIXCdxlgnii2haP2OnugbFssLUKMl\nOKNM97VyMVsAbWxJ7QBqBpAHxuTMcToA43WIXjpe6BFaLdJypodIpO1eiQl6sR73\ngpjaxc1PaRqBxhW7ahJTwwM6mcUVdqJroyI+z4VqQQKBgQDi9sDp5XTJOkU5eKUH\nLNySuDPZJgLNetD4fT3+fDAW/+oXW8IDANF7Au9Ru6VfQ07WhYxB1Tl3A0Hrcb9G\ncsKcJAbfgECuTsq1gBPbktZABbDPAtNmt+PyhWvyMUS77XiHbGQoS5HDiDeySOez\nCb8AVRALDsGa9sh++j2wsT2PMwKBgQDQlPe4Ej+rUi8MlbEdiOO3ZcLIX7is0Mx0\nTO0TGnorU9Z3BGc21lAYm59+DnJCdlQfjy8ECMT600Izj25WmpCvBBqdBajZnqgT\n+TQUlnz3a826OfCCUSY1vVj9jp7DnwDOaF2gER5NNgPIkON5d2UU1eGmGS5FhY1R\nCrde3Rs0oQKBgQDa7CbStgi7XSCOugd871HnmBQy/g4wA6p0NeJJiaKdXMaBN3nh\nibWGESOk0/pE9FikZfcPPUwLtzGrmHFm06VSFRIoHb7GI6w1/E+rOWy+Hn8YfuJJ\nL1GJihbAa7OgDgR3pB7MG3CDie4nY1lTAjChcmtiLx6iii6FBH3i5GO7rwKBgDQK\n90QWSYyVlOeu8eJMpYS8/zy/pXR5JIpgJ0b89D6bTIelsZsdHh8FtWXedOPgYlz9\nfN2k0oFC9OGoh/9T0YXZoEpNfzPNQmK5ayU35zZUz6AHlNrvJHmEJRAe5b4pjiny\nIGov2z+omokQnbFQ+QeZ1hN7dPAjwn7WDaq9wGwBAoGBAIjyLiSkXa4A0lnZGbOA\nufTVPBtmo7AKAuWr/abF7VIcmxNeOEXCg71Ok0GW+CEYJ4uteh4cnzuUVO7NQDRy\npChoQXf90yr7jVnBMfjrhsTsWynlKyFq0cb2MhIEEzdUCPx+pkYJOG74+8+qVAVi\nnap9FZu5OKVQ2C1m2pBnPQGV\n-----END PRIVATE KEY-----\n",
+  "client_email": "dpet-vision@d-pet-vision.iam.gserviceaccount.com",
+  "client_id": "102815050339479377295",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dpet-vision%40d-pet-vision.iam.gserviceaccount.com"
+}
