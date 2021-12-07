@@ -1,0 +1,4 @@
+class Meter < Checkitem
+    
+    
+end

@@ -1,0 +1,2 @@
+class EngineOil < Checkitem
+end

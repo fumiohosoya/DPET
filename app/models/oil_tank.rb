@@ -1,0 +1,2 @@
+class OilTank < Checkitem
+end

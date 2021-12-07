@@ -1,0 +1,37 @@
+<h3>Brake Check</h3>
+
+   <%= form_with(model: @brake, local:true, multipart: true,
+           class: "form-horizontal") do |f|  %>
+    
+    
+      <%= f.hidden_field :driver_id, value: @current_driver.id %>
+      <div class="col-4">
+          <%= image_tag '/images/GuidanceBrake1.png', alt: 'GuidanceMeter1', class: 'img-fluid' %>
+
+          <%= f.fields_for :checkimages do |q| %>
+              <%= q.file_field :image, accept:'image/*', capture:'environment' %>
+              
+              
+          <% end %>
+      </div>
+      <div class="col-4">
+          <%= image_tag '/images/GuidanceBrake2.png', alt: 'GuidanceMeter2', class: 'img-fluid' %>
+
+          <%= f.fields_for :checkimages do |q| %>
+              <%= q.file_field :image, accept:'image/*', capture:'environment' %>
+              
+              
+          <% end %>
+      </div>
+      <div class="col-4">
+          <%= image_tag '/images/GuidanceBrake3.png', alt: 'GuidanceMeter3', class: 'img-fluid' %>
+          <%= f.fields_for :checkimages do |q| %>
+              <%= q.file_field :image, accept:'image/*', capture:'environment' %>
+      </div>        
+              
+      <% end %>
+      
+      <div class="form-group row">
+          <%= f.submit "Send Photo", class:"btn btn-xs btn-danger" %>
+      </div>
+    <% end %>

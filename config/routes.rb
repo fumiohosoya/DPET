@@ -13,34 +13,65 @@ Rails.application.routes.draw do
   
   get 'signup', to: 'users#new'
   
-  get  'admin', to: 'admin#new'
-  post 'admin', to: 'admin#create'
-  delete 'admin', to: 'admin#destroy'
 
-  get  'adminpanel', to: 'admin#index'
-  get  'newadmin', to: "admin#newadmin"
-  post 'createadmin', to: "admin#createadmin"
-  get  'admin_setuser', to: "admin#setuser"
   get  'vehicle_sales/list', to: "vehicle_sales#list"
   
-  # get 'drivers/path'
+
   
-  # get 'drivers/destroy'
+  resources :drivers do 
+    collection do
+      post :update_branch_menus
+      
+      post :update_truck_menus
+
+    end
+  end
   
-  # get 'vehicle_sales/destroy'
   
-  # get 'vehicle_sales/path'
-  
-  #get 'vehicle_sales/path'
-  #get 'vehicle_sales/new', to: 'vehicle_sales#new'
-  resources :drivers
   resources :vehicle_sales
   resources :users, only: [:index, :show, :new, :create]
   
+  resources :trucks
   resources :insurances
   resources :highwayfees
   resources :others
   resources :other_cost
   resources :special_cost
-  resources :admin
+  
+  
+  get  'admin/:number/listdrivers', to: "admin#listdrivers", as: :listdrivers
+
+  resources :admin do 
+    
+    collection do
+      get :truckindex
+    end
+    
+    # member do
+    #   get :listdrivers
+      
+    # end
+  end
+  
+  resources :batteries
+  resources :meters
+  resources :brakes
+  resources :lamp_stopper_tires
+  resources :greaseups
+  resources :engine_oils
+  resources :air_reservers
+  resources :tires
+  resources :oil_tanks
+  resources :cabups
+  resources :greaseups
+  
+  get 'driverlogin',  to: 'driversessions#new'
+  post 'driverlogin', to: 'driversessions#create'
+
+  get 'topmenu/:id',  to: 'drivers#topmenu', as: :topmenu
+
+  get  'adminpanel', to: 'admin#index'
+  get  'newadmin', to: "admin#newadmin"
+  post 'createadmin', to: "admin#createadmin"
+  get  'admin_setuser', to: "admin#setuser"
 end

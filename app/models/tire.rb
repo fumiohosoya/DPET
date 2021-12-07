@@ -1,0 +1,2 @@
+class Tire < Checkitem
+end

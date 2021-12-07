@@ -1,0 +1,39 @@
+<h1>Cost&Profit of Trucks</h1>
+<table border="2">
+    
+    <thead>
+     <tr><th>ID</th></tr>
+     <tr><th>Insurance</th></tr>
+     <tr><th>Highway</th></tr>
+     <tr><th>Others</th></tr>
+     <tr><th>Fuel</th></tr>
+     <tr><th>Mileage</th></tr>
+     <tr><th>Km/L</th></tr>
+     <tr><th>Fuel Price</th></tr>
+     <tr><th>DirectLaborCost</th></tr>
+     <tr><th>Ind.LaborCost</th></tr>
+     <tr><th>SpecialCost</th></tr>
+     <tr><th>OtherCost</th></tr>
+     <tr><th>SalesMonth</th></tr>
+     <tr><th>ProfitMonth</th></tr>
+    </thead>
+    <% @vehicle_sales.each do |vehiclesale| %>
+    <tbody>
+      <tr><td><%= vehiclesale.vehicle_id %></tr></td>
+      <tr><td><%= vehiclesale.insurance %></tr></td>
+      <tr><td><%= vehiclesale.highway %></tr></td>
+      <tr><td><%= vehiclesale.others %></tr></td>
+      <tr><td><%= vehiclesale.fuel %></tr></td>
+      <tr><td><%= vehiclesale.mileage%></tr></td>
+      <tr><td><%= vehiclesale.fuel_consumption %></tr></td>
+      <tr><td><%= vehiclesale.fuel_price %></tr></td>
+      <tr><td><%= vehiclesale.direct_labor_cost%></tr></td>
+      <tr><td><%= vehiclesale.indirect_labor_cost %></tr></td>
+      <tr><td><%= vehiclesale.special_cost %></tr></td>
+      <tr><td><%= vehiclesale.other_cost %></tr></td>
+      <tr><td><%= vehiclesale.sales_month %></tr></td>
+      <tr><td><%= vehiclesale.profit_month %></tr></td>
+    </tbody>
+   <% end %>
+</table>
+

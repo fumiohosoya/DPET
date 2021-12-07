@@ -10,7 +10,57 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_20_124922) do
+ActiveRecord::Schema.define(version: 2021_09_25_124850) do
+
+  create_table "branches", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "company_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "checkimages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "image"
+    t.bigint "checkitem_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["checkitem_id"], name: "index_checkimages_on_checkitem_id"
+  end
+
+  create_table "checkitems", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "type"
+    t.bigint "driver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "lamp"
+    t.boolean "stopper"
+    t.boolean "oilDrops"
+    t.index ["driver_id"], name: "index_checkitems_on_driver_id"
+  end
+
+  create_table "checkmenus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "company_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "checkschedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "dayofweek"
+    t.bigint "checkmenu_id"
+    t.integer "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["checkmenu_id"], name: "index_checkschedules_on_checkmenu_id"
+  end
+
+  create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name_j"
+    t.string "name_e"
+    t.boolean "opt_tirerotation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "drivers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -24,6 +74,10 @@ ActiveRecord::Schema.define(version: 2021_02_20_124922) do
     t.string "vioration_record"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "company"
+    t.string "branch"
+    t.string "email"
+    t.string "password_digest"
   end
 
   create_table "high_way_costs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -82,6 +136,39 @@ ActiveRecord::Schema.define(version: 2021_02_20_124922) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "truckrelations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "truck_id"
+    t.bigint "driver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["driver_id"], name: "index_truckrelations_on_driver_id"
+    t.index ["truck_id"], name: "index_truckrelations_on_truck_id"
+  end
+
+  create_table "trucks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "company_id"
+    t.integer "branch_id"
+    t.string "maker"
+    t.string "model"
+    t.string "body"
+    t.integer "wheels"
+    t.string "year"
+    t.string "age"
+    t.string "engine"
+    t.string "vehicleid"
+    t.string "number"
+    t.integer "e_oil"
+    t.integer "tm_oil"
+    t.string "tire"
+    t.integer "df_oil"
+    t.string "initmileage"
+    t.string "purchase"
+    t.string "image_url"
+    t.string "thumb_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -135,4 +222,9 @@ ActiveRecord::Schema.define(version: 2021_02_20_124922) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "checkimages", "checkitems"
+  add_foreign_key "checkitems", "drivers"
+  add_foreign_key "checkschedules", "checkmenus"
+  add_foreign_key "truckrelations", "drivers"
+  add_foreign_key "truckrelations", "trucks"
 end

@@ -54,5 +54,10 @@
     <%= link_to "Edit", edit_driver_path(@driver), class:"btn btn-primary" %>
     <%= link_to "Delete", driver_path(@driver), method: :delete, class:"btn btn-danger" %>
     <%= link_to "Back To Index", drivers_path, class: "btn btn-success" %>
+    
+    <% if @driver.truckrelations.count > 0 %>
+        <%= link_to "Back To Truck Driver List", 
+         truckindex_admin_index_path(@driver.trucks.first.number), class: "btn btn-primary" %>
+    <% end %>
   </div>
 </div>

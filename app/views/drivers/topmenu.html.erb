@@ -1,0 +1,62 @@
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Today's CheckList</h5>
+ 
+    <div class="card-text">
+        <div class="mb-1">
+          
+          <% if current_driver.has_meter? %>
+             <span class="btn btn-warning">Meter Checked</span>
+          <% else %>
+          <%= link_to "Meters", new_meter_path, class:"btn btn-primary" %>
+          <% end %>
+        </div>
+        <div class="mb-1">
+          <% if current_driver.has_brake? %>
+            <span class="btn btn-warning">Brake Checked</span>
+          <% else %>
+            <%= link_to "Brake & Side Brake", new_brake_path, class:"btn btn-primary" %>
+          <% end %>
+        </div>
+        <div class="mb-1">
+          <% if current_driver.has_lampStopperTire? %>
+            <span class="btn btn-warning">Lamp/Stopper/Tire Checked</span>
+          <% else %>
+            <%= link_to "Lamps & Stopper & Tire Easy Check", new_lamp_stopper_tire_path, class:"btn btn-primary" %></div>
+          <% end %>
+       </div>
+
+        <%  todo_hash = {
+            "Engine Oil" => [new_engine_oil_path, "has_engineoil?"],
+            "Air Reserver" => [new_air_reserver_path, "has_airreserver?"],
+            "Battery" => [new_battery_path, "has_battery?"],
+            "Tires" => [new_tire_path, "has_tire?"],
+            "Oils & Tanks" => [new_oil_tank_path, "has_oil_tank?"],
+            "Grease Up" => [new_greaseup_path , "has_greaseup?"],
+            "Cab Up" => [new_cabup_path, "has_cabup?"],
+            }
+           %>
+
+
+        <% if @todos.any? %>
+    
+          <% @todos.each do |todo| %>
+            <% checkname = todo.checkmenu.name %>
+            <% check_todo = todo_hash[checkname][1] %>
+            <%#= check_todo %>
+            <% if eval("current_driver.#{check_todo}") %>
+                <span class="btn btn-warning"><%= checkname %></span>
+
+            <% else %>
+               <%= link_to checkname, todo_hash[checkname][0], class:"btn btn-primary" %>
+            <% end %>
+          <% end %>
+    
+        <% end %>
+    </div>
+ 
+ 
+ 
+  </div>
+</div>

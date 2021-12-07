@@ -1,0 +1,2 @@
+class Cabup < Checkitem
+end

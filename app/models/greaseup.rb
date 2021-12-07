@@ -1,0 +1,2 @@
+class Greaseup < Checkitem
+end

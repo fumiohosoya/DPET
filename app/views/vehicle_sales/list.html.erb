@@ -1,27 +1,41 @@
 <h1>Cost&Profit of Trucks</h1>
-<table border="2">
-    <tr>
-     <th>ID</th><th>Insurance</th><th>Highway</th><th>Others</th><th>Fuel</th><th>Mileage</th>
-     <th>Km/L</th><th>Fuel Price</th><th>DirectLaborCost</th><th>Ind.LaborCost</th><th>SpecialCost</th>
-     <th>OtherCost</th><th>SalesMonth</th><th>ProfitMonth</th>
-    </tr> 
-     <% @vehicle_sales.each do |vehiclesale| %>
-     <tr>
-      <td><%= vehiclesale.vehicle_id %></td>
-      <td><%= vehiclesale.insurance %></td>
-      <td><%= vehiclesale.highway %></td>
-      <td><%= vehiclesale.others %></td>
-      <td><%= vehiclesale.fuel %></td>
-      <td><%= vehiclesale.mileage%></td>
-      <td><%= vehiclesale.fuel_consumption %></td>
-      <td><%= vehiclesale.fuel_price %></td>
-      <td><%= vehiclesale.direct_labor_cost%></td>
-      <td><%= vehiclesale.indirect_labor_cost %></td><
-      <td><%= vehiclesale.special_cost %></td>
-      <td><%= vehiclesale.other_cost %></td>
-      <td><%= vehiclesale.sales_month %></td>
-      <td><%= vehiclesale.profit_month %></td>
-    </tr>
+
+<div id="vehicle_sales_list">
+    <ul class="vslist_head">
+     <li>ID</li>
+     <li>Insurance</li>
+     <li>Highway</li>
+     <li>Others</li>
+     <li>Fuel</li>
+     <li>Mileage</li>
+     <li>Km/L</li>
+     <li>Fuel Price</li>
+     <li>DirectLaborCost</li>
+     <li>Ind.LaborCost</li>
+     <li>SpecialCost</li>
+     <li>OtherCost</li>
+     <li>SalesMonth</li>
+     <li>ProfitMonth</li>
+    </ul>
+    <% @vehicle_sales.each do |vehiclesale| %>
+    <ul>
+      <li><%= vehiclesale.vehicle_id %></li>
+      <li><%= vehiclesale.insurance %></li>
+      <li><%= vehiclesale.highway %></li>
+      <li><%= vehiclesale.others %></li>
+      <li><%= vehiclesale.fuel %></li>
+      <li><%= vehiclesale.mileage%></li>
+      <li><%= vehiclesale.fuel_consumption.to_f.round(2) %></li>
+      <li><%= vehiclesale.fuel_price %></li>
+      <li><%= vehiclesale.direct_labor_cost%></li>
+      <li><%= vehiclesale.indirect_labor_cost %></li>
+      <li><%= vehiclesale.special_cost %></li>
+      <li><%= vehiclesale.other_cost %></li>
+      <li><%= vehiclesale.sales_month %></li>
+      <li><%= vehiclesale.profit_month %></li>
+    </ul>
    <% end %>
-</table>
+</div>
+
+<%= paginate @vehicle_sales %>
 

@@ -1,0 +1,2 @@
+module LampStopperTiresHelper
+end

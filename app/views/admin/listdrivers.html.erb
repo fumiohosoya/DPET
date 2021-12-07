@@ -1,0 +1,50 @@
+
+<h3 class="bg-red">Driver List </h3>
+
+<% if @drivers.any? && @drivers.any? %>
+
+
+   <table class="table table-striped table-bordered bg-red">
+       <tr>
+           <th>Truck Number</th>
+           <th>Truck Model</th>
+           <th>Truck Vehicle ID</th>
+       </tr>
+       <tr>
+            <td><%= @truck.number %></td>
+            <td><%= @truck.model %></td>
+            <td><%= @truck.vehicleid %></td>
+       </tr>
+       
+   </table>
+
+
+
+    <table class="table table-striped table-bordered bg-red">
+    
+    <tr>
+        <th>Name</th>
+        <th>Gendar</th>
+        <th>BirthDay</th>
+        <th>Age</th>
+        <th>HireDate</th>
+        <th>Blood</th>
+    </tr>
+
+    <% gendar = ["", "Male", "Female"] %>
+    <% @drivers.each do |driver| %>
+    
+      <tr>
+
+        <td><%= link_to driver.name, edit_driver_path(driver) ,class:"btn btn-primary btn-xs" %></td>
+        <td><%= gendar[driver.sex.to_i] %></td>
+        <td><%= driver.date_birth.strftime("%Y/%m/%d") %></td>
+        <td><%= driver.age  %></td>
+        <td><%= driver.hire_date.strftime("%Y/%m/%d") %></td>
+        <td><%= driver.blood_type %></td>
+      </tr>
+    
+    <% end %>
+    </table>
+    
+<% end %>

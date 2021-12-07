@@ -76,7 +76,7 @@ class VehicleSalesController < ApplicationController
  #end
  
  def list
-     @vehicle_sales = VehicleSale.all
+     @vehicle_sales = VehicleSale.all.page(params[:page]).per(15)
  end
  
 private

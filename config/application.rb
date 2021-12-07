@@ -18,6 +18,7 @@ require "sprockets/railtie"
 Bundler.require(*Rails.groups)
 
 module DPET
+  
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
@@ -29,5 +30,6 @@ module DPET
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
   end
 end

@@ -1,0 +1,25 @@
+<h3>Battery Check</h3>
+<div class="row">
+    <div class="offset-2 col-4">
+        <%= image_tag '/images/GuidanceBattery1.png', alt: 'GuidanceBattery1', class: 'img-fluid' %>
+        <%#= image_tag 'images/GuidanceMeter1.png', class="img-fluid" %>
+    </div>
+</div>
+   <%= form_with(model: @battery, local:true, multipart: true) do |f|  %>
+    
+    
+      <%= f.hidden_field :driver_id, value: @current_driver.id %>
+      <%= f.fields_for :checkimages do |q| %>
+          <%= q.file_field :image, accept:'image/*', capture:'environment' %>
+          
+          
+            <!--<input type="file" name="image" accept="video/*" capture="environment">-->
+
+          
+          
+      <% end %>
+      
+      <div class="form-group row">
+          <%= f.submit "Send Photo", class:"btn btn-xs btn-danger" %>
+      </div>
+    <% end %>

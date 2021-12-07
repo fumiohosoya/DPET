@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <%= stylesheet_link_tag  'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
    
@@ -21,8 +21,12 @@
 
   <body>
     <%= render 'layouts/navbar' %>
-
-    <div class="container">
+    <% if (controller.controller_name == "vehicle_sales") &&
+          (controller.action_name == "list") %>
+      <div class="container-fluid">
+    <% else %>
+      <div class="container">
+    <% end %>
       <%= render 'layouts/flash_messages' %>
 
       <%= yield %>
