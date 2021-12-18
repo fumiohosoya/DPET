@@ -62,8 +62,8 @@ gem 'carrierwave'
 gem 'fog'
 
 # 本番ではpostgressを使用する
-#gem 'pg', group: :production
+gem 'pg', group: :production
 
-group :production do
-   gem 'pg', '>= 0.18', '< 2.0'
-end
+#group :production do
+#   gem 'pg', '>= 0.18', '< 2.0'
+#end
