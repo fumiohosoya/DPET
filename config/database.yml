@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: DPET_production
-  username: DPET
-  password: <%= ENV['DPET_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5

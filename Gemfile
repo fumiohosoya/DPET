@@ -49,6 +49,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
+gem 'dotenv-rails'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
@@ -56,4 +57,16 @@ gem 'kaminari'
 
 gem 'rmagick'
 
+gem 'ovirt-engine-sdk', '~> 4.4.1'
 gem 'carrierwave'
+gem 'fog'
+
+# 本番ではpostgressを使用する
+#gem 'pg', group: :production
+
+group :production do
+  
+  gem 'pg', '~> 0.18'
+
+  
+end
