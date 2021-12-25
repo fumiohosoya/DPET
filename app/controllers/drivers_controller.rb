@@ -55,7 +55,7 @@ class DriversController < ApplicationController
   if (@driver.save)
      @driver.addtruck(@truck)
      
-    if (@truck.relations.count > 3)
+    if (@truck.truckrelations.count > 3)
           flash[:error] = "Caution!!: Driver Entries over 3"
      end
      redirect_to @driver
@@ -151,7 +151,7 @@ class DriversController < ApplicationController
    def driver_params
     params.require(:driver).permit(:name, :sex, :date_birth, :age,
       :hire_date, :blood_type, :chronic_disease, :accident_record, 
-      :vioration_record, :email, :password, :password_confirmation)
+      :vioration_record, :email, :password, :password_confirmation, :company, :branch)
    end
  
 end
