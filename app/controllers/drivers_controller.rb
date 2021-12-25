@@ -151,7 +151,7 @@ class DriversController < ApplicationController
    def driver_params
     params.require(:driver).permit(:name, :sex, :date_birth, :age,
       :hire_date, :blood_type, :chronic_disease, :accident_record, 
-      :vioration_record)
+      :vioration_record, :email, :password, :password_confirmation)
    end
  
 end
