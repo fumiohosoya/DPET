@@ -73,6 +73,19 @@
          <%= f.text_field :vioration_record, class: 'form-control' %>
      </div>     
      
+   <div class="form-group">
+         <%= f.label :email, 'email' %>
+         <%= f.text_field :email, class: 'form-control' %>
+   </div>     
+   <div class="form-group">
+         <%= f.label :password, 'password' %>
+         <%= f.password_field :password, class: 'form-control' %>
+   </div>     
+   <div class="form-group">
+         <%= f.label :password_confirmation, 'comfirmpassword' %>
+         <%= f.password_field :password_confirmation, class: 'form-control' %>
+   </div>     
+     
      <%= f.submit 'Regist', class: 'btn btn-primary btn-block' %>
     <% end %>
     
