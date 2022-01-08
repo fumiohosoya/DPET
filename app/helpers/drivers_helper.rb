@@ -43,7 +43,8 @@ end
 
 def gettruck(trucknumber)
 
-    url = "http://logiccs.herokuapp.com/trucks/numbershow.json?number=#{trucknumber}"
+    uritrucknumber = URI.encode(trucknumber)
+    url = "http://logiccs.herokuapp.com/trucks/numbershow.json?number=#{uritrucknumber}"
     uri = URI.parse(url)
     json = Net::HTTP.get(uri)
     result = JSON.parse(json)    

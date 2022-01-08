@@ -6,6 +6,8 @@ class Driver < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: { case_sensitive: false }
+  validates :company, presence: true
+  validates :branch, presence: true
   has_secure_password    
     
     has_many :truckrelations

@@ -1,5 +1,6 @@
 
 <% if @trucks.any? %>
+    <%= @trucks %>
     <table class="table table-striped table-bordered table-sm bg-red">
     
     <tr>
@@ -13,10 +14,12 @@
         <th>Driver Count</th>
     </tr>
     <% @trucks.each do |truck| %>
-    
+     
+    <%# binding.pry  %>
+    <%= "Truck " +truck.branch_id.to_s %>
       <tr>
-      <td><%= find_company(truck.company_id).name_e %></td>
-      <td><%= find_branch(truck.company_id, truck.branch_id).name %>
+      <td><%= find_company(truck.company_id.to_i).name_e %></td>
+      <td><%= find_branch(truck.company_id.to_i, truck.branch_id.to_i).name %>
 
       </td>
         <td><%= truck.maker %></td>

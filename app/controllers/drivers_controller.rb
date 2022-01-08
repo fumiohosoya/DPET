@@ -50,9 +50,9 @@ class DriversController < ApplicationController
     @truck.image_url = tinfo["image_url"]
     @truck.thumb_url = tinfo["thumb_url"]
     @truck.created_at = tinfo["created_at"]
-    @truck.save
   end
   if (@driver.save)
+     @truck.save
      @driver.addtruck(@truck)
      
     if (@truck.truckrelations.count > 3)
