@@ -8,6 +8,8 @@ class Driver < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   validates :company, presence: true
   validates :branch, presence: true
+  validates :blood_type, presence: true
+  validates :age, presence: true
   has_secure_password    
     
     has_many :truckrelations
