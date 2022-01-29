@@ -61,7 +61,7 @@ gem 'ovirt-engine-sdk', '~> 4.4.1'
 gem 'carrierwave'
 gem 'cloudinary'
 
-# gem 'fog'
+gem 'fog'
 
 # 本番ではpostgressを使用する
 gem 'pg', group: :production
