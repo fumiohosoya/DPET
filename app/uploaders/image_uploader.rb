@@ -1,8 +1,11 @@
 # encoding: utf-8
 class ImageUploader < CarrierWave::Uploader::Base  
   
- #storage :file
- storage :fog
+ if Rails.env.production?
+     include Cloudinary::CarrierWave
+   else
+     storage :file
+ end
 
  # リサイズしたり画像形式を変更するのに必要
  include CarrierWave::RMagick

@@ -59,7 +59,9 @@ gem 'rmagick'
 
 gem 'ovirt-engine-sdk', '~> 4.4.1'
 gem 'carrierwave'
-gem 'fog'
+gem 'cloudinary'
+
+# gem 'fog'
 
 # 本番ではpostgressを使用する
 gem 'pg', group: :production
