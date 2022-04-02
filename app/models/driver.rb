@@ -30,66 +30,66 @@ class Driver < ApplicationRecord
         self.truckrelations.find_or_create_by(truck_id: truck.id)
     end
     
-    def has_meter?
+    def has_meter?(day = 1)
       if (self.meters.any?)
-       (Time.now - self.meters.last.created_at ) < 86400 #  24 * 60 * 60
+       (Time.now - self.meters.last.created_at ) < (86400 * day)#  24 * 60 * 60
        end
     end
     
     
-    def has_brake?
+    def has_brake?(day = 1)
       if (self.brakes.any?)
-       (Time.now - self.brakes.last.created_at ) < 86400 && (self.brakes.last.checkimages.count > 1)#  24 * 60 * 60
+       (Time.now - self.brakes.last.created_at  < (86400 * day))  && (self.brakes.last.checkimages.count > 1)#  24 * 60 * 60
        end
     end
     
-    def has_lampStopperTire?
+    def has_lampStopperTire?(day = 1)
       if (self.lamp_stopper_tires.any?)
-        (Time.now - self.lamp_stopper_tires.last.created_at ) < 86400 && (self.lamp_stopper_tires.last.checkimages.count > 1)#  24 * 60 * 60
+        (Time.now - self.lamp_stopper_tires.last.created_at ) < (86400 * day) && (self.lamp_stopper_tires.last.checkimages.count > 1)#  24 * 60 * 60
       end
     end
     
-    def has_battery?
+    def has_battery?(day = 1)
        if (self.batteries.any?)
-         (Time.now - self.batteries.last.created_at ) < 86400 #  24 * 60 * 60
+         (Time.now - self.batteries.last.created_at ) < (86400  * day)#  24 * 60 * 60
        end
     end
     
-      def has_greaseup?
+      def has_greaseup?(day = 1)
         if (self.greaseups.any?)
-          (Time.now - self.greaseups.last.created_at ) < 86400  &&
+          (Time.now - self.greaseups.last.created_at ) < (86400 * day)  &&
              (self.greaseups.last.checkimages.count > 1)#  24 * 60 * 60
         end
           
      end
      
-     def has_engineoil?
+     def has_engineoil?(day = 1)
         if (self.engine_oils.any?)
-          (Time.now - self.engine_oils.last.created_at ) < 86400 #  24 * 60 * 60
+          (Time.now - self.engine_oils.last.created_at ) < (86400 * day) #  24 * 60 * 60
         end
      end
      
-     def has_airreserver?
+     def has_airreserver?(day = 1)
        if (self.air_reservers.any?)
-        (Time.now - self.air_reservers.last.created_at ) < 86400 #  24 * 60 * 60
+        (Time.now - self.air_reservers.last.created_at ) < (86400 * day) #  24 * 60 * 60
        end
      end
      
-     def has_tire?
+     def has_tire?(day = 1)
        if (self.tires.any?)
-        (Time.now - self.tires.last.created_at ) < 86400 && (self.tires.last.checkimages.count > 1)#  24 * 60 * 60
+        (Time.now - self.tires.last.created_at ) < (86400 * day) && (self.tires.last.checkimages.count > 1)#  24 * 60 * 60
        end
      end
      
-     def has_oil_tank?
+     def has_oil_tank?(day = 1)
        if (self.oil_tanks.any?)
-        (Time.now - self.oil_tanks.last.created_at ) < 86400 && (self.oil_tanks.last.checkimages.count > 1)#  24 * 60 * 60
+        (Time.now - self.oil_tanks.last.created_at ) < (86400 * day) && (self.oil_tanks.last.checkimages.count > 1)#  24 * 60 * 60
        end
      end
      
-     def has_cabup?
+     def has_cabup?(day = 1)
         if (self.cabups.any?)
-          (Time.now - self.cabups.last.created_at ) < 86400 #  24 * 60 * 60
+          (Time.now - self.cabups.last.created_at ) < (86400 * day) #  24 * 60 * 60
         end
      end
 end

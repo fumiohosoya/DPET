@@ -95,8 +95,45 @@ class DriversController < ApplicationController
  
  def topmenu
   @driver = Driver.find(params[:id])
-#  @todos = Checkschedule.checkItem(Time.now, @driver.company)
-  @todos = Checkschedule.checkItem(DateTime.new(2021, 11, 6), @driver.company)
+  
+  company_id = @driver.company
+  
+  if (Checkschedule.find_by(company_id: company_id) == nil)
+     Checkschedule.make_default(company_id) 
+  end 
+  
+  #
+  todo_hash = {
+            "Engine Oil" => [new_engine_oil_path, "has_engineoil?"],
+            "Air Reserver" => [new_air_reserver_path, "has_airreserver?"],
+            "Battery" => [new_battery_path, "has_battery?"],
+            "Tires" => [new_tire_path, "has_tire?"],
+            "Oils & Tanks" => [new_oil_tank_path, "has_oil_tank?"],
+            "Grease Up" => [new_greaseup_path , "has_greaseup?"],
+            "Cab Up" => [new_cabup_path, "has_cabup?"],
+            }
+            
+  today = Time.now
+  # today = DateTime.new(2022, 4, 16)   # テスト用
+  
+  # 前日未実施項目があれば繰り越してチェック
+  @prev_todos = Checkschedule.checkItem(today.yesterday, @driver.company)
+  
+   
+   remain_menu = []
+   @prev_todos.each do |p_todo|
+     checkname = p_todo.checkmenu.name
+     check_todo = todo_hash[checkname][1] 
+     if eval("@driver.#{check_todo}(2)")
+       #  trueなら実施済み
+     else
+       remain_menu.push(p_todo)
+    end
+   end
+  
+  @todos = Checkschedule.checkItem(today, @driver.company)
+  @todos += remain_menu
+  @todos = @todos.uniq
  end
  
  
