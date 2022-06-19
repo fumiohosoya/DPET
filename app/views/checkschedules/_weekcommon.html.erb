@@ -1,0 +1,27 @@
+   <% daystr = ["Mon", "Tue", "Wed", "Thr", "Fri", "Sat", "Sun"] %>
+
+   
+    <tr>
+        <% (0..6).each do |idx| %>
+          <% fontc =  (idx == 5) ? 'text-primary alert-primary': '' %>
+          <% fontc = "text-danger alert-danger" if idx == 6 %>
+          <td class="text-center font-weight-bold <%= fontc %>" style="width:12%">
+               <%= daystr[idx] %>
+          </td>
+        <% end %>
+    </tr>
+    <tr>
+       <td colspan="7" class="bg-warning text-center">
+           Meters
+       </td>
+    </tr>
+    <tr>
+       <td colspan="7" class="bg-success text-light text-center">
+           Brake & Side Brake
+       </td>
+    </tr>
+    <tr>
+       <td colspan="7" class="bg-primary text-light text-center">
+           Lamps & Stopper  & Tire Easy Check
+       </td>
+    </tr>

@@ -241,7 +241,7 @@ checked program was:
 /* end */
 
 "gcc -o conftest -I/home/ec2-user/.rvm/rubies/ruby-2.5.3/include/ruby-2.5.0/x86_64-linux -I/home/ec2-user/.rvm/rubies/ruby-2.5.3/include/ruby-2.5.0/ruby/backward -I/home/ec2-user/.rvm/rubies/ruby-2.5.3/include/ruby-2.5.0 -I.  -fopenmp -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16 -I/usr/include/ImageMagick-6    -fopenmp -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16 -I/usr/include/ImageMagick-6   -std=gnu99 conftest.c  -L. -L/home/ec2-user/.rvm/rubies/ruby-2.5.3/lib -Wl,-rpath,/home/ec2-user/.rvm/rubies/ruby-2.5.3/lib  -lMagickCore-6.Q16      -lMagickCore-6.Q16    -Wl,-rpath,'/../lib' -Wl,-rpath,'/../lib' -lruby  -lpthread -ldl -lcrypt -lm   -lc"
-/tmp/cc1QDn3L.o: In function `t':
+/tmp/ccqg8F2X.o: In function `t':
 conftest.c:(.text+0x3d): undefined reference to `malloc_size'
 collect2: error: ld returned 1 exit status
 checked program was:
@@ -309,7 +309,7 @@ checked program was:
 /* end */
 
 "gcc -o conftest -I/home/ec2-user/.rvm/rubies/ruby-2.5.3/include/ruby-2.5.0/x86_64-linux -I/home/ec2-user/.rvm/rubies/ruby-2.5.3/include/ruby-2.5.0/ruby/backward -I/home/ec2-user/.rvm/rubies/ruby-2.5.3/include/ruby-2.5.0 -I.  -fopenmp -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16 -I/usr/include/ImageMagick-6    -fopenmp -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16 -I/usr/include/ImageMagick-6   -std=gnu99 conftest.c  -L. -L/home/ec2-user/.rvm/rubies/ruby-2.5.3/lib -Wl,-rpath,/home/ec2-user/.rvm/rubies/ruby-2.5.3/lib  -lMagickCore-6.Q16      -lMagickCore-6.Q16    -Wl,-rpath,'/../lib' -Wl,-rpath,'/../lib' -lruby  -lpthread -ldl -lcrypt -lm   -lc"
-/tmp/ccnOGFyY.o: In function `t':
+/tmp/cc23RSI9.o: In function `t':
 conftest.c:(.text+0x3d): undefined reference to `_aligned_msize'
 collect2: error: ld returned 1 exit status
 checked program was:
@@ -439,7 +439,7 @@ checked program was:
 /* end */
 
 "gcc -o conftest -I/home/ec2-user/.rvm/rubies/ruby-2.5.3/include/ruby-2.5.0/x86_64-linux -I/home/ec2-user/.rvm/rubies/ruby-2.5.3/include/ruby-2.5.0/ruby/backward -I/home/ec2-user/.rvm/rubies/ruby-2.5.3/include/ruby-2.5.0 -I.  -fopenmp -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16 -I/usr/include/ImageMagick-6    -fopenmp -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16 -I/usr/include/ImageMagick-6   -std=gnu99 conftest.c  -L. -L/home/ec2-user/.rvm/rubies/ruby-2.5.3/lib -Wl,-rpath,/home/ec2-user/.rvm/rubies/ruby-2.5.3/lib  -lMagickCore-6.Q16      -lMagickCore-6.Q16    -Wl,-rpath,'/../lib' -Wl,-rpath,'/../lib' -lruby  -lpthread -ldl -lcrypt -lm   -lc"
-/tmp/ccrrku2h.o: In function `t':
+/tmp/ccFiPAWt.o: In function `t':
 conftest.c:(.text+0x3d): undefined reference to `SetMagickAlignedMemoryMethods'
 collect2: error: ld returned 1 exit status
 checked program was:
@@ -503,7 +503,7 @@ extconf.h is:
 /* end */
 
 ======================================================================
-Tue 21 Dec 21 10:35:35
+Sun 19 Jun 22 11:26:23
 This installation of RMagick 4.2.3 is configured for
 Ruby 2.5.3 (x86_64-linux) and ImageMagick 6.9.10
 ======================================================================

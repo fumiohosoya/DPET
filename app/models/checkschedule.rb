@@ -15,6 +15,11 @@ class Checkschedule < ApplicationRecord
     Checkschedule.create(dayofweek: 18, checkmenu_id: 7, company_id: company_id)
   end
   
+  def self.reset_to_default(company_id)
+    Checkschedule.where(company_id: company_id).delete_all
+    self.make_default(company_id)
+  end
+  
   def self.checkItem(day, company_id)
       wday = day.wday
       if (wday < 6)

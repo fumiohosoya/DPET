@@ -29,6 +29,12 @@ jumbotron {
 }
 
 /*  20201205 Higuchi added */
+
+.bgwhite, .bg-white {
+    background-color: white;
+    color: black;
+}
+
 .bg-red {
     background-color: darkred;
     color: white;

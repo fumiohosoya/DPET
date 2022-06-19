@@ -14,8 +14,8 @@ require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 require "action_cable"
 
-require 'fog/core'
-Fog::Logger[:deprecation] = nil
+#require 'fog/core'
+#Fog::Logger[:deprecation] = nil
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.

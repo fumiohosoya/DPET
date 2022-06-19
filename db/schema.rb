@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_25_124850) do
+ActiveRecord::Schema.define(version: 2022_06_18_040411) do
 
   create_table "branches", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "company_id"
@@ -78,6 +78,39 @@ ActiveRecord::Schema.define(version: 2021_09_25_124850) do
     t.string "branch"
     t.string "email"
     t.string "password_digest"
+  end
+
+  create_table "evaluates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "type"
+    t.bigint "driver_id"
+    t.integer "op_count"
+    t.integer "empty_conv"
+    t.integer "occupied_conv"
+    t.integer "mileage"
+    t.time "handling"
+    t.integer "speedover"
+    t.time "spover_time"
+    t.integer "scramble"
+    t.integer "rapid_accel"
+    t.integer "abrupt_decel"
+    t.time "idling"
+    t.time "running"
+    t.float "evaluate"
+    t.string "rank"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["driver_id"], name: "index_evaluates_on_driver_id"
+  end
+
+  create_table "ext_check_menus", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.date "record_date"
+    t.string "type"
+    t.string "name"
+    t.integer "company_id"
+    t.string "description"
+    t.string "image_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "high_way_costs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -225,6 +258,7 @@ ActiveRecord::Schema.define(version: 2021_09_25_124850) do
   add_foreign_key "checkimages", "checkitems"
   add_foreign_key "checkitems", "drivers"
   add_foreign_key "checkschedules", "checkmenus"
+  add_foreign_key "evaluates", "drivers"
   add_foreign_key "truckrelations", "drivers"
   add_foreign_key "truckrelations", "trucks"
 end

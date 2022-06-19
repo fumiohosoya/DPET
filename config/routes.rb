@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  get 'ext2s/new'
+  get 'ext2s/create'
+  get 'ext2s/edit'
+  get 'ext2s/update'
+  get 'ext2s/destroy'
+  get 'ext1s/new'
+  get 'ext1s/create'
+  get 'ext1s/edit'
+  get 'ext1s/update'
+  get 'ext1s/destroy'
   get 'sessions/new'
   get 'sessions/create'
   get 'sessions/destroy'
@@ -64,6 +74,26 @@ Rails.application.routes.draw do
   resources :oil_tanks
   resources :cabups
   resources :greaseups
+  resources :checkschedules do
+    member do
+      get :make_default
+      get :makeext1
+      get :makeext2
+    end
+    collection do
+       get :newschedule
+    end
+  end
+  
+  resources :ext1s
+  resources :ext2s
+  
+  resources :card_evals do
+    collection do
+      get :check
+      post :checkresult
+    end
+  end
   
   get 'driverlogin',  to: 'driversessions#new'
   post 'driverlogin', to: 'driversessions#create'

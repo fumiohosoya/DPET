@@ -1,5 +1,5 @@
 current directory: /home/ec2-user/environment/DPET/vendor/bundle/ruby/2.5.0/gems/rmagick-4.2.3/ext/RMagick
-/home/ec2-user/.rvm/rubies/ruby-2.5.3/bin/ruby -I /home/ec2-user/.rvm/rubies/ruby-2.5.3/lib/ruby/site_ruby/2.5.0 -r ./siteconf20211221-9637-1sli5ih.rb extconf.rb
+/home/ec2-user/.rvm/rubies/ruby-2.5.3/bin/ruby -I /home/ec2-user/.rvm/rubies/ruby-2.5.3/lib/ruby/site_ruby/2.5.0 -r ./siteconf20220619-21796-1ckmo56.rb extconf.rb
 checking for brew... no
 checking for pacman... no
 checking for Ruby version >= 2.3.0... yes
@@ -21,7 +21,7 @@ checking for malloc.h... yes
 creating extconf.h
 creating Makefile
 ======================================================================
-Tue 21 Dec 21 10:35:35
+Sun 19 Jun 22 11:26:23
 This installation of RMagick 4.2.3 is configured for
 Ruby 2.5.3 (x86_64-linux) and ImageMagick 6.9.10
 ======================================================================
@@ -51,4 +51,4 @@ linking shared-object RMagick2.so
 
 current directory: /home/ec2-user/environment/DPET/vendor/bundle/ruby/2.5.0/gems/rmagick-4.2.3/ext/RMagick
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 RMagick2.so ./.gem.20211221-9637-qjpmm0
+/usr/bin/install -c -m 0755 RMagick2.so ./.gem.20220619-21796-pyeh9h

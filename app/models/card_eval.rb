@@ -1,0 +1,2 @@
+class CardEval < Evaluate
+end

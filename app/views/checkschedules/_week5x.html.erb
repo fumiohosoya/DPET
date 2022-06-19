@@ -1,0 +1,14 @@
+    <style>
+        .pad6 {
+            vertical-align: middle !important;
+        }
+    </style>
+    <tr>
+        <td class="day1m text-center pad6"><%= @day1.name %></td>
+        <td class="day2m text-center pad6"><%= @day2.name %></td>
+        <td class="day3m text-center pad6"><%= @day3.name %></td>
+        <td class="day4m text-center pad6"><%= @day4.name %></td>
+        <td class="day5m text-center pad6"><%= @day5.name %></td>
+        <td class="alert-primary"><%= select_tag :day18, options_for_select(@todo, @day18.id), class:'form-control alert-primary' %></td>
+        <td class="alert-danger">&nbsp;</td>
+    </tr>

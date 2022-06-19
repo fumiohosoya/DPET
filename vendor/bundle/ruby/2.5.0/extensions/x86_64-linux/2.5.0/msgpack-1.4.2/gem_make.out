@@ -1,5 +1,5 @@
 current directory: /home/ec2-user/environment/DPET/vendor/bundle/ruby/2.5.0/gems/msgpack-1.4.2/ext/msgpack
-/home/ec2-user/.rvm/rubies/ruby-2.5.3/bin/ruby -I /home/ec2-user/.rvm/rubies/ruby-2.5.3/lib/ruby/site_ruby/2.5.0 -r ./siteconf20211221-9637-150w0qr.rb extconf.rb
+/home/ec2-user/.rvm/rubies/ruby-2.5.3/bin/ruby -I /home/ec2-user/.rvm/rubies/ruby-2.5.3/lib/ruby/site_ruby/2.5.0 -r ./siteconf20220619-21796-jwe07x.rb extconf.rb
 checking for ruby/st.h... yes
 checking for st.h... yes
 checking for rb_str_replace() in ruby.h... yes
@@ -70,4 +70,4 @@ linking shared-object msgpack/msgpack.so
 
 current directory: /home/ec2-user/environment/DPET/vendor/bundle/ruby/2.5.0/gems/msgpack-1.4.2/ext/msgpack
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 msgpack.so ./.gem.20211221-9637-ylx5w8/msgpack
+/usr/bin/install -c -m 0755 msgpack.so ./.gem.20220619-21796-yh3b8o/msgpack

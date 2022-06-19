@@ -1,0 +1,2 @@
+class ExtCheckMenu < ApplicationRecord
+end

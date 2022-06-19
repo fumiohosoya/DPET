@@ -1,0 +1,24 @@
+<style>
+    .weekhead {
+        padding: 0.5rem !important;
+    }
+</style>
+
+<div class="col-12 bg-white" style="line-height:0.8rem;">
+    <h3 class="bg-white text-dark"> Check Schedule Maker</h3>
+
+<%= form_with(model: @ext2, method: :post, local: true) do |f| %>
+    <%= hidden_field_tag :company_id, @company_id %>
+    
+    <%= f.label :name, "Option Menu Title" %>
+    <%= f.text_field :name, class:'form-control' %>
+    <%= f.label :image, "Guidance Image file" %>
+    <%= f.file_field :image, class:'form-control' %>
+
+    <%= f.submit "Regist", class:'btn btn-info btn-block offset-6 w-50' %>
+
+
+<% end %>
+</div>
+
+

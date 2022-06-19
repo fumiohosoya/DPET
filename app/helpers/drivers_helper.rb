@@ -52,7 +52,7 @@ end
 
   def find_company(id)
     @allcompaniesarray = allcompanies if (@allcompaniesarray == nil)
-    return Company.new( @allcompaniesarray.find{|e| e["id"] == id} )
+    return Company.new( @allcompaniesarray.find{|e| e["id"] == id.to_i} )
   end
   
   def getallbranch_array(c_id)
