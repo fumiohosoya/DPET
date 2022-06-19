@@ -5,11 +5,11 @@ class Driver < ApplicationRecord
   validates :name, presence: true, length: { maximum: 50 }
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
-                    uniqueness: { case_sensitive: false }
+                    uniqueness: { case_sensitive: false }, on: :update
   validates :company, presence: true
   validates :branch, presence: true
-  validates :blood_type, presence: true
-  validates :age, presence: true
+  validates :blood_type, presence: true, on: :update
+  validates :age, presence: true, on: :update
   has_secure_password    
     
     has_many :truckrelations
