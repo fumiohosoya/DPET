@@ -1,7 +1,7 @@
 class Branch < ApplicationRecord
     
-    validate :name,    presence: true
-    validate :company_id, presence: true
+    validates :name,    presence: true
+    validates :company_id, presence: true
    
     
     

@@ -1,5 +1,5 @@
 class Evaluate < ApplicationRecord
   belongs_to :driver
   
-  validate :recordmonth, presence: true
+  validates :recordmonth, presence: true
 end

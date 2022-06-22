@@ -11,7 +11,7 @@ class CardEvalsController < ApplicationController
          upload_file = params[:card_eval][:file_name]
          send_params = card_eval_params
          year = send_params["yearmonth(1i)"]
-         month = send_params["yearmonth(1i)"]
+         month = send_params["yearmonth(2i)"]
          company_id = send_params[:company_id]
          branch_id = send_params[:branch_id]
          logger.debug(send_params.inspect)
@@ -58,17 +58,25 @@ class CardEvalsController < ApplicationController
         idling = record[11]
         running = record[12]
         evaluate = record[13]
-        rank = record[14]
-        recordmonth = Date.new(year, month).end_of_month
-        eval = CardEval.new(driver_id: drv.id,
-            op_count: op_count, empty_conv: empty_conv, occupied_conv: occupied_conv,
-            mileage: mileage, handling: handling, speedover: speedover, spover_time: spover_time,
-            scramble: scramble, rapid_accel: rapid_accel, abrupt_decel: abrupt_decel,
-            idling: idling, running: running, evaluate: evaluate, rank: rank,
-            recordmonth: recordmonth
-        )
-        eval.save
-        
+        rank = record[14].tr('Ａ-Ｚ', 'A-Z')
+        recordmonth = Date.new(year.to_i, month.to_i).end_of_month
+        if ((eval = CardEval.find_by(driver_id: drv.id, recordmonth: recordmonth)) != nil)
+           eval.update(
+                op_count: op_count, empty_conv: empty_conv, occupied_conv: occupied_conv,
+                mileage: mileage, handling: handling, speedover: speedover, spover_time: spover_time,
+                scramble: scramble, rapid_accel: rapid_accel, abrupt_decel: abrupt_decel,
+                idling: idling, running: running, evaluate: evaluate, rank: rank,
+           )
+        else
+            eval = CardEval.new(driver_id: drv.id,
+                op_count: op_count, empty_conv: empty_conv, occupied_conv: occupied_conv,
+                mileage: mileage, handling: handling, speedover: speedover, spover_time: spover_time,
+                scramble: scramble, rapid_accel: rapid_accel, abrupt_decel: abrupt_decel,
+                idling: idling, running: running, evaluate: evaluate, rank: rank,
+                recordmonth: recordmonth
+            )
+            eval.save
+        end
     end
     
     def card_eval_params
