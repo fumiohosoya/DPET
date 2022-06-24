@@ -16,4 +16,14 @@ class ApplicationController < ActionController::Base
       redirect_to driverlogin_url
     end
   end
+  
+  
+  def timerecord_2_datetime(rec_str)
+    if (rec_str.present?)
+       (h, m) = rec_str.scan(/([0-9]+):([0-9]+)/)[0].map {|e| e.to_i} 
+       return Time.at((h * 3600) + (m * 60)).utc
+    else
+      return nil
+    end
+  end
 end 

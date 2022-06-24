@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_19_131707) do
+ActiveRecord::Schema.define(version: 2022_06_24_092617) do
 
   create_table "branches", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "company_id"
@@ -87,14 +87,14 @@ ActiveRecord::Schema.define(version: 2022_06_19_131707) do
     t.integer "empty_conv"
     t.integer "occupied_conv"
     t.integer "mileage"
-    t.time "handling"
+    t.datetime "handling"
     t.integer "speedover"
-    t.time "spover_time"
+    t.datetime "spover_time"
     t.integer "scramble"
     t.integer "rapid_accel"
     t.integer "abrupt_decel"
-    t.time "idling"
-    t.time "running"
+    t.datetime "idling"
+    t.datetime "running"
     t.float "evaluate"
     t.string "rank"
     t.datetime "created_at", null: false

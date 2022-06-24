@@ -10,17 +10,14 @@ class CardEvalsController < ApplicationController
     def checkresult
          upload_file = params[:card_eval][:file_name]
          send_params = card_eval_params
-         year = send_params["yearmonth(1i)"]
-         month = send_params["yearmonth(2i)"]
-         company_id = send_params[:company_id]
-         branch_id = send_params[:branch_id]
+         @year = send_params["yearmonth(1i)"]
+         @month = send_params["yearmonth(2i)"]
+         @company_id = send_params[:company_id]
+         @branch_id = send_params[:branch_id]
          logger.debug(send_params.inspect)
          tmpdata = []
+         @result = []
          if upload_file.present?
-             
-#               File.open(upload_file.tempfile.path, "r:bom|cp932") do |f|
-#                 @data = SmarterCSV.process(f, {file_encoding: 'cp932'});
-#               end
             first = true
             CSV.foreach(upload_file.tempfile.path, encoding: "CP932:UTF-8") do |row|
                 if first
@@ -28,11 +25,14 @@ class CardEvalsController < ApplicationController
                 end
                 tmpdata << row
             end
+            
+           @data = tmpdata.slice(0, tmpdata.count - 3)
+           @data.each do |e|
+             tmprecord = find_or_create_driver_evaluate(e, @company_id, @branch_id, @year, @month)
+             @result << tmprecord
+           end
          end
-         @data = tmpdata.slice(0, tmpdata.count - 3)
-         @data.each do |e|
-             find_or_create_driver_evaluate(e, company_id, branch_id, year, month)
-         end
+
     end
     
     private
@@ -49,14 +49,14 @@ class CardEvalsController < ApplicationController
         empty_conv = record[2]
         occupied_conv = record[3]
         mileage = record[4]
-        handling = record[5]
+        handling = timerecord_2_datetime(record[5])
         speedover = record[6]
-        spover_time = record[7]
+        spover_time = timerecord_2_datetime(record[7])
         scramble = record[8]
         rapid_accel = record[9]
         abrupt_decel = record[10]
-        idling = record[11]
-        running = record[12]
+        idling = timerecord_2_datetime(record[11])
+        running = timerecord_2_datetime(record[11])
         evaluate = record[13]
         rank = record[14].tr('Ａ-Ｚ', 'A-Z')
         recordmonth = Date.new(year.to_i, month.to_i).end_of_month
@@ -67,6 +67,7 @@ class CardEvalsController < ApplicationController
                 scramble: scramble, rapid_accel: rapid_accel, abrupt_decel: abrupt_decel,
                 idling: idling, running: running, evaluate: evaluate, rank: rank,
            )
+           return eval
         else
             eval = CardEval.new(driver_id: drv.id,
                 op_count: op_count, empty_conv: empty_conv, occupied_conv: occupied_conv,
@@ -76,6 +77,7 @@ class CardEvalsController < ApplicationController
                 recordmonth: recordmonth
             )
             eval.save
+            return eval
         end
     end
     

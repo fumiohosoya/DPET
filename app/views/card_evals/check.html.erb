@@ -2,7 +2,7 @@
 <h2><%=  find_company(@company_id).name_e %></h2> 
 <div class="bgwhite row mt-4">
    <div class="col-12">
-    <%= form_with(scope: :card_eval, url: :checkresult_card_evals, local:true, multipart: true) do |f| %>
+    <%= form_with(scope: :card_eval, url: checkresult_card_evals_path(company_id: @company_id), local:true, multipart: true) do |f| %>
     
       <%= f.hidden_field :company_id, value: @company_id %>
       <div class="row mt-4">
