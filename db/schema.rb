@@ -87,19 +87,19 @@ ActiveRecord::Schema.define(version: 2022_06_24_092617) do
     t.integer "empty_conv"
     t.integer "occupied_conv"
     t.integer "mileage"
-    t.datetime "handling"
     t.integer "speedover"
-    t.datetime "spover_time"
     t.integer "scramble"
     t.integer "rapid_accel"
     t.integer "abrupt_decel"
-    t.datetime "idling"
-    t.datetime "running"
     t.float "evaluate"
     t.string "rank"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "recordmonth"
+    t.datetime "handling"
+    t.datetime "spover_time"
+    t.datetime "idling"
+    t.datetime "running"
     t.index ["driver_id"], name: "index_evaluates_on_driver_id"
   end
 
