@@ -7,16 +7,17 @@ class CreateEvaluates < ActiveRecord::Migration[5.2]
       t.integer :empty_conv
       t.integer :occupied_conv
       t.integer :mileage
-      t.time :handling
+      t.datetime :handling
       t.integer :speedover
-      t.time :spover_time
+      t.datetime :spover_time
       t.integer :scramble
       t.integer :rapid_accel
       t.integer :abrupt_decel
-      t.time :idling
-      t.time :running
+      t.datetime :idling
+      t.datetime :running
       t.float :evaluate
       t.string :rank
+      t.date :recordmonth
 
       t.timestamps
     end
