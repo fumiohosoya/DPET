@@ -19,7 +19,20 @@ class CardEvalsController < ApplicationController
          @result = []
          if upload_file.present?
             first = true
-            CSV.foreach(upload_file.tempfile.path, encoding: "CP932:UTF-8") do |row|
+            detection = CharlockHolmes::EncodingDetector.detect(File.read(upload_file.tempfile.path))
+
+            # CharlockHolmes::EncodingDetectorのディテクション結果は、
+            # CP932であるShift JIS拡張文字コードを含む場合にもShift_JISと見なされてしまう為、CP932を優先して利用する。
+            # もしそのままShift JISを指定すれば、CSV.foreach()で変換エラーが出る原因となる。
+            # アップサイドは拡張文字コードを変換できることで、ダウンサイドは7種類の記号文字の見た目が完全に一致しないこと。
+
+            encoding = detection[:encoding] == 'Shift_JIS' ? 'CP932' : detection[:encoding]
+            encoding = 'CP874' if encoding == 'ISO-8859-6'
+            encoding = 'CP874' if encoding == 'ISO-8859-11'
+            # タイ語版 Windows向けと推測されるのExcelデータの場合は強制的に CP874に変更
+            #  本来 ISO-8859-6はアラビア語文字エンコーディング ISO-8859-11がタイ語文字エンコーディング
+            CSV.foreach(upload_file.tempfile.path,
+                        encoding: "#{encoding}:UTF-8",  headers: true) do |row|
                 if first
                     first = false; next; 
                 end
@@ -33,6 +46,11 @@ class CardEvalsController < ApplicationController
            end
          end
 
+    end
+    
+    def listresults
+        @company_id = params[:company_id]
+        @drivers = Driver.where(company: @company_id)
     end
     
     private

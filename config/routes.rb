@@ -89,6 +89,7 @@ Rails.application.routes.draw do
   resources :ext2s
   
   resources :card_evals do
+    get :checkresult, to: "card_evals#listresults", on: :collection
     collection do
       get :check
       post :checkresult

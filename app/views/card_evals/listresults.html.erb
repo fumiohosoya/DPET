@@ -1,0 +1,16 @@
+<h2><%=  find_company(@company_id).name_e %></h2> 
+<div class="bgwhite row mt-4">
+    
+    <% if @drivers.any? %>
+
+        <div class="row">
+            <% @drivers.each do |driver| %>
+            <div class="col-md-4">
+                <%= driver.name %>
+            </div>
+            <% end %>
+        </div>
+
+    <% end %>
+    
+</div>

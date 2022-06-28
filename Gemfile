@@ -63,6 +63,7 @@ gem 'rmagick'
 
 #gem 'smarter_csv'
 gem 'csv'
+gem 'charlock_holmes'  # caution with heroku buildpack
 
 #gem 'ovirt-engine-sdk', '~> 4.4.1'
 #gem 'fog'
