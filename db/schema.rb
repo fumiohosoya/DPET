@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_18_040411) do
+ActiveRecord::Schema.define(version: 2022_07_23_084412) do
 
   create_table "branches", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "company_id"
@@ -158,6 +158,17 @@ ActiveRecord::Schema.define(version: 2022_06_18_040411) do
     t.integer "vehicle_id"
     t.date "date"
     t.integer "total_amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "rankings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "company"
+    t.integer "A"
+    t.integer "B"
+    t.integer "C"
+    t.integer "D"
+    t.integer "E"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,0 +1,84 @@
+<div class="col-12 bg-white">
+    <div class="row mb-3">
+        <div class="col-6">
+            <div class="card col-12">
+              <div class="card-body">
+                <h3 class="card-title">Driver Evaluation</h3>
+                <h4 class="card-subtitle mb-2 text-muted">Name: <%= @driver.name %></h4>
+                <p class="card-text"><%= @company.name_e %></p>
+                <!--<a href="#" class="card-link">Card link</a>-->
+                <!--<a href="#" class="card-link">Another link</a>-->
+              </div>
+            </div>
+            
+        </div>
+        <div class="col-6">
+            <div class="row">
+                <div class="card col-6">
+                  <div class="card-body">
+                    <h3 class="card-title"><%= @now.year %>y Eval avg</h3>
+                    <h4 class="card-subtitle mb-2 text-muted"><%= @average %> Pts</h4>
+                    <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+                    <!--<a href="#" class="card-link">Card link</a>-->
+                    <!--<a href="#" class="card-link">Another link</a>-->
+                  </div>
+                </div>
+               <div class="card col-6">
+                  <div class="card-body">
+                    <h3 class="card-title">Ranking</h3>
+                    <h1 class="card-subtitle mb-2 text-muted bgwhite"><%= @ranking %> </h1>
+                    <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+                    <!--<a href="#" class="card-link">Card link</a>-->
+                    <!--<a href="#" class="card-link">Another link</a>-->
+                  </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+    <div class="row mx-2 my-3">
+        <% if @year_array.any? %>
+        <% @year_array.each do |y| %>
+            <div class="col-md-4">
+                <% colorcls = (y == @now.year.to_i) ? 'btn-danger': 'btn-secondary' %>
+                <%= link_to y.to_s, evaluates_driver_path(id: @driver, year: y), class:"btn btn-xs #{colorcls}" %>
+            </div>
+        <% end %>
+        <% end %>
+    </div>    
+    
+    
+  <% if @evaluates.any? %>
+      <table class="table table-striped table-bordered">
+          <tr>
+              <th>Ope Count</th> <th>Empty</th> <th>Occupied </th>
+              <th>mileage</th> <th>Handling</th> <th>SpeedOver</th>
+              <th>SpOverTime</th> <th>Scramble</th> <th>RapidAccel</th>
+              <th>AbruptDecel</th> <th>Idling</th> <th>Running</th>
+              <th>Evaluate</th> <th>RecoredAt</th>
+          </tr>
+           <% @evaluates.each do |eval| %> 
+               <tr>
+                   <td><%= eval.op_count %></td>
+                   <td><%= eval.empty_conv %></td>
+                   <td><%= eval.occupied_conv %></td>
+                   <td><%= eval.mileage %></td>
+                   <td><%= timecount_hm(eval.handling) %></td>
+                   <td><%= eval.speedover %></td>
+                   <td><%= timecount_hm(eval.speedover) %></td>
+                   <td><%= eval.scramble %></td>
+                   <td><%= eval.rapid_accel %></td>
+                   <td><%= eval.abrupt_decel %></td>
+                   <td><%= timecount_hm(eval.idling) %></td>
+                   <td><%= timecount_hm(eval.running) %></td>
+                   <td><%= eval.evaluate %></td>
+                   <td><%= eval.updated_at.strftime("%Y/%m") %></td>
+               </tr>
+           <% end %>
+       </table>
+    
+  <% else %>
+      <h1>No Evalutes record</h1>
+  <% end %>
+    
+    
+</div>

@@ -1,25 +1,18 @@
 <h2><%=  find_company(@company_id).name_e %></h2> 
 <div class="bgwhite row mt-4">
     
+
+    
+    
     <% if @result.any? %>
     
         <table class="table table-striped table-bordered bgwhite">
             <tr>
-               <th>Name</th> 
-               <th>Operation</th>
-               <th>Empty </th>
-               <th>Occupied </th>
-               <th>Mileage </th>
-               <th>Handling </th>
-               <th>SpeedOver </th>
-               <th>SpOver Time</th>
-               <th>Scramble</th>
-               <th>Rapid Accel</th>
-               <th>Abrupt Decel</th>
-               <th>Idling</th>
-               <th>Running</th>
-               <th>Evaluate</th>
-               <th>Rank</th>
+               <th>Name</th>  <th>Operation</th> <th>Empty </th>
+               <th>Occupied </th> <th>Mileage </th> <th>Handling </th>
+               <th>SpeedOver </th> <th>SpOver Time</th> <th>Scramble</th>
+               <th>Rapid Accel</th> <th>Abrupt Decel</th> <th>Idling</th>
+               <th>Running</th> <th>Evaluate</th> <th>Rank</th>
             </tr>
             <% @result.each do |e| %>
                 <tr>
@@ -38,7 +31,6 @@
                     <td><%= timecount_hm(e.running) %></td>
                     <td><%= e.evaluate %></td>
                     <td><%= e.rank %></td>
-                    
                 </tr>
             <% end %>
             

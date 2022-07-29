@@ -25,6 +25,7 @@ class Driver < ApplicationRecord
     has_many :oil_tanks
     has_many :cabups
     has_many :greaseups
+    has_many :evaluates
     
     def addtruck(truck)
         self.truckrelations.find_or_create_by(truck_id: truck.id)

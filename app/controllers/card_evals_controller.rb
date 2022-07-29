@@ -50,7 +50,8 @@ class CardEvalsController < ApplicationController
     
     def listresults
         @company_id = params[:company_id]
-        @drivers = Driver.where(company: @company_id)
+        @drivers = Driver.where(company: @company_id).order(:branch, :name)
+        @branches = @drivers.pluck(:branch).uniq!.delete_if{|x| x == nil}
     end
     
     private
@@ -63,16 +64,13 @@ class CardEvalsController < ApplicationController
             drv.email = "xxx@example.com"
             drv.save!
         end
-        op_count = record[1]
-        empty_conv = record[2]
-        occupied_conv = record[3]
-        mileage = record[4]
+        # op_count = record[1] empty_conv = record[2] occupied_conv = record[3] mileage = record[4]
+        (op_count, empty_conv, occupied_conv, mileage) = record[1..4]
         handling = timerecord_2_datetime(record[5])
         speedover = record[6]
         spover_time = timerecord_2_datetime(record[7])
-        scramble = record[8]
-        rapid_accel = record[9]
-        abrupt_decel = record[10]
+        # scramble = record[8] rapid_accel = record[9] abrupt_decel = record[10]
+        (scramble, rapid_accel, abrupt_decel) = record[8..10]
         idling = timerecord_2_datetime(record[11])
         running = timerecord_2_datetime(record[11])
         evaluate = record[13]
@@ -98,6 +96,8 @@ class CardEvalsController < ApplicationController
             return eval
         end
     end
+    
+  private
     
     def card_eval_params
         params.require(:card_eval).permit("yearmonth(1i)", "yearmonth(2i)", "yearmonth(3i)", :month, :file_name, :company_id, :branch_id)

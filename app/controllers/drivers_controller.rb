@@ -136,6 +136,64 @@ class DriversController < ApplicationController
   @todos = @todos.uniq
  end
  
+ def get_year_eval(driver, year)
+  t = Time.gm(year)
+  startdate = t.beginning_of_year
+  enddate = t.end_of_year
+  evaluates = driver.evaluates.where(recordmonth: startdate..enddate).order(:updated_at)
+  average = driver.evaluates.where(recordmonth: startdate..enddate).average(:evaluate).ceil(3)
+  return [evaluates, average]
+ end
+ 
+ def conv_dvalue_to_ranking(value)
+   if (Ranking.find_by(company: @company.id) == nil)
+     rankdata= Ranking.find_by(company: 0)
+   end
+   e = rankdata; rhash = {A: e.A, B: e.B, C: e.C, D: e.D, E: e.E}
+   rankseed = "F"
+   rhash.each {|key, val| 
+      if (value >= val)
+        rankseed = key
+        break
+       end
+   }
+   ranking = rankseed.to_s
+ end
+ 
+ # should be placed in model?????
+ def checkevals(driver, year)
+  t = Time.gm(year)
+  startdate = t.beginning_of_year
+  enddate = t.end_of_year
+  months = driver.checkiiems.where(created_at: startdate..enddate).pluck(:created_at).map { |e| e.beginning_of_month }.uniq.sort
+  ev_array = []
+  months.each do |m|
+   end_m = m.end_of_month
+   count = driver.checkitems.where(created_at: m..end_m).count
+   ev_array << count.to_f / 46.to_f
+  end
+  ev = 0.0
+  if (ev_array.any?)
+   ev = ev_array.sum(0.0) / ev_array.length
+  end
+  return ev
+ end
+ 
+ def evaluates
+   @driver = Driver.find(params[:id])
+   @company = find_company(@driver.company)
+   
+   #@now = Time.now
+   @now = params[:year] ? Time.gm(params[:year].to_i) : Time.now
+   
+   (@evaluates, @average) = get_year_eval(@driver, @now.year.to_i)
+   @ranking = conv_dvalue_to_ranking(@average)
+   
+   @year_array = @driver.evaluates.pluck(:recordmonth).map{|r| r.year}.uniq.sort
+   # @year_array.delete(now.year)
+   
+ end
+ 
  
  def update_branch_menus
   
