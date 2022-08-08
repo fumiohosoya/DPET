@@ -36,10 +36,12 @@ class CardEvalsController < ApplicationController
                 if first
                     first = false; next; 
                 end
+                break if row[0] == "รวม" || row[0] == "合計値"
+                    
                 tmpdata << row
             end
             
-           @data = tmpdata.slice(0, tmpdata.count - 3)
+           @data = tmpdata
            @data.each do |e|
              tmprecord = find_or_create_driver_evaluate(e, @company_id, @branch_id, @year, @month)
              @result << tmprecord
