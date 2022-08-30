@@ -99,3 +99,20 @@ form#lampStopperTire > div:nth-child(8) > label {
     margin-bottom: 0;
 }
 
+.dphoto {
+    height: 8.0rem;
+}
+
+.monthlyeval td {
+    padding: 0.25rem;
+}
+
+.yellowbg {
+    text: black;
+    background-color: yellow;
+}
+
+.greenbg {
+    text: black !important;
+    background-color: lightgreen !important;
+}

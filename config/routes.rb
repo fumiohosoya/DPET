@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'dailyresults/create'
   get 'ext2s/new'
   get 'ext2s/create'
   get 'ext2s/edit'
@@ -37,6 +38,7 @@ Rails.application.routes.draw do
     end
     member do
       get :evaluates
+      get :yearlyevaluates
     end
   end
   
@@ -50,6 +52,7 @@ Rails.application.routes.draw do
   resources :others
   resources :other_cost
   resources :special_cost
+  
   
   
   get  'admin/:number/listdrivers', to: "admin#listdrivers", as: :listdrivers
@@ -100,6 +103,7 @@ Rails.application.routes.draw do
     end
   end
   
+  
   get 'driverlogin',  to: 'driversessions#new'
   post 'driverlogin', to: 'driversessions#create'
 
@@ -109,4 +113,10 @@ Rails.application.routes.draw do
   get  'newadmin', to: "admin#newadmin"
   post 'createadmin', to: "admin#createadmin"
   get  'admin_setuser', to: "admin#setuser"
+  
+  get 'readevals', to: "readevals#index", as: :readevals
+    
+
+  resources :dailyresults, only:[:create]
+  resources :mileageproofs, only:[:create]
 end

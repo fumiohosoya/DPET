@@ -1,0 +1,2 @@
+class Mileageproof < Checkitem
+end

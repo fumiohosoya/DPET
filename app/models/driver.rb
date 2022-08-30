@@ -26,6 +26,7 @@ class Driver < ApplicationRecord
     has_many :cabups
     has_many :greaseups
     has_many :evaluates
+    has_many :mileageproofs
     
     def addtruck(truck)
         self.truckrelations.find_or_create_by(truck_id: truck.id)
@@ -92,5 +93,39 @@ class Driver < ApplicationRecord
         if (self.cabups.any?)
           (Time.now - self.cabups.last.created_at ) < (86400 * day) #  24 * 60 * 60
         end
+     end
+     
+     def get_checkitempoint(datestr)
+         d = Date.parse(datestr)
+         year = d.year
+         month = d.month
+         c = self.pick_checkitem_period(year, month).count
+         return c / 100.0
+     end
+     
+     def pick_checkitem_period(year, month)
+         firstdate = Date.new(year, month)
+         lastdate = firstdate.end_of_month
+         self.checkitems.where(created_at: firstdate..lastdate) 
+     end
+     
+     def get_fuelcomsaption(datestr)
+         d = Date.parse(datestr)
+         year = d.year
+         month = d.month
+         firstdate = Date.new(d.year, d.month)
+         lastdate = firstdate.end_of_month
+         rec = self.dailyresults.where(created_at: firstdate..lastdate)
+         max = rec.maximum(:mileage)
+         min = rec.minimum(:mileage)
+         diff = max - min
+         fuel = rec.sum(:fuel)
+         if (diff != 0.0 && fuel != 0.0)
+             efficient = diff / fuel.to_f 
+             return [efficient, diff]
+         else
+             return [0.0, 0.0]
+         end
+             
      end
 end

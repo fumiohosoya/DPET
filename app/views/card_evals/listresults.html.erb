@@ -9,7 +9,8 @@
                 <% @drivers.each do |driver| %>
                     <% if !driver.evaluates.empty? %>
                         <div class="col-md-4 text-center mb-2">
-                            <%= link_to driver.name, evaluates_driver_path(driver.id), class:"btn btn-xs btn-primary w-75" %>
+                            <%#= link_to driver.name, evaluates_driver_path(driver.id), class:"btn btn-xs btn-primary w-75" %>
+                            <%= link_to driver.name, yearlyevaluates_driver_path(driver.id), class:"btn btn-xs btn-primary w-75" %>
                         </div>
                     <% else %>
                         <div class="col-md-4 text-center mb-2">

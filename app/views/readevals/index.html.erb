@@ -1,0 +1,17 @@
+<div class="bg-white">
+<% if @allcompanies.any? %>
+    <table class="offset-1 col-10 table table-striped table-bordered">
+    <% @allcompanies.each do |company| %>
+     <tr>
+         <td class="w-75">
+             <% @company = Company.new(company) %>
+             <%= link_to @company.name_e, checkresult_card_evals_path(company_id: @company.id), class:'btn btn-warning w-100' %>
+         </td>
+
+     </tr>
+    <% end %>
+    </table>
+<% else %>
+    <h1>Coundn't get companies list</h1>
+<% end %>
+</div>

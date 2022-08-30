@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_23_084412) do
+ActiveRecord::Schema.define(version: 2022_08_27_025550) do
 
   create_table "branches", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "company_id"
@@ -60,6 +60,17 @@ ActiveRecord::Schema.define(version: 2022_07_23_084412) do
     t.boolean "opt_tirerotation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "dailyresults", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "driver_id"
+    t.integer "truck_id"
+    t.float "mileage"
+    t.float "fuel"
+    t.date "recorddate"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["driver_id"], name: "index_dailyresults_on_driver_id"
   end
 
   create_table "drivers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -270,6 +281,7 @@ ActiveRecord::Schema.define(version: 2022_07_23_084412) do
   add_foreign_key "checkimages", "checkitems"
   add_foreign_key "checkitems", "drivers"
   add_foreign_key "checkschedules", "checkmenus"
+  add_foreign_key "dailyresults", "drivers"
   add_foreign_key "evaluates", "drivers"
   add_foreign_key "truckrelations", "drivers"
   add_foreign_key "truckrelations", "trucks"

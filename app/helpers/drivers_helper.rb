@@ -31,13 +31,27 @@ end
 
 
 def alltrucks(branchid)
-  if (@allcompaniesresult == nil)
+#  if (@alltrucks == nil)
     url = "http://logiccs.herokuapp.com/trucks/#{branchid}/all.json"
     uri = URI.parse(url)
     json = Net::HTTP.get(uri)
-    @allcompaniesresult = JSON.parse(json)
-  else
-    @allcompaniesresult
+    @alltrucks = JSON.parse(json)
+#  else
+#    @alltrucks
+#  end
+end
+
+def alltruckmodels(branchid)
+  trucks = []
+  alltrucks = alltrucks(branchid)
+  alltrucks.each do |t|
+    t.delete("dealercompany_id")
+    image_url = t["image"]["url"]
+    thumb_url = t["image"]["thumb"]["url"]
+    t.delete("image")
+    trucks << Truck.new(t)
+    trucks.last.image_url = image_url
+    trucks.last.thumb_url = thumb_url
   end
 end
 

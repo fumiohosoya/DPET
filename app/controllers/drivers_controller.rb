@@ -4,6 +4,32 @@ class DriversController < ApplicationController
  
  include DriversHelper
  
+ def maketruck_model(tinfo)
+    truck = Truck.new()
+    truck.id = tinfo["id"]
+    truck.company_id = tinfo["company_id"]
+    truck.branch_id  = tinfo["branch_id"]
+    truck.maker = tinfo["maker"]
+    truck.model = tinfo["model"]
+    truck.body = tinfo["body"]
+    truck.wheels = tinfo["wheels"]
+    truck.year = tinfo["year"]
+    truck.age = tinfo["age"]
+    truck.engine = tinfo["engine"]
+    truck.vehicleid = tinfo["vehicleid"]
+    truck.number = tinfo["number"]
+    truck.e_oil = tinfo["e_oil"]
+    truck.tm_oil = tinfo["tm_oil"]
+    truck.tire = tinfo["tire"]
+    truck.df_oil = tinfo["df_oil"]
+    truck.initmileage = tinfo["initmileage"]
+    truck.purchase = tinfo["purpurchase"]
+    truck.image_url = tinfo["image"]["url"]
+    truck.thumb_url = tinfo["image"]["thumb"]["url"]
+    truck.created_at = tinfo["created_at"]
+    return truck
+ end
+ 
  def index
      #render plain: 'ここがドライバー入力画面です'
      
@@ -29,27 +55,7 @@ class DriversController < ApplicationController
 
   if (@truck.new_record?)
     tinfo = gettruck(number)
-
-    @truck.company_id = tinfo["company_id"]
-    @truck.branch_id  = tinfo["branch_id"]
-    @truck.maker = tinfo["maker"]
-    @truck.model = tinfo["model"]
-    @truck.body = tinfo["body"]
-    @truck.wheels = tinfo["wheels"]
-    @truck.year = tinfo["year"]
-    @truck.age = tinfo["age"]
-    @truck.engine = tinfo["engine"]
-    @truck.vehicleid = tinfo["vehicleid"]
-    @truck.number = tinfo["number"]
-    @truck.e_oil = tinfo["e_oil"]
-    @truck.tm_oil = tinfo["tm_oil"]
-    @truck.tire = tinfo["tire"]
-    @truck.df_oil = tinfo["df_oil"]
-    @truck.initmileage = tinfo["initmileage"]
-    @truck.purchase = tinfo["purpurchase"]
-    @truck.image_url = tinfo["image_url"]
-    @truck.thumb_url = tinfo["thumb_url"]
-    @truck.created_at = tinfo["created_at"]
+    @truck = maketruck_model(tinfo)
   end
   if (@driver.save)
      @truck.save
@@ -131,9 +137,18 @@ class DriversController < ApplicationController
     end
    end
   
-  @todos = Checkschedule.checkItem(today, @driver.company)
-  @todos += remain_menu
-  @todos = @todos.uniq
+    @todos = Checkschedule.checkItem(today, @driver.company)
+    @todos += remain_menu
+    @todos = @todos.uniq
+    
+    @trucks = @driver.trucks
+    if (@trucks.empty?)
+     @trucks = []
+     @thash = alltrucks(@driver.branch)
+     @thash.each do |t|
+      @trucks << maketruck_model(t)
+     end
+    end
  end
  
  def get_year_eval(driver, year)
@@ -161,23 +176,25 @@ class DriversController < ApplicationController
  end
  
  # should be placed in model?????
- def checkevals(driver, year)
-  t = Time.gm(year)
-  startdate = t.beginning_of_year
-  enddate = t.end_of_year
-  months = driver.checkiiems.where(created_at: startdate..enddate).pluck(:created_at).map { |e| e.beginning_of_month }.uniq.sort
-  ev_array = []
-  months.each do |m|
-   end_m = m.end_of_month
-   count = driver.checkitems.where(created_at: m..end_m).count
-   ev_array << count.to_f / 46.to_f
-  end
-  ev = 0.0
-  if (ev_array.any?)
-   ev = ev_array.sum(0.0) / ev_array.length
-  end
-  return ev
+ def checkevals(driver, year, month)
+    t = Time.gm(year, month)
+    startdate = t.beginning_of_month
+    enddate = t.end_of_month
+    months = driver.checkiiems.where(created_at: startdate..enddate).pluck(:created_at).map { |e| e.beginning_of_month }.uniq.sort
+    ev_array = []
+    months.each do |m|
+     end_m = m.end_of_month
+     count = driver.checkitems.where(created_at: m..end_m).count
+     ev_array << count.to_f / 100.to_f
+    end
+    ev = 0.0
+    if (ev_array.any?)
+     ev = ev_array.sum(0.0) / ev_array.length
+    end
+    return ev
  end
+ 
+ 
  
  def evaluates
    @driver = Driver.find(params[:id])
@@ -190,6 +207,29 @@ class DriversController < ApplicationController
    @ranking = conv_dvalue_to_ranking(@average)
    
    @year_array = @driver.evaluates.pluck(:recordmonth).map{|r| r.year}.uniq.sort
+   # @year_array.delete(now.year)
+   
+ end
+ 
+  def yearlyevaluates
+   @driver = Driver.find(params[:id])
+   @company = find_company(@driver.company)
+   
+   #@now = Time.now
+   @year = params[:year] || Time.now.localtime.year.to_s
+   @now = params[:year] ? Time.gm(params[:year].to_i) : Time.now
+   
+   (@evaluates, @average) = get_year_eval(@driver, @now.year.to_i)
+   @ranking = conv_dvalue_to_ranking(@average)
+   
+   
+   
+   @year_hash = {}
+   year_array = @driver.evaluates.pluck(:recordmonth).map{|r| r.year}.uniq.sort
+   @evaluates.each do |e|
+     key = e.updated_at.strftime("%Y/%m")
+     @year_hash[key] = {record: e }
+   end
    # @year_array.delete(now.year)
    
  end

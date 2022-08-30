@@ -54,7 +54,7 @@
               <th>mileage</th> <th>Handling</th> <th>SpeedOver</th>
               <th>SpOverTime</th> <th>Scramble</th> <th>RapidAccel</th>
               <th>AbruptDecel</th> <th>Idling</th> <th>Running</th>
-              <th>Evaluate</th> <th>RecoredAt</th>
+              <th>Evaluate</th> <th>km/l</th> <th>Rank</th> <th>RecoredAt</th>
           </tr>
            <% @evaluates.each do |eval| %> 
                <tr>
@@ -71,6 +71,8 @@
                    <td><%= timecount_hm(eval.idling) %></td>
                    <td><%= timecount_hm(eval.running) %></td>
                    <td><%= eval.evaluate %></td>
+                   <td> ----- </td>
+                   <td> XX </td>
                    <td><%= eval.updated_at.strftime("%Y/%m") %></td>
                </tr>
            <% end %>
