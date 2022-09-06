@@ -27,6 +27,7 @@ class Driver < ApplicationRecord
     has_many :greaseups
     has_many :evaluates
     has_many :mileageproofs
+    has_many :dailyresults
     
     def addtruck(truck)
         self.truckrelations.find_or_create_by(truck_id: truck.id)
@@ -100,7 +101,7 @@ class Driver < ApplicationRecord
          year = d.year
          month = d.month
          c = self.pick_checkitem_period(year, month).count
-         return c / 100.0
+         return ((c / 101.0) * 100.0).ceil(1)
      end
      
      def pick_checkitem_period(year, month)
@@ -115,17 +116,38 @@ class Driver < ApplicationRecord
          month = d.month
          firstdate = Date.new(d.year, d.month)
          lastdate = firstdate.end_of_month
-         rec = self.dailyresults.where(created_at: firstdate..lastdate)
-         max = rec.maximum(:mileage)
-         min = rec.minimum(:mileage)
-         diff = max - min
-         fuel = rec.sum(:fuel)
-         if (diff != 0.0 && fuel != 0.0)
-             efficient = diff / fuel.to_f 
-             return [efficient, diff]
+         rec = self.dailyresults.where(recorddate: firstdate..lastdate)
+         if (rec.count > 1) 
+             max = rec.maximum(:mileage)
+             min = rec.minimum(:mileage)
+             diff = max - min
+             fuel = rec.sum(:fuel)
+             if  (diff != 0.0 && fuel != 0.0)
+                 efficient = diff / fuel.to_f 
+                 return [efficient.ceil(2), diff]
+            else
+                return [0.0, 0.0]
+            end
          else
              return [0.0, 0.0]
          end
              
      end
+     
+   def conv_dvalue_to_ranking(value)
+     if (Ranking.find_by(company: self.company) == nil)
+      rankdata= Ranking.find_by(company: 0)
+     end
+     e = rankdata; rhash = {A: e.A, B: e.B, C: e.C, D: e.D, E: e.E}
+     rankseed = "F"
+     rhash.each {|key, val| 
+     if (value >= val)
+        rankseed = key
+        break
+      end
+    }
+    ranking = rankseed.to_s
+ end
+     
+     
 end

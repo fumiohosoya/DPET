@@ -1,0 +1,2 @@
+class Displayflag < ApplicationRecord
+end

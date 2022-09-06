@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'truckrelations/create'
+  get 'truckrelations/destroy'
+  get 'displayflags/driverfuelset'
   get 'dailyresults/create'
   get 'ext2s/new'
   get 'ext2s/create'
@@ -119,4 +122,8 @@ Rails.application.routes.draw do
 
   resources :dailyresults, only:[:create]
   resources :mileageproofs, only:[:create]
+  resources :truckrelations, only:[:create, :destroy]
+  
+  post 'driverfuelset', to: "displayflags#driverfuelset"
+  patch 'driverfuelset', to: "displayflags#driverfuelchange"
 end

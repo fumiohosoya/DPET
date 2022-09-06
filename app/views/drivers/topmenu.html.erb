@@ -64,34 +64,43 @@
     <h5 class="card-title">Today's Result</h5>
  
     <div class="card-text">
-      <%= form_with(model: @dailyresult, local:true) do |f| %>
-       <%= f.hidden_field :recorddate, value:Date.new %>
-       <%= f.label :truck_id, "Truck Number" %>
-       <div class="row">
-         <div class="col-6">
-           <%= f.collection_select :truck_id, @trucks, :id, :number, class:"form-control" %>
-         </div>
-       </div> 
-       <%= f.label :mileage %>
-       
-       <div class="input-group">
-         <%= f.number_field :mileage, min:0, step:0.01,  class: "form-control col-10 text-left" %>
-         <span class="input-group-text col-2"> km </span>
-       </div>
-       <%= f.label :fuel %>
-       <div class="input-group">
-         <%= f.number_field :fuel, step:0.01, value: 0, min:0, class: "form-control col-10 text-left" %>
-         <span class="input-group-text col-2">litter</span>
-       </div>
-       <%= f.submit "result send", class:"mt-3 btn btn-danger" %>
-      <% end %>
+      <%= render 'layouts/flash_messages' %>
+      <% if @dailyresult.persisted? %>
+      <div class="col-md-6 btn btn-warning">
+         Fuel data is already saved
+      </div
+      <% else %>
+          <%= form_with(model: @dailyresult, url:dailyresults_url(@driver_id), local:true) do |f| %>
+          <div class="row">
+           <%= f.date_field :recorddate, value: Date.today %>
+          </div> 
+           <div class="row">
+             <%= f.label :truck_id, "Truck Number" %>
+             <div class="col-6">
+               <%= f.collection_select :truck_id, @trucks, :id, :number, selected: @select, class:"form-control" %>
+             </div>
+           </div> 
+           <%= f.label :mileage %>
+           
+           <div class="input-group">
+             <%= f.number_field :mileage, min:0, step:0.01, min:@min_mileage, class: "form-control col-10 text-left" %>
+             <span class="input-group-text col-2"> km </span>
+           </div>
+           <%= f.label :fuel %>
+           <div class="input-group">
+             <%= f.number_field :fuel, step:0.01, value: 0, min:0, class: "form-control col-10 text-left" %>
+             <span class="input-group-text col-2">litter</span>
+           </div>
+           <%= f.submit "result send", class:"mt-3 btn btn-danger" %>
+          <% end %>
+      <% end %> 
     </div>
   </div>
  </div>
  </div> <!-- col-md-6 -->
  
- <%# if Time.now.day <= 7 %>
-  <div class="card">
+ <% if Time.now.day <= 7 %>
+  <div class="card mt-4">
   <div class="card-body">
     <h5 class="card-title">Monthly Mileage Proof</h5>
  
@@ -114,7 +123,7 @@
     </div> <!-- card-body -->
     </div> <!-- card -->
  
- <%# end %>
+ <% end %>
  
  
   </div>

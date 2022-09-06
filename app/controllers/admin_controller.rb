@@ -14,6 +14,9 @@ class AdminController < ApplicationController
   def listdrivers
     @truck = Truck.find_by(number: params[:number])
     @drivers = @truck.drivers
+    @relations = @truck.truckrelations
+    
+    @listeddrivers = Driver.where(branch: @truck.branch_id) - @drivers
   end
   
   private

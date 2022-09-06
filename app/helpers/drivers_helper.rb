@@ -49,20 +49,30 @@ def alltruckmodels(branchid)
     image_url = t["image"]["url"]
     thumb_url = t["image"]["thumb"]["url"]
     t.delete("image")
-    trucks << Truck.new(t)
+    symh = t.symbolize_keys
+    trucks << Truck.new(symh)
     trucks.last.image_url = image_url
     trucks.last.thumb_url = thumb_url
   end
+  return trucks
 end
 
-def gettruck(trucknumber)
+  def gettruck(trucknumber)
+  
+      uritrucknumber = URI.encode(trucknumber)
+      url = "http://logiccs.herokuapp.com/trucks/numbershow.json?number=#{uritrucknumber}"
+      uri = URI.parse(url)
+      json = Net::HTTP.get(uri)
+      result = JSON.parse(json)    
+  end
 
-    uritrucknumber = URI.encode(trucknumber)
-    url = "http://logiccs.herokuapp.com/trucks/numbershow.json?number=#{uritrucknumber}"
+  def gettruck_by_id(id)
+    uri_id = URI.encode(id.to_s)
+    url = "http://logiccs.herokuapp.com/trucks/#{uri_id}/json"
     uri = URI.parse(url)
     json = Net::HTTP.get(uri)
     result = JSON.parse(json)    
-end
+  end
 
   def find_company(id)
     @allcompaniesarray = allcompanies if (@allcompaniesarray == nil)

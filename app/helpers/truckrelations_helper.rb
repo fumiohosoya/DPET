@@ -1,0 +1,2 @@
+module TruckrelationsHelper
+end

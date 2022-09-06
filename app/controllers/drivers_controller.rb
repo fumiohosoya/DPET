@@ -125,7 +125,6 @@ class DriversController < ApplicationController
   # 前日未実施項目があれば繰り越してチェック
   @prev_todos = Checkschedule.checkItem(today.yesterday, @driver.company)
   
-   
    remain_menu = []
    @prev_todos.each do |p_todo|
      checkname = p_todo.checkmenu.name
@@ -141,14 +140,31 @@ class DriversController < ApplicationController
     @todos += remain_menu
     @todos = @todos.uniq
     
+    @select = nil
     @trucks = @driver.trucks
-    if (@trucks.empty?)
-     @trucks = []
-     @thash = alltrucks(@driver.branch)
-     @thash.each do |t|
-      @trucks << maketruck_model(t)
+    if (!(@trucks.any?))
+       @trucks = alltruckmodels(@driver.branch)
+    end
+    @dailyresult = current_driver.dailyresults.last
+    if (@trucks.count == 1)
+      @select = @trucks.last.id
+      if (@daylyresult != nil)
+        @min_mileage = @dailyresult.mileage
+      else
+        @min_mileage = @trucks.last.initmileage
      end
     end
+    if (@dailyresult)
+      @select = @dailyresult.truck_id
+      @min_mileage = @dailyresult.mileage
+      # Don't move this cord
+      # **Caution** last record is modified by next step with
+      # current_driver.dailyresults.bulid
+    end
+    if  ((@dailyresult == nil) || ((Time.now - @dailyresult.created_at ) > (43200)))
+      @dailyresult = current_driver.dailyresults.build
+    end
+ 
  end
  
  def get_year_eval(driver, year)
@@ -160,20 +176,20 @@ class DriversController < ApplicationController
   return [evaluates, average]
  end
  
- def conv_dvalue_to_ranking(value)
-   if (Ranking.find_by(company: @company.id) == nil)
-     rankdata= Ranking.find_by(company: 0)
-   end
-   e = rankdata; rhash = {A: e.A, B: e.B, C: e.C, D: e.D, E: e.E}
-   rankseed = "F"
-   rhash.each {|key, val| 
-      if (value >= val)
-        rankseed = key
-        break
-       end
-   }
-   ranking = rankseed.to_s
- end
+# def conv_dvalue_to_ranking(value)
+#   if (Ranking.find_by(company: @company.id) == nil)
+#     rankdata= Ranking.find_by(company: 0)
+#   end
+#   e = rankdata; rhash = {A: e.A, B: e.B, C: e.C, D: e.D, E: e.E}
+#   rankseed = "F"
+#   rhash.each {|key, val| 
+#       if (value >= val)
+#         rankseed = key
+#         break
+#       end
+#   }
+#   ranking = rankseed.to_s
+# end
  
  # should be placed in model?????
  def checkevals(driver, year, month)
@@ -204,7 +220,7 @@ class DriversController < ApplicationController
    @now = params[:year] ? Time.gm(params[:year].to_i) : Time.now
    
    (@evaluates, @average) = get_year_eval(@driver, @now.year.to_i)
-   @ranking = conv_dvalue_to_ranking(@average)
+   @ranking = @driver.conv_dvalue_to_ranking(@average)
    
    @year_array = @driver.evaluates.pluck(:recordmonth).map{|r| r.year}.uniq.sort
    # @year_array.delete(now.year)
@@ -220,9 +236,7 @@ class DriversController < ApplicationController
    @now = params[:year] ? Time.gm(params[:year].to_i) : Time.now
    
    (@evaluates, @average) = get_year_eval(@driver, @now.year.to_i)
-   @ranking = conv_dvalue_to_ranking(@average)
-   
-   
+   @ranking = @driver.conv_dvalue_to_ranking(@average)
    
    @year_hash = {}
    year_array = @driver.evaluates.pluck(:recordmonth).map{|r| r.year}.uniq.sort
@@ -231,6 +245,14 @@ class DriversController < ApplicationController
      @year_hash[key] = {record: e }
    end
    # @year_array.delete(now.year)
+      
+   @displayflag = Displayflag.find_by(company_id: @driver.company)
+   if (@displayflag == nil)
+      @displayflag = Displayflag.new(
+            company_id: @driver.company, 
+            driverfuel: true 
+      )
+   end
    
  end
  

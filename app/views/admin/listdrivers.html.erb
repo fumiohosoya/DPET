@@ -32,19 +32,42 @@
     </tr>
 
     <% gendar = ["", "Male", "Female"] %>
-    <% @drivers.each do |driver| %>
+    <% @relations.each do |relation| %>
     
+      <% driver = relation.driver %>
       <tr>
 
-        <td><%= link_to driver.name, edit_driver_path(driver) ,class:"btn btn-primary btn-xs" %></td>
+        <td>
+            <%= link_to driver.name, edit_driver_path(driver) ,class:"btn btn-primary btn-xs" %>
+            <%= link_to relation, class:"btn btn-danger btn-xs", method: :delete do %>
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            <% end %>
+        </td>
         <td><%= gendar[driver.sex.to_i] %></td>
-        <td><%= driver.date_birth.strftime("%Y/%m/%d") %></td>
+        <td><%= driver.date_birth.strftime("%Y/%m/%d") if driver.date_birth%></td>
         <td><%= driver.age  %></td>
-        <td><%= driver.hire_date.strftime("%Y/%m/%d") %></td>
+        <td><%= driver.hire_date.strftime("%Y/%m/%d") if driver.hire_date %></td>
         <td><%= driver.blood_type %></td>
       </tr>
     
     <% end %>
     </table>
+    
+    <%#= @listeddrivers %>
+    <% if @listeddrivers.any? %>
+        <div class="row">
+            <div class="col-md-6 border border-white">
+                <%= form_with(model: Truckrelation.new, local:true) do |f| %>
+                
+                    <%= f.hidden_field :truck_id, value:@truck.id %>
+                    <div class="form-group mt-2">
+                        <%= f.collection_select :driver_id, @listeddrivers, :id, :name, {include_blank: true, prompt: "Driver Select"}, class:"form-control" %>
+                    </div>
+                    <%= f.submit "Add Driver", class:"btn btn-danger" %>
+                
+                <% end %>
+            </div>
+        </div>
+    <% end %>
     
 <% end %>

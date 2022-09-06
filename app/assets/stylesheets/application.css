@@ -114,5 +114,9 @@ form#lampStopperTire > div:nth-child(8) > label {
 
 .greenbg {
     text: black !important;
-    background-color: lightgreen !important;
+    background-color: #82ca3f !important;
+}
+
+.font1_5rem {
+    font-size: 1.5rem;
 }
