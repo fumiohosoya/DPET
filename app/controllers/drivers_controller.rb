@@ -258,10 +258,13 @@ class DriversController < ApplicationController
             driverfuel: true 
       )
    end
+   if (@displayflag.driverfuel)
+     @target_fuel_mlg = 6.8
+   end
    
  end
  
- 
+ #### followings are Need to MicroAPI
  def update_branch_menus
   
    company_id = params[:company]

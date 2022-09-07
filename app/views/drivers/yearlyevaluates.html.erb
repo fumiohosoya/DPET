@@ -1,3 +1,4 @@
+<%= render 'admin/backtoadmin' %>
 <div class="col-12 bg-white">
     <div class="row">
         <div class="col-12 text-center bg-w">
@@ -161,13 +162,13 @@
        <div class="col-8">
         <table class="table table-bordered table-striped monthlyeval">
             <tr>
-                <th colspan="6" class="yellowbg text-center">Fuel Data:</th>
+                <th colspan="6" class="yellowbg text-center">Fuel Data: <%= @target_fuel_mlg %> km</th>
             </tr>
             <tr class="w-100">
                  <th class="w-10">Month</th> <th  class="w-25">Score</th> <th>Grade</th>
                  <th class="w-10">Month</th> <th  class="w-25">Score</th> <th>Grade</th>
             </tr>
-            
+            <% fuel_ary = [] %>
             <% (1..6).each do |m| %>
                 <tr class="w-100">
                     <%
@@ -181,15 +182,21 @@
                     <td> <%=  Date::MONTHNAMES[m] %></td>
                     <td> 
                         <%= @year_hash.keys.include?(key) ? 
-                            @driver.get_fuelcomsaption(key)[0] : "--" %>
+                            mlg = @driver.get_fuelcomsaption(key)[0] : "--" %>
+                        <% fuel_ary << mlg if mlg %>
                     </td>
-                    <td> <%#= record1 != nil ? record1[:rank] : "--" %></td>
+                    <td> <%= @year_hash.keys.include?(key) ?
+                            @driver.conv_fuel_to_ranking(mlg, @target_fuel_mlg) : "--" %></td>
                     <td> <%=  Date::MONTHNAMES[m + 6] %></td>
                     <td>
                          <%= @year_hash.keys.include?(key2) ?
-                            @driver.get_fuelcomsaption(key2)[0] : "--" %>
+                            mlg2 = @driver.get_fuelcomsaption(key2)[0] : "--" %>
+                        <% fuel_ary << mlg2 if mlg2%>
                     </td>
-                    <td> <%#= record2 != nil ? record2[:rank] : "--" %></td>
+                    <td>
+                          <%= @year_hash.keys.include?(key2) ?
+                            @driver.conv_fuel_to_ranking(mlg2, @target_fuel_mlg) : "--" %></td>
+                    </td>
                 </tr>
             <% end %>            
            <tr class="greenbg">
@@ -204,11 +211,14 @@
                     </th>
                 </tr>
                 <tr class="greenbg">
+                    <%#= avg = fuel_ary.sum / fuel_ary.count %>
+                    <% avg = (fuel_ary.sum(0.0) / fuel_ary.count.to_f).ceil(2) %>
                     <td class="text-center font1_5rem fw-bold">
-                        <%= "DUMMYRANK" %>
+                        <%= @driver.conv_fuel_to_ranking(avg, @target_fuel_mlg) %>
                     </td>
                     <td colspan="2" class="text-center font1_5rem fw-bold">
-                        <%= "DUMMY" %>
+
+                        <%= avg %>
                     </td>
                 </tr>
             

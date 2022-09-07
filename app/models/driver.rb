@@ -148,6 +148,21 @@ class Driver < ApplicationRecord
     }
     ranking = rankseed.to_s
  end
+ 
+def conv_fuel_to_ranking(value, target)
+#     if (Ranking.find_by(company: self.company) == nil)
+#      rankdata= Ranking.find_by(company: 0)
+#     end
+     rhash = {A: target, B: target*0.9, C: target*1.8, D: target*0.7, E: 0.0}
+     rankseed = "F"
+     rhash.each {|key, val| 
+     if (value >= val)
+        rankseed = key
+        break
+      end
+    }
+    ranking = rankseed.to_s
+ end
      
      
 end
