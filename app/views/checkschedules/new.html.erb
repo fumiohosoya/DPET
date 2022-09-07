@@ -1,19 +1,12 @@
-<style>
-    .weekhead {
-        padding: 0.5rem !important;
-    }
-</style>
 
 <% daystr = ["Mon", "Tue", "Wed", "Thr", "Fri", "Sat", "Sun"] %>
-
+<%= render 'admin/backtoadmin' %>
 
 
 <div class="col-12 bg-white" style="line-height:0.8rem;">
     <h3 class="bg-white text-dark"> Check Schedule Maker</h3>
 <% if @schedules.any? %>
-<%# @schedules.each do |schedule| %>
-  <%#= schedule.dayofweek %>
-<%# end %>
+
 
 <%= form_with(url: checkschedules_path, scope: :schedules, method: :post, local: true) do |f| %>
 <%= hidden_field_tag :company_id, @company_id %>
@@ -60,6 +53,8 @@
 
 <% end %>
 </div>
+<%= render 'admin/backtoadmin' %>
+
 
 
 <script>

@@ -1,16 +1,44 @@
-<div class="bg-white">
-<% if @allcompanies.any? %>
-    <table class="offset-1 col-10 table table-striped table-bordered">
-    <% @allcompanies.each do |company| %>
-     <tr>
-         <td class="w-75">
-             <% @company = Company.new(company) %>
-             <%= link_to @company.name_e, check_card_evals_path(company: @company.id), class:'btn btn-success w-100' %>
-         </td>
-
-     </tr>
+<%= render 'admin/backtoadmin' %>
+<div class="mt-3">
+<% if @companies.any? %>
+<div class="row mb-3">
+    <% @companies.each do |e| %>
+        <% btc = @target_c.id == e.id ? "btn-warning" : "btn-danger" %>
+        
+        <div class="col-2 mb-1">
+            <%= link_to ((c = array_find_by(@companies, e.id)) ? c.name_e : ""),
+                card_evals_path(company: e.id),
+                class: "btn #{btc} btn-block" %>
+        </div>
     <% end %>
-    </table>
+</div>
+
+<div class="bgwhite row mt-4">
+   <div class="offset-1 col-10">
+    <%= form_with(scope: :card_eval, url: checkresult_card_evals_path(company_id: @company_id), local:true, multipart: true) do |f| %>
+    
+      <%= f.hidden_field :company_id, value: @company_id %>
+      <div class="row mt-4">
+          <%= date_select(:card_eval, :yearmonth, {selected: Date.today.ago(18.days), discard_day: true}, {class: "form-control"} ) %>
+      </div>
+      <div class="row mt-4">
+           <%= label :card_eval, :branch, "Select branch" %>
+           <% @branches =  Branch.json2model(allbranches(@company_id)) %>
+           <%= collection_select(:card_eval, :branch_id, @branches, :id, :name, {include_blank: true, class:"form-control"}) %>
+       </div>
+       
+       <div class="row mt-4">
+           <%= label :card_eval, :file_name, "Select Card Data File" %>
+           <%= file_field :card_eval, :file_name, class:"form-control" %>
+       </div>
+       <div class="row mt-4">
+           <%= f.submit "CHECK", class:"form-control btn btn-warning" %>
+       </div>
+    <% end %>
+   </div>
+</div>
+
+
 <% else %>
     <h1>Coundn't get companies list</h1>
 <% end %>

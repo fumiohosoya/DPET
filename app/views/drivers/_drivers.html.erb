@@ -2,14 +2,16 @@
  <table class="table table-striped table-bordered bg-red">
      <% drivers.each do |driver| %>
       <tr>
-         <td class="w-10 text-center">
-             <%= driver.id %>:
+         <td class="w-25 text-center">
+             <%= (c = array_find_by(@companies, driver.company)) ? c.name_e : "" %>
          </td>
-         <td class="w-40 pl-4">
+         <td class="w-25 text-center">
+             <%= (b = array_find_by(@branches, driver.branch.to_i)) ? b.name : "" %>
+         </td>
+         <td class="w-25 pl-4">
              <%= driver.name %>
          </td>
          <td>
-   
              <%= link_to 'View profile', driver_path(driver), class:"btn btn-primary" %>
          </td>
      </tr>

@@ -1,27 +1,23 @@
 <%= render 'admin/backtoadmin' %>
 <div class="row bg-red">
-    <h2>Driver Registration</h2>
+    <h2>Truck Registration</h2>
   <div class="col-12">
       
     
-    <%= form_for(@driver) do |f| %>
+    <%= form_for(@truck) do |f| %>
       <div class="row">
-          <% if @driver.errors %>
+          <% if @truck.errors %>
               <div class="col-12">
                   <%= render 'layouts/error_messages', model: f.object %>
               </div>
           <% end %>
     
           <div class="offset-lg-1 col-lg-5">
-                <div class="form-group row">
-                     <%= f.label :name, 'Name' %>
-                     <%= f.text_field :name, class: 'form-control', required: true %>
-                </div>
                  
                 <div class="form-group row">
                     <%= f.label :company, "Company" %>
                     <% @companies = allcompanies %>
-                    <%= select("driver", "company",
+                    <%= select("truck", "company_id",
                         @companies.collect { |p| [ p["name_e"], p["id"] ] },
                         { include_blank: true }, class:"form-control") %>
                 </div>
@@ -30,7 +26,7 @@
                 <div class="form-group row">
                     <%= f.label :branch, "Branch" %>
                     <% @branches = allbranches(1) %>
-                    <%= select("driver", "branch",
+                    <%= select("truck", "branch_id",
                         @branches.collect { |p| [ p["name"], p["id"] ] },
                         { include_blank: true }, class:"form-control", required: true) %>
                 </div>
@@ -45,64 +41,6 @@
             
                 </div>
               
-                 <div class="form-group row">
-                     <%= f.label :sex, 'Gendar' %>
-                     <%= f.select :sex, {'Male': 1, 'Female': 2},
-                         { include_blank: 'Please Select'},
-                         { class: 'form-control' , required: true } %>
-                 </div> 
-                 
-                 <div class="form-group row">
-                     <%= f.label :date_birth, 'Date of Birth' %>
-                     <%= f.date_field :date_birth, value: Date.today.years_ago(30), class: 'form-control', required: true %>
-                 </div>
-                 
-                  <div class="form-group row">
-                     <%= f.label :age, 'Age' %>
-                     <%= f.number_field :age, class: 'form-control', required: true %>
-                 </div>
-                 
-                 <div class="form-group row">
-                     <%= f.label :hire_date, 'Date of Hire' %>
-                     <%= f.date_field :hire_date,  value: Date.today.years_ago(10), class: 'form-control', required: true %>
-                 </div>
-            </div>
-        <div class="offset-lg-1 col-lg-5">
-          <div class="form-group row">
-             <%= f.label :blood_type, 'BloodType' %>
-             <%= f.select :blood_type, ['A(RH+)', 'B(RH+)', 'O(RH+)', 'AB(RH+)',
-             'A(RH-)', 'B(RH-)', 'O(RH-)', 'AB(RH-)', 'Unknown'],
-             { include_blank: 'Please Select'}, { class: 'form-control' , required: true } %>
-         </div>
-         
-         <div class="form-group row">
-             <%= f.label :chronic_disease, 'Chronic Disease' %>
-             <%= f.text_field :chronic_disease, class: 'form-control' %>
-         </div>
-         
-          <div class="form-group row">
-             <%= f.label :accident_record, 'Accident Record' %>
-             <%= f.text_field :accident_record, class: 'form-control' %>
-         </div>
-         
-          <div class="form-group row">
-             <%= f.label :vioration_record, 'Vioration Record' %>
-             <%= f.text_field :vioration_record, class: 'form-control' %>
-         </div>     
-         
-       <div class="form-group row">
-             <%= f.label :email, 'email' %>
-             <%= f.email_field :email, class: 'form-control', required: true %>
-       </div>     
-       <div class="form-group row">
-             <%= f.label :password, 'password' %>
-             <%= f.password_field :password, class: 'form-control', required: true %>
-       </div>     
-       <div class="form-group row">
-             <%= f.label :password_confirmation, 'comfirmpassword' %>
-             <%= f.password_field :password_confirmation, class: 'form-control', required: true %>
-       </div>     
-     
      </div>
      <div class="offset-lg-1 col-lg-11">
        <div class="form-group row text-right">
@@ -118,10 +56,10 @@
 <script>
 
 
-$("#driver_company").change(function(){
+$("#truck_company_id").change(function(){
     
-
    var id = this.value;
+   debugger;
    $.ajax({
         url: "/drivers/update_branch_menus",
         type: "POST",
@@ -133,7 +71,7 @@ $("#driver_company").change(function(){
             
             // console.log(`${data}`);
             
-            $("#driver_branch").html(`${data}`);
+            $("#truck_branch_id").html(`${data}`);
       // 成功したとき
       // data にサーバーから返された html が入る
         },
@@ -146,7 +84,7 @@ $("#driver_company").change(function(){
 });
 
 
-$("#driver_branch").change(function(){
+$("#truck_branch_id").change(function(){
     
     
    var branchid = this.value;
@@ -169,9 +107,8 @@ $("#driver_branch").change(function(){
 });
 
 $(document).ready(function() {
-    var companyid = $("#driver_company").val();
+    var companyid = $("#truck_company_id").val();
     $("#trucknumber").html("<option value='' disabled selected style='display:none;'>No Entry</option>");
-
     if (companyid !== "") {
         debugger;
         $.ajax({
@@ -185,7 +122,7 @@ $(document).ready(function() {
                 
                 // console.log(`${data}`);
                 
-                $("#driver_branch").html(`${data}`);
+                $("#truck_branch").html(`${data}`);
           // 成功したとき
           // data にサーバーから返された html が入る
             },
@@ -195,7 +132,7 @@ $(document).ready(function() {
         });
     }
     
-    var branchid = $("#driver_branch").val();
+    var branchid = $("#truck_branch_id").val();
     if (branchid !== "") {
         $.ajax(
           {

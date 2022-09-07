@@ -14,11 +14,20 @@ module DriversHelper
 
 
 def allcompanies
-    
     url = 'https://logiccs.herokuapp.com/companies/all'
     uri = URI.parse(url)
     json = Net::HTTP.get(uri)
     result = JSON.parse(json)
+end
+
+def allcompanies_model
+  json = allcompanies
+  return json.map{|e| Company.new(e.symbolize_keys)}
+end
+
+def array_find_by(ar, id)
+    return nil if id == 0
+    return (ar && id) ? ar.find {|e| e && e.id == id.to_i} : nil
 end
 
 
@@ -28,6 +37,22 @@ def allbranches(id)
     json = Net::HTTP.get(uri)
     result = JSON.parse(json)
 end
+
+def branches_by_cid_model(id)
+  json = allbranches(id)
+
+  return json.map{|e| Branch.new(e.symbolize_keys)}
+end
+
+
+def allbranchesmodel
+    url = "http://logiccs.herokuapp.com/branches/allall"
+    uri = URI.parse(url)
+    json = Net::HTTP.get(uri)
+    parsed_json = JSON.parse(json)
+    return parsedjson.map{|e| Branch.new(e.symbolize_keys)}
+end
+
 
 
 def alltrucks(branchid)

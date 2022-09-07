@@ -33,7 +33,14 @@ class DriversController < ApplicationController
  def index
      #render plain: 'ここがドライバー入力画面です'
      
-     @drivers = Driver.all.order(:id).page(params[:page])
+     @companies = allcompanies_model
+     @branches = @companies.map {|c|  branches_by_cid_model(c.id.to_s)[0] }
+     if (params[:company])
+      @target_c = array_find_by(@companies, params[:company])
+     else
+      @target_c = @companies.first
+     end
+     @drivers = Driver.where(company: @target_c.id).order(:company, :branch).page(params[:page])
  end
  
  def show
@@ -51,7 +58,6 @@ class DriversController < ApplicationController
   number = params[:trucknumber]
   
   @truck = Truck.find_or_initialize_by(number: number)
-   # binding.pry
 
   if (@truck.new_record?)
     tinfo = gettruck(number)
@@ -83,7 +89,7 @@ class DriversController < ApplicationController
    if @driver.update(driver_params)
     flash[:success] = 'Driver Data was successfully updated'
     #render :edit
-    redirect_to driver_url(@driver)
+    redirect_to drivers_url
     
    else
     flash.now[:danger] = 'Update was not suucessful'
@@ -95,8 +101,7 @@ class DriversController < ApplicationController
  def destroy
    @driver = Driver.find(params[:id])
     @driver.destroy if (@driver)
-    #redirect_to drivers_url
-    render :destroy
+    redirect_to drivers_url
  end
  
  def topmenu

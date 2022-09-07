@@ -1,6 +1,14 @@
 class CardEvalsController < ApplicationController
     def index
-        @allcompanies = allcompanies
+     @companies = allcompanies_model
+     @branches = @companies.map {|c|  branches_by_cid_model(c.id.to_s)[0] }
+     if (params[:company])
+      @target_c = array_find_by(@companies, params[:company])
+      @company_id = params[:company]
+     else
+      @target_c = @companies.first
+      @company_id = @target_c.id.to_s
+     end
     end
     
     def check
@@ -51,7 +59,15 @@ class CardEvalsController < ApplicationController
     end
     
     def listresults
-        @company_id = params[:company_id]
+        @companies = allcompanies_model
+        @branches = @companies.map {|c|  branches_by_cid_model(c.id.to_s)[0] }
+        if (params[:company])
+          @target_c = array_find_by(@companies, params[:company])
+          @company_id = params[:company]
+        else
+          @target_c = @companies.first
+          @company_id = @target_c.id.to_s
+        end
         @drivers = Driver.where(company: @company_id).order(:branch, :name)
         if @drivers.any?
             @branches = @drivers.pluck(:branch).uniq!.delete_if{|x| x == nil}

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'trucks/create'
+  get 'trucks/destroy'
   get 'truckrelations/create'
   get 'truckrelations/destroy'
   get 'displayflags/driverfuelset'
@@ -119,7 +121,7 @@ Rails.application.routes.draw do
   
   get 'readevals', to: "readevals#index", as: :readevals
     
-
+  resources :trucks, only:[:new, :create, :destroy]
   resources :dailyresults, only:[:create]
   resources :mileageproofs, only:[:create]
   resources :truckrelations, only:[:create, :destroy]

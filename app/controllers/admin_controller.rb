@@ -6,7 +6,15 @@ class AdminController < ApplicationController
   end
 
   def truckindex
-      @trucks = Truck.all.order("company_id and branch_id and vehicleid")
+      @companies = allcompanies_model
+      @branches = @companies.map {|c|  branches_by_cid_model(c.id.to_s)[0] }
+      if (params[:company])
+       @target_c = array_find_by(@companies, params[:company])
+     else
+       @target_c = @companies.first
+     end
+        
+     @trucks = Truck.where(company_id: @target_c.id).order(:company_id, :branch_id, :vehicleid).page(params[:page])
       # @companies = getcompany_array
       
   end

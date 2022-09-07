@@ -1,5 +1,25 @@
-<h1>Drivers#index</h1>
+<%= render 'admin/backtoadmin' %>
+<h1>Drivers-index</h1>
+
+<% if @companies.any? %>
+<div class="row mb-3">
+    <% @companies.each do |e| %>
+        <% btc = @target_c.id == e.id ? "btn-warning" : "btn-danger" %>
+        
+        <div class="col-2 mb-1">
+            <%= link_to ((c = array_find_by(@companies, e.id)) ? c.name_e : ""),
+                drivers_path(company: e.id),
+                class: "btn #{btc} btn-block" %>
+        </div>
+    <% end %>
+</div>
+
+<%= render 'drivers/adddriver' %>
 
 <%= render 'drivers', drivers: @drivers %>
+
+<% else %>
+  No Company detected
+<% end %>
 
 
