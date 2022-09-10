@@ -99,7 +99,7 @@
  </div>
  </div> <!-- col-md-6 -->
  
- <% if Time.now.day <= 7 %>
+ <% if Time.now.day <= 7 && (@driver.has_mlproof? == nil) %>
   <div class="card mt-4">
   <div class="card-body">
     <h5 class="card-title">Monthly Mileage Proof</h5>

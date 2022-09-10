@@ -1,0 +1,2 @@
+module FueltargetsHelper
+end

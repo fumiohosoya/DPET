@@ -9,8 +9,9 @@
     <% @companies.each do |e| %>
         <% btc = @target_c.id == e.id ? "btn-warning" : "btn-danger" %>
         
-        <div class="col-2 mb-1">
-            <%= link_to ((c = array_find_by(@companies, e.id)) ? c.name_e : ""),
+        <div class="col-md-4 col-lg-3 col-xl-2 mb-1">
+            <%= link_to ((c = array_find_by(@companies, e.id)) ?
+                c.name_e.truncate(24) : ""),
                 truckindex_admin_index_path(company: e.id),
                 class: "btn #{btc} btn-block" %>
         </div>
@@ -28,6 +29,7 @@
         <th>number</th>
         <th class="w-10">vehicleid</th>
         <th>Driver Count</th>
+        <th>Fuel Target</th>
     </tr>
     <% @trucks.each do |truck| %>
      
@@ -44,6 +46,15 @@
         <td class="text-center"><%= link_to truck.number, listdrivers_path(truck.number), class: "btn btn-primary btn-xs" %></td>
         <td class="text-center"><%= truck.vehicleid %></td>
         <td class="text-center"><%= truck.drivers.count %></td>
+        <td class="text-center">
+            <% if truck.fueltarget == nil %>
+                <%= link_to Fueltarget.makedefault(truck).to_s + "km/l(def)",
+                    new_fueltarget_path(truck:truck), class:"btn btn-success btn-xs" %>
+            <% else %>    
+                <%= link_to truck.fueltarget.fuel.ceil(2).to_s + "Km/l",
+                    edit_fueltarget_path(truck.fueltarget), class:"btn btn-warning btn-xs" %>
+            <% end %>
+        </td>
       </tr>
     
     <% end %>

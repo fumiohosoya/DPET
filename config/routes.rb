@@ -126,6 +126,8 @@ Rails.application.routes.draw do
   resources :mileageproofs, only:[:create]
   resources :truckrelations, only:[:create, :destroy]
   
+  resources :fueltargets
+  
   post 'driverfuelset', to: "displayflags#driverfuelset"
   patch 'driverfuelset', to: "displayflags#driverfuelchange"
 end

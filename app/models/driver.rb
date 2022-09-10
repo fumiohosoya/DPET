@@ -96,6 +96,14 @@ class Driver < ApplicationRecord
         end
      end
      
+     def has_mlproof?(day = 7)
+        if (self.mileageproofs.any?)
+          (Time.now - self.mileageproofs.last.created_at ) < (86400 * day) #  24 * 60 * 60
+        else
+            nil
+        end
+     end
+     
      def get_checkitempoint(datestr)
          d = Date.parse(datestr)
          year = d.year

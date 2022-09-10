@@ -1,0 +1,7 @@
+        <h3>Set To Target Fuel Consamption for <%= truck.number %></h3>
+        <%= form_with(model: fueltarget) do |f| %>
+            <%= f.hidden_field :truck_id, value: f.object.truck_id %>
+            <%= f.label :fuel, "FuelTarget (km/l)" %>
+            <%= f.number_field :fuel, step:0.1, min:0, class:"form-control" %>
+            <%= f.submit "SET", class:"btn btn-danger" %>
+        <% end %>
