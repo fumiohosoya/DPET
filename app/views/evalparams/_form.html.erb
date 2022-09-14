@@ -1,0 +1,62 @@
+<h2 class="col-12">Parameters for <%= array_find_by(@companies, evalparam.company_id).name_e %></h2>
+<div class="offset-1 col-10">
+<%= form_with(model: evalparam, local: true) do |f| %>
+   <%= f.hidden_field :company_id, value: evalparam.company_id %>
+   <h3>Cofficient percentages for Fuel target ranking</h3> 
+    <div class="form-row">
+        <% keys = ["fuelA", "fuelB", "fuelC", "fuelD", "fuelE", "fuelF"] %>
+
+        <% keys.each do |e| %>
+            <div class="col-2">
+                <div class="row">
+                    <%= f.label e.to_sym, e, class:'col-form-label col-3 text-right' %>
+                    <div class="col-9">
+                        <%= f.number_field e.to_sym, class:'form-control' %>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+        <h6 class="mt-2"> Fueltarget x FuelA(%) means A rank, Fueltarget x FuelB(%) means B rank.... so,
+        A rank give 100points, B rank give 80 points turns into Total Evaluation.
+        </h6>
+        
+    </div>
+    <hr>
+    <h3 class="mt-3 col-12">Evaluation Point Balance Control</h3>
+    <div class="col-12">
+        
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row border border-danger rounded">
+                    <div class="col-4">Safety</div>
+                    <div class="col-4">Check</div>
+                    <div class="col-4">Fuel</div>
+                    <div class="col-4 text-center" id="safety">xx</div>
+                    <div class="col-4 text-center" id="check">xx</div>
+                    <div class="col-4 text-center" id="fuel">xx</div>
+                    <%= f.hidden_field :balanceSafety, value:0.0 %>
+                    <%= f.hidden_field :balanceCheck, value:0.0 %>
+                    <%= f.hidden_field :balanceFuel, value:0.0 %>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class='slider' id='slider1'>
+                    <div class="slider-range"></div>
+                    <div class="min"></div>
+                    <div class="max"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <%= f.submit "Paramete set", class:'btn btn-primary' %>
+            
+        </div>
+        
+    </div>
+
+<% end %>
+</div>
+

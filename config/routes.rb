@@ -127,6 +127,7 @@ Rails.application.routes.draw do
   resources :truckrelations, only:[:create, :destroy]
   
   resources :fueltargets
+  resources :evalparams
   
   post 'driverfuelset', to: "displayflags#driverfuelset"
   patch 'driverfuelset', to: "displayflags#driverfuelchange"

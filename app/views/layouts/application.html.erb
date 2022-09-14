@@ -9,7 +9,14 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <% if controller_name == "evalparams" %>
+      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/hot-sneaks/jquery-ui.css">
+
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <% end %>
     <%= stylesheet_link_tag  'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
    
@@ -33,6 +40,130 @@
     </div>
     
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
-
+<% if controller_name == "evalparams" && ((action_name == "index") || (action_name == "edit")) %>
+<script>
+  var min = <%= @balanceSafety %>;
+  var max = <%= 100.0 - @balanceCheck %>;
+  
+  /**
+   * Decimal adjustment of a number.
+   *
+   * @param {String}  type  The type of adjustment.
+   * @param {Number}  value The number.
+   * @param {Integer} exp   The exponent (the 10 logarithm of the adjustment base).
+   * @returns {Number} The adjusted value.
+   */
+  function decimalAdjust(type, value, exp) {
+    // If the exp is undefined or zero...
+    if (typeof exp === 'undefined' || +exp === 0) {
+      return Math[type](value);
+    }
+    value = +value;
+    exp = +exp;
+    // If the value is not a number or the exp is not an integer...
+    if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+      return NaN;
+    }
+    // Shift
+    value = value.toString().split('e');
+    value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+    // Shift back
+    value = value.toString().split('e');
+    return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+  }
+  
+  // Decimal round
+  var round10 = (value, exp) => decimalAdjust('round', value, exp);
+  // Decimal floor
+  var floor10 = (value, exp) => decimalAdjust('floor', value, exp);
+  // Decimal ceil
+  var ceil10 = (value, exp) => decimalAdjust('ceil', value, exp);
+  
+  function update_val(ui) {
+    var handleIndex = $(ui.handle).data().uiSliderHandleIndex;
+    if (handleIndex == 0) {
+        $("#safety").text(ui.value + '%');
+        $("#check").text(floor10((ui.values[1] - ui.value), -1)  + '%');
+        $("#fuel").text(floor10((100.0 - ui.values[1]), -1) + '%');
+        $("#evalparam_balanceSafety").val(ui.value);
+        $("#evalparam_balanceCheck").val(floor10((ui.values[1] - ui.value), -1));
+        $("#evalparam_balanceFuel").val(floor10((100.0 - ui.values[1]), -1));
+    }
+    else {
+        $("#safety").text(ui.values[0] + '%');
+        $("#check").text(floor10((ui.value - ui.values[0]), -1)  + '%');
+        $("#fuel").text(floor10((100.0 - ui.value), -1) + '%');
+        $("#evalparam_balanceSafety").val(ui.values[0]);
+        $("#evalparam_balanceCheck").val(floor10((ui.value - ui.values[0]), -1));
+        $("#evalparam_balanceFuel").val(floor10((100.0 - ui.value), -1));
+    }
+      
+  }
+  
+  $(document).ready(function () {
+  
+      $(".slider").each(function () {
+          $this = $(this);
+          console.log($this)
+          $(".slider-range", $this).slider({
+              values: [min, max],
+              min: 0,
+              max: 100,
+              step: 0.1,
+              slide: function (event, ui) {
+  
+                  var slider = $(ui.handle).closest('.slider');
+                  var handleIndex = $(ui.handle).data().uiSliderHandleIndex;
+                  var label = handleIndex == 0 ? slider.find('.min') : slider.find('.max');
+        
+                  if (handleIndex == 0) {
+                  //   console.log("minval" + ui.value); 
+                     if (ui.value > ui.values[1] - 5) {
+                         ui.value = ui.values[1] - 10.0;
+                         ui.values[0] = ui.value;
+                         return false;
+                     }
+                  }
+                  else {
+                      if (ui.value < ui.values[0] + 5) {
+                         ui.value = ui.values[0] + 10.0;
+                         ui.values[1] = ui.value;
+                         return false;  
+                      }
+                  }
+                  update_val(ui);
+              },
+              create: function( event, ui ) {
+                var a =   $( ".slider-range" ).slider( "values", 0 );
+                var b =   $( ".slider-range" ).slider( "values", 1 );
+                $("#safety").text(a + '%');
+                $("#check").text(floor10((b - a), -1)  + '%');
+                $("#fuel").text(floor10((100.0 - (b)), -1) + '%');
+                $("#evalparam_balanceSafety").val(a);
+                $("#evalparam_balanceCheck").val(floor10((b - a), -1));
+                $("#evalparam_balanceFuel").val(floor10((100.0 - b), -1));
+              },
+              change: function( event, ui ) {
+                  update_val(ui);
+              }
+          });
+  
+          $this.children('.min').html( $this.slider('values', 0) + '%').position({
+              my: 'center top',
+              at: 'center bottom',
+              of: $($this.eq(0)),
+              offset: "0, 10"
+          });
+  
+          $this.children('.max').html($this.slider('values', 1) + '%').position({
+              my: 'center top',
+              at: 'center bottom',
+              of: $('.slider a:eq(1)'),
+              offset: "0, 10"
+          });
+      });
+  });
+</script>
+<% end %>
   </body>
 </html>

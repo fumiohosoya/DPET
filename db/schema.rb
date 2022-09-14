@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_09_131444) do
+ActiveRecord::Schema.define(version: 2022_09_13_060325) do
 
   create_table "branches", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "company_id"
@@ -96,6 +96,21 @@ ActiveRecord::Schema.define(version: 2022_09_09_131444) do
     t.string "branch"
     t.string "email"
     t.string "password_digest"
+  end
+
+  create_table "evalparams", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "company_id"
+    t.integer "fuelA"
+    t.integer "fuelB"
+    t.integer "fuelC"
+    t.integer "fuelD"
+    t.integer "fuelE"
+    t.integer "fuelF"
+    t.float "balanceSafety"
+    t.float "balanceCheck"
+    t.float "balanceFuel"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "evaluates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
