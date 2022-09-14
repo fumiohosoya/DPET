@@ -250,7 +250,7 @@
 
 <% if @displayflag.driverfuel? %>
     <% 
-        evalparam = Evalparam.find(@driver.company)
+        evalparam = Evalparam.find_by(company_id: @driver.company)
         if (evalparam)
             balanceSafety = evalparam.balanceSafety / 100.0
             balanceCheck = evalparam.balanceCheck / 100.0

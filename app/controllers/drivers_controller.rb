@@ -268,9 +268,9 @@ class DriversController < ApplicationController
        @target_fuel_mlg = truck.fueltarget
       end
      else
-      truckrel = @driver.truckrelations.last
+      truckrel = @driver.truckrelations.last.truck
       if (truckrel)
-       @target_fuel_mlg = truckrel.fueltarget
+       @target_fuel_mlg = truckrel.fueltarget.fuel
       end
      end
    end
