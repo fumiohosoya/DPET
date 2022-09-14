@@ -161,14 +161,23 @@ def conv_fuel_to_ranking(value, target)
 #     if (Ranking.find_by(company: self.company) == nil)
 #      rankdata= Ranking.find_by(company: 0)
 #     end
-     rhash = {A: target, B: target*0.9, C: target*1.8, D: target*0.7, E: 0.0}
+    rhash = {A: target * 1.1, B: target*1.0, C: target*0.9,
+             D: target*0.8, E: target*0.7, F: target*0.6}
+     evp = Evalparam.find_by(company_id: self.company)
+     if (evp)
+        rhash = { A: target * (evp.fuelA/100.0), B: target * (evp.fuelB/100.0),
+                  C: target * (evp.fuelC/100.0), D: target * (evp.fuelD/100.0),
+                  E: target * (evp.fuelE/100.0), F: target * (evp.fuelF/100.0)
+        }
+     end
      rankseed = "F"
      rhash.each {|key, val| 
-     if (value >= val)
+      if (value >= val)
         rankseed = key
         break
       end
     }
+    logger.debug 'drivermodel Fuel Ranking ' + rankseed.to_s
     ranking = rankseed.to_s
  end
      

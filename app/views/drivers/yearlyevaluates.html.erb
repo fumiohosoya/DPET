@@ -57,7 +57,7 @@
                 <% end %>
                 <tr class="greenbg">
                     <th colspan="3" rowspan="2" class="text-center align-middle font1_5rem">
-                         TOTAL EVALUATION
+                         SAFETY ANNUAL EVALUATION
                     </th>
                     <th class="text-center">
                         GRADE
@@ -71,7 +71,26 @@
                         <%= @ranking %>
                     </td>
                     <td colspan="2" class="text-center font1_5rem fw-bold">
-                        <%= @average %>
+                        <%= safetyavg = @average %>
+                    </td>
+                </tr>
+                <tr class="greenbg">
+                    <th colspan="3" rowspan="2" class="text-center align-middle font1_5rem">
+                         TOTAL EVALUATION
+                    </th>
+                    <th class="text-center">
+                        GRADE
+                    </th>
+                    <th colspan="2" class="text-center">
+                        SCORE
+                    </th>
+                </tr>
+                <tr class="greenbg">
+                    <td class="text-center font1_5rem fw-bold">
+                        <span id="totalrank">--</span>
+                    </td>
+                    <td colspan="2" class="text-center font1_5rem fw-bold">
+                        <span id="totalval">--</span>
                     </td>
                 </tr>
                 
@@ -129,7 +148,7 @@
                 <% end %>
                <tr class="greenbg">
                     <th colspan="3" rowspan="2" class="text-center align-middle font1_5rem">
-                         ANNUAL EVALUATION
+                         CHECKPOINT ANNUAL EVALUATION
                     </th>
                     <th class="text-center">
                         GRADE
@@ -201,7 +220,7 @@
             <% end %>            
            <tr class="greenbg">
                     <th colspan="3" rowspan="2" class="text-center align-middle font1_5rem">
-                         ANNUAL EVALUATION
+                         FUEL ANNUAL EVALUATION
                     </th>
                     <th class="text-center">
                         GRADE
@@ -212,30 +231,64 @@
                 </tr>
                 <tr class="greenbg">
                     <%#= avg = fuel_ary.sum / fuel_ary.count %>
-                    <% avg = (fuel_ary.sum(0.0) / fuel_ary.count.to_f).ceil(2) %>
+                    <% fuelavg = (fuel_ary.sum(0.0) / fuel_ary.count.to_f).ceil(2) %>
                     <td class="text-center font1_5rem fw-bold">
-                        <%= @driver.conv_fuel_to_ranking(avg, @target_fuel_mlg) %>
+                        <%= fuelrank = @driver.conv_fuel_to_ranking(fuelavg, @target_fuel_mlg) %>
                     </td>
                     <td colspan="2" class="text-center font1_5rem fw-bold">
-
-                        <%= avg %>
+                        <%= fuelavg %>
                     </td>
                 </tr>
-            
-            
-            
-            
-            
-            
         </table>
-
        </div>
    </div>
    <% end %>  <%# driverfuelset? %>
 </div>
-    
-    
 
-    
-  
 </div>
+
+
+<% if @displayflag.driverfuel? %>
+    <% 
+        evalparam = Evalparam.find(@driver.company)
+        if (evalparam)
+            balanceSafety = evalparam.balanceSafety / 100.0
+            balanceCheck = evalparam.balanceCheck / 100.0
+            balanceFuel = evalparam.balanceFuel / 100.0
+        else
+            balanceSafety = (33.30 / 100.0)
+            balanceCheck = (33.40 / 100.0)
+            balanceFuel = (33.30 / 100.0)
+        end
+        
+        fuelpoint_hash = {A: 100, B: 80, C: 60, E: 40, F:20, G: 0}
+        fuelpoint = fuelpoint_hash[fuelrank.to_sym]
+    
+        totalval = safetyavg * balanceSafety + 
+                    avgcheck * balanceCheck + fuelpoint * balanceFuel 
+                    
+        totalrank = @driver.conv_dvalue_to_ranking(totalval)
+                    
+    %>
+<script>
+   $('#totalval').text('<%= totalval.ceil(2) %>');
+   $('#totalrank').text('<%= totalrank %>');
+</script>
+<% else %>
+    <% 
+        evp = Evalparam.find(@driver.company)
+        if (evalparam)
+            balanceSafety = evp.balanceSafety / (evp.balanceSafety + evp.balanceCheck)
+            balanceCheck =  evp.balanceCheck /  (evp.balanceSafety + evp.balanceCheck)
+        else
+            balanceSafety = 0.5
+            balanceCheck = 0.5
+        end
+        totalval = safetyavg * balanceSafety +  avgcheck * balanceCheck
+        totalrank = @driver.conv_dvalue_to_ranking(totalval)
+    %>
+<script>
+   $('#totalval').text('<%= totalval.ceil(2) %>');
+   $('#totalrank').text('<%= totalrank %>');
+</script
+<% end %>

@@ -39,6 +39,17 @@ class EvalparamsController < ApplicationController
         end
     end
     
+    def update
+        @evalparam = Evalparam.find(params[:id])
+        if (@evalparam.update(evalparam_params))
+            flash[:success] = "Parameters are saved"
+            redirect_to evalparams_url(company: @evalparam.company_id)
+        else
+            flash[:success] = "Parameters are not saved"
+            redirect_to evalparams_url(company: @evalparam.company_id)
+        end
+    end
+    
     
     private
     

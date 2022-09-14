@@ -1,6 +1,7 @@
 <h2 class="col-12">Parameters for <%= array_find_by(@companies, evalparam.company_id).name_e %></h2>
 <div class="offset-1 col-10">
 <%= form_with(model: evalparam, local: true) do |f| %>
+   <%= render 'layouts/error_messages', model: f.object %>
    <%= f.hidden_field :company_id, value: evalparam.company_id %>
    <h3>Cofficient percentages for Fuel target ranking</h3> 
     <div class="form-row">
