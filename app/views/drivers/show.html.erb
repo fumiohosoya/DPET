@@ -50,6 +50,17 @@
          <th>Vioration Record</th>
          <td><%= @driver.vioration_record %></td>
      </tr>
+     <tr>
+         <th>Photo</th>
+         <td>
+             <% if @driver.photo.url %>
+                 <%= image_tag @driver.photo.thumb.url, class:'img-fluid w-50', style:'height:auto;' %>
+             <% else %>
+                 <%= image_tag 'no_image.png', class:'img-fluid w-50' %>
+             <% end %>
+         </td>
+     </tr>
+     
      
     </table>
     

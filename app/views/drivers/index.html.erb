@@ -7,7 +7,7 @@
         <% btc = @target_c.id == e.id ? "btn-warning" : "btn-danger" %>
         
         <div class="col-2 mb-1">
-            <%= link_to ((c = array_find_by(@companies, e.id)) ? c.name_e : ""),
+            <%= link_to ((c = array_find_by(@companies, e.id)) ? c.name_e.truncate(22) : ""),
                 drivers_path(company: e.id),
                 class: "btn #{btc} btn-block" %>
         </div>

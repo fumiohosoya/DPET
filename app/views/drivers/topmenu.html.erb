@@ -10,21 +10,22 @@
           <% if current_driver.has_meter? %>
              <span class="btn btn-warning">Meter Checked</span>
           <% else %>
-          <%= link_to "Meters", new_meter_path, class:"btn btn-primary" %>
+          <%= link_to thai_trans("Meters"), new_meter_path, class:"btn btn-primary" %>
           <% end %>
         </div>
         <div class="mb-1">
           <% if current_driver.has_brake? %>
             <span class="btn btn-warning">Brake Checked</span>
           <% else %>
-            <%= link_to "Brake & Side Brake", new_brake_path, class:"btn btn-primary" %>
+            <% word = "Brake & Side Brake" %>
+            <%= link_to thai_trans("Brake & Side Brake"), new_brake_path, class:"btn btn-primary" %>
           <% end %>
         </div>
         <div class="mb-1">
           <% if current_driver.has_lampStopperTire? %>
             <span class="btn btn-warning">Lamp/Stopper/Tire Checked</span>
           <% else %>
-            <%= link_to "Lamps & Stopper & Tire Easy Check", new_lamp_stopper_tire_path, class:"btn btn-primary" %></div>
+            <%= link_to thai_trans("Lamps & Stopper & Tire Easy Check"), new_lamp_stopper_tire_path, class:"btn btn-primary" %></div>
           <% end %>
        </div>
 
@@ -47,10 +48,10 @@
             <% check_todo = todo_hash[checkname][1] %>
             <%#= check_todo %>
             <% if eval("current_driver.#{check_todo}") %>
-                <span class="btn btn-warning"><%= checkname %></span>
+                <span class="btn btn-warning"><%= thai_trans(checkname) %></span>
 
             <% else %>
-               <%= link_to checkname, todo_hash[checkname][0], class:"btn btn-primary" %>
+               <%= link_to thai_trans(checkname), todo_hash[checkname][0], class:"btn btn-primary" %>
             <% end %>
           <% end %>
     

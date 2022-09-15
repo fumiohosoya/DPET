@@ -114,5 +114,28 @@ end
     branchesarray = getallbranch_array(c_id)
     return Branch.new(branchesarray.find{|e| e["id"] == id})
   end
+  
+  def thai_trans(s)
+    
+    thai_hash = {
+      "Meters" => "เครื่องวัด / เมตร",
+      "Brake & Side Brake" => "เบรกและเบรกข้าง",
+      "Lamps & Stopper & Tire Easy Check" => "หลอดไฟ & จุกปิด & การเช็คยางอย่างง่าย",
+      "Engine Oil" => "น้ำมันเครื่อง",
+      "Air Reserver" => "ถังลม",
+      "Battery" => "แบตเตอรี่",
+      "Tires" => "ยางรถ",
+      "Oils & Tanks" => "น้ำมันและถัง",
+      "Grease Up" => "อัดจารบี",
+      "Cab Up" => "ยกหัวเก๋ง",
+      "Send Photo" => "ส่งรูป / ภาพถ่าย",
+      "Photo saved" => "บันทึกรูปภาพ ",
+      "Photo not Saved Please Set Again" => "หากบันทึกรูปภาพไม่ได้ โปรดตั้งค่าอีกครั้ง",
+      "Photo/Data not Saved Please Set Again" => "หากบันทึกรูปภาพ / บันทึกข้อมูลไม่ได้ โปรดตั้งค่าอีกครั้ง",
+    }
+    
+    return (t = thai_hash[s]) ? s + "- " + t : s
+    
+  end
 
 end

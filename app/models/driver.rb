@@ -1,6 +1,9 @@
 class Driver < ApplicationRecord
 
 
+  mount_uploader :photo, ImageUploader
+
+
   before_save { self.email.downcase! }
   validates :name, presence: true, length: { maximum: 50 }
   validates :email, presence: true, length: { maximum: 255 },
@@ -12,7 +15,7 @@ class Driver < ApplicationRecord
   validates :age, presence: true, on: :update
   has_secure_password    
     
-    has_many :truckrelations
+    has_many :truckrelations, dependent: :destroy
     has_many :trucks, through: :truckrelations, source: :truck
     has_many :checkitems
     has_many :meters

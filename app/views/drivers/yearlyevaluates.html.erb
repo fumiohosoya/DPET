@@ -8,8 +8,16 @@
             <%= render 'fuel_button', flag: @displayflag %>
         </div>
         <div class="col-4">
-            <div class="card dphoto col-12">
-                
+            <div class="card dphoto col-12 vh-50" style="height:auto;">
+                <div class="offset-1 col-10">
+                <% if @driver.photo %>
+                   <%= image_tag @driver.photo.thumb.url, class:'img-fluid img-thumbnail' %>
+
+                   image exist
+                <% else %>
+                    <%= image_tag 'no_image.png', class:'img-fluid img-thumbnail' %>
+                <% end %>
+                </div>
             </div>
             <div class="card col-12">
               <div class="card-body">

@@ -11,7 +11,8 @@
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <% if controller_name == "evalparams" %>
+    <!-- jquery-ui can't load first time in evalparams, so load at admin -->
+    <% if controller_name == "evalparams" || controller_name == "admin"%>
       <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/hot-sneaks/jquery-ui.css">
 
       <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -40,11 +41,9 @@
     </div>
     
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
-<% if controller_name == "evalparams" && ((action_name == "index") || (action_name == "edit")) %>
+<% if (controller_name == "evalparams" && (action_name == "index"))  %>
 <script>
-  var min = <%= @balanceSafety %>;
-  var max = <%= 100.0 - @balanceCheck %>;
-  
+
   /**
    * Decimal adjustment of a number.
    *
@@ -100,13 +99,19 @@
       
   }
   
-  $(document).ready(function () {
+  var min = <%= @balanceSafety %>;
+  var max = <%= 100.0 - @balanceCheck %>;
   
+  $(document).ready(function () {
+    var contmin = <%= @balanceSafety %>;
+    var contmax = <%= 100.0 - @balanceCheck %>;
+   
       $(".slider").each(function () {
           $this = $(this);
-          console.log($this)
+          console.log($this);
+          debugger;
           $(".slider-range", $this).slider({
-              values: [min, max],
+              values: [contmin, contmax],
               min: 0,
               max: 100,
               step: 0.1,

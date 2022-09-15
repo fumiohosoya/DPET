@@ -16,6 +16,10 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
 
+  def cache_dir
+    "uploads/cache/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+  end
+
  # 画像の上限を700pxにする
   process :resize_to_limit => [700, 700]
 
