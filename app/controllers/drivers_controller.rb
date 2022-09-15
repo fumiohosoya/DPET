@@ -260,8 +260,8 @@ class DriversController < ApplicationController
    end
    if (@displayflag.driverfuel)
      @target_fuel_mlg = 4.5
-     truck = Truck.find_by(id: @driver.dailyresults.last.truck_id)
-     if (truck != nil) 
+     lastr =  @driver.dailyresults.last
+     if (lastr != nil && (truck = Truck.find_by(id: lastr.truck_id)))
       if truck.fueltarget == nil
        @target_fuel_mlg = Fueltarget.makedefault(truck)
       else
