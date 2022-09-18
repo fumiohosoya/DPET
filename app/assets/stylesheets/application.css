@@ -121,6 +121,14 @@ form#lampStopperTire > div:nth-child(8) > label {
     font-size: 1.5rem;
 }
 
+.font1_8rem {
+    font-size: 1.8rem;
+}
+
+.fw-bold {
+    font-weight: 800;
+}
+
 .weekhead {
     padding: 0.5rem !important;
 }

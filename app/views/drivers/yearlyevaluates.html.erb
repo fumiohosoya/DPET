@@ -31,7 +31,27 @@
                 <!--<a href="#" class="card-link">Another link</a>-->
               </div>
             </div>
-            
+               <table class="table table-bordered table-striped">
+                        <tr class="bg-warning">
+                            <th colspan="3" rowspan="2" class="text-center align-middle font1_8rem">
+                                 TOTAL EVALUATION
+                            </th>
+                            <th class="text-center">
+                                GRADE
+                            </th>
+                            <th colspan="2" class="text-center">
+                                SCORE
+                            </th>
+                        </tr>
+                        <tr class="bg-warning">
+                            <td class="text-center font1_8rem fw-bold">
+                                <span id="totalrank">--</span>
+                            </td>
+                            <td colspan="2" class="text-center font1_8rem fw-bold">
+                                <span id="totalval">--</span>
+                            </td>
+                        </tr>                
+                    </table>
         </div>
         <div class="col-8">
             <table class="table table-bordered table-striped monthlyeval">
@@ -82,37 +102,10 @@
                         <%= safetyavg = @average %>
                     </td>
                 </tr>
-                <tr class="greenbg">
-                    <th colspan="3" rowspan="2" class="text-center align-middle font1_5rem">
-                         TOTAL EVALUATION
-                    </th>
-                    <th class="text-center">
-                        GRADE
-                    </th>
-                    <th colspan="2" class="text-center">
-                        SCORE
-                    </th>
-                </tr>
-                <tr class="greenbg">
-                    <td class="text-center font1_5rem fw-bold">
-                        <span id="totalrank">--</span>
-                    </td>
-                    <td colspan="2" class="text-center font1_5rem fw-bold">
-                        <span id="totalval">--</span>
-                    </td>
-                </tr>
+
                 
              </table>
-        </div>
-    </div>
 
-
-
-   <div class="row">
-
-       <div class="col-4">
-       </div>
-       <div class="col-8">
            <table class="table table-bordered table-striped monthlyeval">
                 <tr>
                     <th colspan="6" class="yellowbg text-center">Daily Check Result</th>
@@ -177,16 +170,11 @@
             </table>
 
            
-       </div>
-   </div>
+ 
    
    <% if @displayflag.driverfuel? %>
    
-    <div class="row">
-
-       <div class="col-4">
-       </div>
-       <div class="col-8">
+ 
         <table class="table table-bordered table-striped monthlyeval">
             <tr>
                 <th colspan="6" class="yellowbg text-center">Fuel Data: <%= @target_fuel_mlg %> km</th>
@@ -248,12 +236,14 @@
                     </td>
                 </tr>
         </table>
-       </div>
-   </div>
+ 
    <% end %>  <%# driverfuelset? %>
-</div>
+   
+         </div>  <!-- col-8 -->
+   </div><!-- col-4 -->
+</div> <!-- row -->
 
-</div>
+</div> <!-- col-12 bg-white -->
 
 
 <% if @displayflag.driverfuel? %>

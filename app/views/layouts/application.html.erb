@@ -100,11 +100,11 @@
   }
   
   var min = <%= @balanceSafety %>;
-  var max = <%= 100.0 - @balanceCheck %>;
+  var max = <%= 100.0 - @balanceFuel %>;
   
   $(document).ready(function () {
     var contmin = <%= @balanceSafety %>;
-    var contmax = <%= 100.0 - @balanceCheck %>;
+    var contmax = <%= 100.0 - @balanceFuel %>;
    
       $(".slider").each(function () {
           $this = $(this);
