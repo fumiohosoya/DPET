@@ -76,6 +76,24 @@ class CardEvalsController < ApplicationController
         end
     end
     
+    def summary
+        @companies = allcompanies_model
+        @branches = @companies.map {|c|  branches_by_cid_model(c.id.to_s)[0] }
+        if (params[:company])
+          @target_c = array_find_by(@companies, params[:company])
+          @company_id = params[:company]
+        else
+          @target_c = @companies.first
+          @company_id = @target_c.id.to_s
+        end
+        @drivers = Driver.where(company: @company_id).order(:branch, :name)
+        if @drivers.any?
+            @branches = @drivers.pluck(:branch).uniq!.delete_if{|x| x == nil}
+        else
+            @branches = []
+        end
+    end
+    
     private
     
     def find_or_create_driver_evaluate(record,  company, branch, year, month)
@@ -94,7 +112,7 @@ class CardEvalsController < ApplicationController
         # scramble = record[8] rapid_accel = record[9] abrupt_decel = record[10]
         (scramble, rapid_accel, abrupt_decel) = record[8..10]
         idling = timerecord_2_datetime(record[11])
-        running = timerecord_2_datetime(record[11])
+        running = timerecord_2_datetime(record[12])
         evaluate = record[13]
         rank = record[14].tr('Ａ-Ｚ', 'A-Z')
         recordmonth = Date.new(year.to_i, month.to_i).end_of_month

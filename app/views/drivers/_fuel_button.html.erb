@@ -1,11 +1,13 @@
   <% if ( flag.driverfuel? ) %>
       <%= form_with(model: flag, url: :driverfuelset, local:true) do |f| %>
+        <%= f.label :driverfuel, "FuelDisplay" %>
         <%= f.hidden_field :company_id, value: flag.company_id %>
         <%= f.hidden_field :driverfuel, value: false %>
         <%= f.submit "TurnOFF", class: "btn btn-xs btn-primary" %>
       <% end %>
   <% else %>
       <%= form_with(model: flag, url: :driverfuelset, local:true) do |f| %>
+        <%= f.label :driverfuel, "FuelDisplay" %>
         <%= f.hidden_field :company_id, value: flag.company_id %>
         <%= f.hidden_field :driverfuel, value: true %>
         <%= f.submit "TurnON", class: "btn btn-xs btn-danger" %>

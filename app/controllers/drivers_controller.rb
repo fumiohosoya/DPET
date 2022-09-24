@@ -217,7 +217,7 @@ class DriversController < ApplicationController
  
  
  
- def evaluates
+ def summary
    @driver = Driver.find(params[:id])
    @company = find_company(@driver.company)
    
@@ -229,7 +229,26 @@ class DriversController < ApplicationController
    
    @year_array = @driver.evaluates.pluck(:recordmonth).map{|r| r.year}.uniq.sort
    # @year_array.delete(now.year)
-   
+   @year_hash = {}
+
+   if (@evaluates.any?)
+    @evaluates.each do |e|
+      key = e.updated_at.strftime("%Y/%m")
+      @year_hash[key] = {record: e }
+    end
+   end
+   # @year_array.delete(now.year)
+      
+   @displayflag = Displayflag.find_by(company_id: @driver.company)
+   if (@displayflag == nil)
+      @displayflag = Displayflag.new(
+            company_id: @driver.company, 
+            driverfuel: true 
+      )
+   end
+   if (@displayflag.driverfuel)
+     @target_fuel_mlg =  get_target_fuel(@driver)
+   end
  end
  
   def yearlyevaluates
@@ -259,21 +278,9 @@ class DriversController < ApplicationController
       )
    end
    if (@displayflag.driverfuel)
-     @target_fuel_mlg = 4.5
-     lastr =  @driver.dailyresults.last
-     if (lastr != nil && (truck = Truck.find_by(id: lastr.truck_id)))
-      if truck.fueltarget == nil
-       @target_fuel_mlg = Fueltarget.makedefault(truck)
-      else
-       @target_fuel_mlg = truck.fueltarget
-      end
-     else
-      if ((tr = @driver.truckrelations).any? && (truckrel = tr.last.truck))
-       @target_fuel_mlg = truckrel.fueltarget.fuel
-      end
-     end
+
+     @target_fuel_mlg =  get_target_fuel(@driver)
    end
-   
  end
  
  #### followings are Need to MicroAPI
@@ -322,6 +329,23 @@ class DriversController < ApplicationController
  
  
  private
+ 
+  def get_target_fuel(driver)
+     target_fuel_mlg = 4.5
+     lastr =  driver.dailyresults.last
+     if (lastr != nil && (truck = Truck.find_by(id: lastr.truck_id)))
+      if truck.fueltarget == nil
+       target_fuel_mlg = Fueltarget.makedefault(truck)
+      else
+       target_fuel_mlg = truck.fueltarget
+      end
+     else
+      if ((tr = @driver.truckrelations).any? && (truckrel = tr.last.truck))
+       target_fuel_mlg = truckrel.fueltarget.fuel
+      end
+     end
+     return target_fuel_mlg
+  end
  
    
      

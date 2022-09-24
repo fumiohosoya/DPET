@@ -42,7 +42,7 @@ Rails.application.routes.draw do
 
     end
     member do
-      get :evaluates
+      get :summary
       get :yearlyevaluates
     end
   end
@@ -101,6 +101,8 @@ Rails.application.routes.draw do
   
   resources :card_evals do
     get :checkresult, to: "card_evals#listresults", on: :collection
+    get :summary, to: "card_evals#summary", on: :collection
+
     get :drivereval, to: "card_evals#drivereval", on: :collection
     collection do
       get :check
