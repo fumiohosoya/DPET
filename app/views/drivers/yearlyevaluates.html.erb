@@ -1,0 +1,296 @@
+<%= render 'admin/backtoadmin' %>
+<div class="col-12 bg-white">
+    <div class="row">
+        <div class="col-12 text-center bg-w">
+            <h2 class="bg-white">Driver Evaluation Table</h2>
+        </div>
+        <div class="col-12 text-right">
+            <%= render 'fuel_button', flag: @displayflag %>
+        </div>
+        <div class="col-4">
+            <div class="card dphoto col-12 vh-50" style="height:auto;">
+                <div class="offset-1 col-10">
+                <% if @driver.photo.url %>
+                   <%= image_tag @driver.photo.thumb.url, class:'img-fluid img-thumbnail' %>
+
+                   image exist
+                <% else %>
+                    <%= image_tag 'no_image.png', class:'img-fluid img-thumbnail' %>
+                <% end %>
+                </div>
+            </div>
+            <div class="card col-12">
+              <div class="card-body">
+                <h4 class="card-subtitle mb-2 text-muted">Name: <%= @driver.name %></h4>
+                <p class="card-text"><%= @company.name_e %></p>
+                <p class="card-text">Birth: <%= @driver.date_birth.to_s %></p>
+                <p class="card-text">HireDate: <%= @driver.hire_date.to_s %></p>
+                <p class="card-text">BloodType: <%= @driver.blood_type %></p>
+
+                <!--<a href="#" class="card-link">Card link</a>-->
+                <!--<a href="#" class="card-link">Another link</a>-->
+              </div>
+            </div>
+               <table class="table table-bordered table-striped">
+                        <tr class="bg-warning">
+                            <th colspan="3" rowspan="2" class="text-center align-middle font1_8rem">
+                                 TOTAL EVALUATION
+                            </th>
+                            <th class="text-center">
+                                GRADE
+                            </th>
+                            <th colspan="2" class="text-center">
+                                SCORE
+                            </th>
+                        </tr>
+                        <tr class="bg-warning">
+                            <td class="text-center font1_8rem fw-bold">
+                                <span id="totalrank">--</span>
+                            </td>
+                            <td colspan="2" class="text-center font1_8rem fw-bold">
+                                <span id="totalval">--</span>
+                            </td>
+                        </tr>                
+                    </table>
+        </div>
+        <div class="col-8">
+            <table class="table table-bordered table-striped monthlyeval">
+                <tr>
+                    <th colspan="6" class="yellowbg text-center">Monthly Evaluate</th>
+                </tr>
+                <tr class="w-100">
+                    <th class="w-10">Month</th> <th  class="w-25">Grade</th> <th>Score</th>
+                    <th class="w-10">Month</th> <th  class="w-25">Grade</th> <th>Score</th>
+                    
+                </tr>
+                <% (1..6).each do |m| %>
+                <tr class="w-100">
+                    <%
+                    if (m < 4) 
+                         key = "#{@year}/0#{m}"; key2 = "#{@year}/0#{m + 6}" 
+                    else
+                         key = "#{@year}/0#{m}"; key2 = "#{@year}/#{m + 6}" 
+                    end
+                     record1 = (r1 = @year_hash[key.to_s]) ? r1[:record] : nil 
+                     record2 = (r2 = @year_hash[key2.to_s]) ? r2[:record] : nil 
+                    %>
+                    
+                    <td> <%=  Date::MONTHNAMES[m] %></td>
+                    <td> <%= record1 != nil ? record1[:evaluate] : "--" %></td>
+                    <td> <%= record1 != nil ? record1[:rank] : "--" %></td>
+                    <td> <%=  Date::MONTHNAMES[m + 6] %></td>
+                    <td> <%= record2 ? record2.evaluate : "--" %></td>
+                    <td> <%= record2 != nil ? record2[:rank] : "--" %></td>
+                </tr>
+                <% end %>
+                <tr class="greenbg">
+                    <th colspan="3" rowspan="2" class="text-center align-middle font1_5rem">
+                         SAFETY ANNUAL EVALUATION
+                    </th>
+                    <th class="text-center">
+                        GRADE
+                    </th>
+                    <th colspan="2" class="text-center">
+                        SCORE
+                    </th>
+                </tr>
+                <tr class="greenbg">
+                    <td class="text-center font1_5rem fw-bold">
+                        <%= @ranking %>
+                    </td>
+                    <td colspan="2" class="text-center font1_5rem fw-bold">
+                        <%= safetyavg = @average %>
+                    </td>
+                </tr>
+
+                
+             </table>
+
+           <table class="table table-bordered table-striped monthlyeval">
+                <tr>
+                    <th colspan="6" class="yellowbg text-center">Daily Check Result</th>
+                </tr>
+                <tr class="w-100">
+                    <th class="w-10">Month</th> <th  class="w-25">Score</th> <th>Grade</th>
+                    <th class="w-10">Month</th> <th  class="w-25">Score</th> <th>Grade</th>
+                </tr>
+                <% totalcheck = 0 %>
+                <% (1..6).each do |m| %>
+                <tr class="w-100">
+                    <%
+                    if (m < 4) 
+                         key = "#{@year}/0#{m}"; key2 = "#{@year}/0#{m + 6}" 
+                    else
+                         key = "#{@year}/0#{m}"; key2 = "#{@year}/#{m + 6}" 
+                    end
+                    %>
+                    
+                    <td> <%=  Date::MONTHNAMES[m] %></td>
+                    <td> 
+                        <%= @year_hash.keys.include?(key) ? 
+                            val1 = @driver.get_checkitempoint(key) : "--" %>
+                        <% totalcheck += val1.to_f %>
+                    </td>
+                    <td>
+                        <%= @year_hash.keys.include?(key) ? 
+                            @driver.conv_dvalue_to_ranking(val1) : "--" %>
+                    </td>
+                    <td> <%=  Date::MONTHNAMES[m + 6] %></td>
+                    <td>
+                         <%= @year_hash.keys.include?(key2) ?
+                            val2 = @driver.get_checkitempoint(key2) : "--" %>
+                        <% totalcheck += val2.to_f %>
+                    </td>
+                    <td>
+                        <%= @year_hash.keys.include?(key2) ? 
+                            @driver.conv_dvalue_to_ranking(val2) : "--" %>
+                        </td>
+                </tr>
+                <% end %>
+               <tr class="greenbg">
+                    <th colspan="3" rowspan="2" class="text-center align-middle font1_5rem">
+                         CHECKPOINT ANNUAL EVALUATION
+                    </th>
+                    <th class="text-center">
+                        GRADE
+                    </th>
+                    <th colspan="2" class="text-center">
+                        SCORE
+                    </th>
+                </tr>
+                <tr class="greenbg">
+                    <% avgcheck= totalcheck / @year_hash.keys.count.to_f  %>
+                    <td class="text-center font1_5rem fw-bold">
+                        <%= @driver.conv_dvalue_to_ranking(avgcheck) %>
+                    </td>
+                    <td colspan="2" class="text-center font1_5rem fw-bold">
+                        <%= avgcheck  %>
+                    </td>
+                </tr>
+            </table>
+
+           
+ 
+   
+   <% if @displayflag.driverfuel? %>
+   
+ 
+        <table class="table table-bordered table-striped monthlyeval">
+            <tr>
+                <th colspan="6" class="yellowbg text-center">Fuel Data: <%= @target_fuel_mlg %> km</th>
+            </tr>
+            <tr class="w-100">
+                 <th class="w-10">Month</th> <th  class="w-25">Score</th> <th>Grade</th>
+                 <th class="w-10">Month</th> <th  class="w-25">Score</th> <th>Grade</th>
+            </tr>
+            <% fuel_ary = [] %>
+            <% (1..6).each do |m| %>
+                <tr class="w-100">
+                    <%
+                    if (m < 4) 
+                         key = "#{@year}/0#{m}"; key2 = "#{@year}/0#{m + 6}" 
+                    else
+                         key = "#{@year}/0#{m}"; key2 = "#{@year}/#{m + 6}" 
+                    end
+                    %>
+                    
+                    <td> <%=  Date::MONTHNAMES[m] %></td>
+                    <td> 
+                        <%= @year_hash.keys.include?(key) ? 
+                            mlg = @driver.get_fuelcomsaption(key)[0] : "--" %>
+                        <% fuel_ary << mlg if mlg %>
+                    </td>
+                    <td> <%= @year_hash.keys.include?(key) ?
+                            @driver.conv_fuel_to_ranking(mlg, @target_fuel_mlg) : "--" %></td>
+                    <td> <%=  Date::MONTHNAMES[m + 6] %></td>
+                    <td>
+                         <%= @year_hash.keys.include?(key2) ?
+                            mlg2 = @driver.get_fuelcomsaption(key2)[0] : "--" %>
+                        <% fuel_ary << mlg2 if mlg2%>
+                    </td>
+                    <td>
+                          <%= @year_hash.keys.include?(key2) ?
+                            @driver.conv_fuel_to_ranking(mlg2, @target_fuel_mlg) : "--" %></td>
+                    </td>
+                </tr>
+            <% end %>            
+           <tr class="greenbg">
+                    <th colspan="3" rowspan="2" class="text-center align-middle font1_5rem">
+                         FUEL ANNUAL EVALUATION
+                    </th>
+                    <th class="text-center">
+                        GRADE
+                    </th>
+                    <th colspan="2" class="text-center">
+                        SCORE
+                    </th>
+                </tr>
+                <tr class="greenbg">
+                    <%#= avg = fuel_ary.sum / fuel_ary.count %>
+                    <% fuelavg = (fuel_ary.sum(0.0) / fuel_ary.count.to_f).ceil(2) %>
+                    <td class="text-center font1_5rem fw-bold">
+                        <%= fuelrank = @driver.conv_fuel_to_ranking(fuelavg, @target_fuel_mlg) %>
+                    </td>
+                    <td colspan="2" class="text-center font1_5rem fw-bold">
+                        <%= fuelavg %>
+                    </td>
+                </tr>
+        </table>
+ 
+   <% end %>  <%# driverfuelset? %>
+   
+         </div>  <!-- col-8 -->
+   </div><!-- col-4 -->
+</div> <!-- row -->
+
+</div> <!-- col-12 bg-white -->
+
+
+<% if @displayflag.driverfuel? %>
+    <% 
+        evalparam = Evalparam.find_by(company_id: @driver.company)
+        if (evalparam)
+            balanceSafety = evalparam.balanceSafety / 100.0
+            balanceCheck = evalparam.balanceCheck / 100.0
+            balanceFuel = evalparam.balanceFuel / 100.0
+        else
+            balanceSafety = (33.30 / 100.0)
+            balanceCheck = (33.40 / 100.0)
+            balanceFuel = (33.30 / 100.0)
+        end
+        
+        fuelpoint_hash = {A: 100, B: 80, C: 60, E: 40, F:20, G: 0}
+        fuelpoint = fuelpoint_hash[fuelrank.to_sym]
+    
+        avgcheck = 0.0 if (avgcheck == nil)
+        fuelpoint = 0.0 if (fuelpoint == nil)
+        totalval = safetyavg * balanceSafety + 
+                    avgcheck * balanceCheck + fuelpoint * balanceFuel 
+                    
+        totalrank = @driver.conv_dvalue_to_ranking(totalval)
+                    
+    %>
+<script>
+   $('#totalval').text('<%= totalval.ceil(2) %>');
+   $('#totalrank').text('<%= totalrank %>');
+</script>
+<% else %>
+    <% 
+        evp = Evalparam.find(@driver.company)
+        if (evalparam)
+            balanceSafety = evp.balanceSafety / (evp.balanceSafety + evp.balanceCheck)
+            balanceCheck =  evp.balanceCheck /  (evp.balanceSafety + evp.balanceCheck)
+        else
+            balanceSafety = 0.5
+            balanceCheck = 0.5
+        end
+        avgcheck = 0.0 if (avgcheck == nil)
+        fuelpoint = 0.0 if (fuelpoint == nil)
+        totalval = safetyavg * balanceSafety +  avgcheck * balanceCheck
+        totalrank = @driver.conv_dvalue_to_ranking(totalval)
+    %>
+<script>
+   $('#totalval').text('<%= totalval.ceil(2) %>');
+   $('#totalrank').text('<%= totalrank %>');
+</script
+<% end %>
