@@ -237,7 +237,12 @@ def conv_fuel_to_ranking(value, target)
       end
      else
       if ((tr = self.truckrelations).any? && (truckrel = tr.last.truck))
-       target_fuel_mlg = truckrel.fueltarget.fuel
+       target = truckrel.fueltarget
+       if (target != nil)
+           target_fuel_mlg = truckrel.fueltarget.fuel
+       else
+           target_fuel_mlg = 4.4
+       end
       end
      end
      return target_fuel_mlg     
