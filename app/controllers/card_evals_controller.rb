@@ -59,15 +59,8 @@ class CardEvalsController < ApplicationController
     end
     
     def listresults
-        @companies = allcompanies_model
-        @branches = @companies.map {|c|  branches_by_cid_model(c.id.to_s)[0] }
-        if (params[:company])
-          @target_c = array_find_by(@companies, params[:company])
-          @company_id = params[:company]
-        else
-          @target_c = @companies.first
-          @company_id = @target_c.id.to_s
-        end
+        get_companies_and_target_with_param
+
         @drivers = Driver.where(company: @company_id).order(:branch, :name)
         if @drivers.any?
             @branches = @drivers.pluck(:branch).uniq!.delete_if{|x| x == nil}
@@ -75,26 +68,25 @@ class CardEvalsController < ApplicationController
             @branches = []
         end
     end
-    
+        
     def summary
-        @companies = allcompanies_model
-        @branches = @companies.map {|c|  branches_by_cid_model(c.id.to_s)[0] }
-        if (params[:company])
-          @target_c = array_find_by(@companies, params[:company])
-          @company_id = params[:company]
-        else
-          @target_c = @companies.first
-          @company_id = @target_c.id.to_s
-        end
+        get_companies_and_target_with_param
+        @year = Time.now.year.to_i
         @drivers = Driver.where(company: @company_id).order(:branch, :name)
         if @drivers.any?
             @branches = @drivers.pluck(:branch).uniq!.delete_if{|x| x == nil}
         else
             @branches = []
         end
+        @displayflag = Displayflag.find_by(company_id: @company_id)
+        if (@displayflag == nil)
+          @displayflag = Displayflag.new(
+            company_id: @company_id, 
+            driverfuel: true 
+            )
+        end
     end
-    
-    private
+ 
     
     def find_or_create_driver_evaluate(record,  company, branch, year, month)
         name = record[0] 
@@ -137,7 +129,20 @@ class CardEvalsController < ApplicationController
         end
     end
     
-  private
+    private
+    
+    
+    def get_companies_and_target_with_param
+        @companies = allcompanies_model
+        @branches = @companies.map {|c|  branches_by_cid_model(c.id.to_s)[0] }
+        if (params[:company])
+          @target_c = array_find_by(@companies, params[:company])
+          @company_id = params[:company]
+        else
+          @target_c = @companies.first
+          @company_id = @target_c.id.to_s
+        end        
+    end
     
     def card_eval_params
         params.require(:card_eval).permit("yearmonth(1i)", "yearmonth(2i)", "yearmonth(3i)", :month, :file_name, :company_id, :branch_id)

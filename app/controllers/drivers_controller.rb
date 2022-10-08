@@ -172,30 +172,6 @@ class DriversController < ApplicationController
  
  end
  
- def get_year_eval(driver, year)
-  t = Time.gm(year)
-  startdate = t.beginning_of_year
-  enddate = t.end_of_year
-  evaluates = driver.evaluates.where(recordmonth: startdate..enddate).order(:updated_at)
-  average = driver.evaluates.where(recordmonth: startdate..enddate).average(:evaluate).ceil(3)
-  return [evaluates, average]
- end
- 
-# def conv_dvalue_to_ranking(value)
-#   if (Ranking.find_by(company: @company.id) == nil)
-#     rankdata= Ranking.find_by(company: 0)
-#   end
-#   e = rankdata; rhash = {A: e.A, B: e.B, C: e.C, D: e.D, E: e.E}
-#   rankseed = "F"
-#   rhash.each {|key, val| 
-#       if (value >= val)
-#         rankseed = key
-#         break
-#       end
-#   }
-#   ranking = rankseed.to_s
-# end
- 
  # should be placed in model?????
  def checkevals(driver, year, month)
     t = Time.gm(year, month)
@@ -215,8 +191,6 @@ class DriversController < ApplicationController
     return ev
  end
  
- 
- 
  def summary
    @driver = Driver.find(params[:id])
    @company = find_company(@driver.company)
@@ -224,7 +198,7 @@ class DriversController < ApplicationController
    #@now = Time.now
    @now = params[:year] ? Time.gm(params[:year].to_i) : Time.now
    
-   (@evaluates, @average) = get_year_eval(@driver, @now.year.to_i)
+   (@evaluates, @average) = @driver.get_year_eval(@now.year.to_i)
    @ranking = @driver.conv_dvalue_to_ranking(@average)
    
    @year_array = @driver.evaluates.pluck(:recordmonth).map{|r| r.year}.uniq.sort
@@ -259,7 +233,7 @@ class DriversController < ApplicationController
    @year = params[:year] || Time.now.localtime.year.to_s
    @now = params[:year] ? Time.gm(params[:year].to_i) : Time.now
    
-   (@evaluates, @average) = get_year_eval(@driver, @now.year.to_i)
+   (@evaluates, @average) = @driver.get_year_eval(@now.year.to_i)
    @ranking = @driver.conv_dvalue_to_ranking(@average)
    
    @year_hash = {}
@@ -279,7 +253,7 @@ class DriversController < ApplicationController
    end
    if (@displayflag.driverfuel)
 
-     @target_fuel_mlg =  get_target_fuel(@driver)
+     @target_fuel_mlg =  @driver.get_fuel_target
    end
  end
  
@@ -330,22 +304,22 @@ class DriversController < ApplicationController
  
  private
  
-  def get_target_fuel(driver)
-     target_fuel_mlg = 4.5
-     lastr =  driver.dailyresults.last
-     if (lastr != nil && (truck = Truck.find_by(id: lastr.truck_id)))
-      if truck.fueltarget == nil
-       target_fuel_mlg = Fueltarget.makedefault(truck)
-      else
-       target_fuel_mlg = truck.fueltarget
-      end
-     else
-      if ((tr = @driver.truckrelations).any? && (truckrel = tr.last.truck))
-       target_fuel_mlg = truckrel.fueltarget.fuel
-      end
-     end
-     return target_fuel_mlg
-  end
+  # def get_target_fuel(driver)
+  #    target_fuel_mlg = 4.5
+  #    lastr =  driver.dailyresults.last
+  #    if (lastr != nil && (truck = Truck.find_by(id: lastr.truck_id)))
+  #     if truck.fueltarget == nil
+  #      target_fuel_mlg = Fueltarget.makedefault(truck)
+  #     else
+  #      target_fuel_mlg = truck.fueltarget
+  #     end
+  #    else
+  #     if ((tr = @driver.truckrelations).any? && (truckrel = tr.last.truck))
+  #      target_fuel_mlg = truckrel.fueltarget.fuel
+  #     end
+  #    end
+  #    return target_fuel_mlg
+  # end
  
    
      

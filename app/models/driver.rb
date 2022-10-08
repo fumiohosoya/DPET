@@ -115,6 +115,20 @@ class Driver < ApplicationRecord
          return ((c / 101.0) * 100.0).ceil(1)
      end
      
+     def get_yearly_checkitempoint(year)
+         resultarray = []
+         monthes =  evaluates.pluck(:updated_at).map{|d| d.strftime("%Y/%m")}
+         monthes.each {|m|
+          c = self.pick_checkitem_period(m[0..3].to_i, m[5..-1].to_i).count
+          monthlyc = ((c / 101.0) * 100.0).ceil(1)
+          resultarray << monthlyc
+         }
+         avg = resultarray.sum / resultarray.length.to_f
+         avg = avg.ceil(3) if (resultarray.any?)
+             
+     end
+     
+     
      def pick_checkitem_period(year, month)
          firstdate = Date.new(year, month)
          lastdate = firstdate.end_of_month
@@ -145,6 +159,17 @@ class Driver < ApplicationRecord
              
      end
      
+   def get_yearly_fuelcomsamption(year)
+     resultarray = []
+     monthes =  evaluates.pluck(:updated_at).map{|d| d.strftime("%Y/%m")}
+     monthes.each {|m|
+      f = self.get_fuelcomsaption(m)
+      resultarray << f[0]
+     }
+     avg = resultarray.sum / resultarray.length.to_f
+     avg = avg.ceil(3) if (resultarray.any?)
+   end
+     
    def conv_dvalue_to_ranking(value)
      if (Ranking.find_by(company: self.company) == nil)
       rankdata= Ranking.find_by(company: 0)
@@ -164,6 +189,9 @@ def conv_fuel_to_ranking(value, target)
 #     if (Ranking.find_by(company: self.company) == nil)
 #      rankdata= Ranking.find_by(company: 0)
 #     end
+    if (value == nil)
+        return 'F'
+    end
     rhash = {A: target * 1.1, B: target*1.0, C: target*0.9,
              D: target*0.8, E: target*0.7, F: target*0.6}
      evp = Evalparam.find_by(company_id: self.company)
@@ -183,6 +211,36 @@ def conv_fuel_to_ranking(value, target)
     logger.debug 'drivermodel Fuel Ranking ' + rankseed.to_s
     ranking = rankseed.to_s
  end
-     
+ 
+ def get_year_eval(year)
+  t = Time.gm(year)
+  startdate = t.beginning_of_year
+  enddate = t.end_of_year
+  evaluateslist = self.evaluates.where(recordmonth: startdate..enddate).order(:updated_at)
+  return [nil, nil] if (evaluateslist == nil)
+  average = self.evaluates.where(recordmonth: startdate..enddate).average(:evaluate)
+  if (average)
+      average = average.ceil(3)
+  end
+  return [evaluateslist, average]
+ end
+
+
+  def get_fuel_target
+     target_fuel_mlg = 4.5
+     lastr =  self.dailyresults.last
+     if (lastr != nil && (truck = Truck.find_by(id: lastr.truck_id)))
+      if truck.fueltarget == nil
+       target_fuel_mlg = Fueltarget.makedefault(truck)
+      else
+       target_fuel_mlg = truck.fueltarget
+      end
+     else
+      if ((tr = self.truckrelations).any? && (truckrel = tr.last.truck))
+       target_fuel_mlg = truckrel.fueltarget.fuel
+      end
+     end
+     return target_fuel_mlg     
+  end
      
 end
