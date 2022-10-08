@@ -174,14 +174,16 @@ class Driver < ApplicationRecord
      if (Ranking.find_by(company: self.company) == nil)
       rankdata= Ranking.find_by(company: 0)
      end
-     e = rankdata; rhash = {A: e.A, B: e.B, C: e.C, D: e.D, E: e.E}
      rankseed = "F"
-     rhash.each {|key, val| 
-     if (value >= val)
-        rankseed = key
-        break
-      end
-    }
+     if (value)
+         e = rankdata; rhash = {A: e.A, B: e.B, C: e.C, D: e.D, E: e.E}
+         rhash.each {|key, val| 
+         if (value >= val)
+            rankseed = key
+            break
+          end
+        }
+    end
     ranking = rankseed.to_s
  end
  
