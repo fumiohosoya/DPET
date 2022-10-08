@@ -221,7 +221,7 @@ class DriversController < ApplicationController
       )
    end
    if (@displayflag.driverfuel)
-     @target_fuel_mlg =  get_target_fuel(@driver)
+     @target_fuel_mlg =  @driver.get_fuel_target
    end
  end
  
