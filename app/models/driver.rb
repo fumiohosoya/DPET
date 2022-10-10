@@ -223,8 +223,10 @@ def conv_fuel_to_ranking(value, target)
   average = self.evaluates.where(recordmonth: startdate..enddate).average(:evaluate)
   if (average)
       average = average.ceil(3)
+      return [evaluateslist, average]
+  else
+      return [[], 0.0]
   end
-  return [evaluateslist, average]
  end
 
 

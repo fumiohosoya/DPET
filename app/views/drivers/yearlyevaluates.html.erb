@@ -263,8 +263,8 @@
         fuelpoint = fuelpoint_hash[fuelrank.to_sym]
     
         totalval = safetyavg * balanceSafety
-#        totalval = totalval + avgcheck * balanceCheck 
-#        totalval = totalval + fuelpoint * balanceFuel 
+        totalval = totalval + avgcheck * balanceCheck 
+        totalval = totalval + fuelpoint * balanceFuel 
                     
         totalrank = @driver.conv_dvalue_to_ranking(totalval)
                     
