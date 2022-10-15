@@ -63,25 +63,31 @@
                     <th class="w-10">Month</th> <th  class="w-25">Grade</th> <th>Score</th>
                     
                 </tr>
-                <% (1..6).each do |m| %>
-                <tr class="w-100">
-                    <%
-                    if (m < 4) 
-                         key = "#{@year}/0#{m}"; key2 = "#{@year}/0#{m + 6}" 
-                    else
-                         key = "#{@year}/0#{m}"; key2 = "#{@year}/#{m + 6}" 
-                    end
-                     record1 = (r1 = @year_hash[key.to_s]) ? r1[:record] : nil 
-                     record2 = (r2 = @year_hash[key2.to_s]) ? r2[:record] : nil 
-                    %>
-                    
-                    <td> <%=  Date::MONTHNAMES[m] %></td>
-                    <td> <%= record1 != nil ? record1[:evaluate] : "--" %></td>
-                    <td> <%= record1 != nil ? record1[:rank] : "--" %></td>
-                    <td> <%=  Date::MONTHNAMES[m + 6] %></td>
-                    <td> <%= record2 ? record2.evaluate : "--" %></td>
-                    <td> <%= record2 != nil ? record2[:rank] : "--" %></td>
-                </tr>
+                <% if @evaluates.any? %>
+                    <% (1..6).each do |m| %>
+                    <tr class="w-100">
+                        <%
+                        if (m < 4) 
+                             key = "#{@year}/0#{m}"; key2 = "#{@year}/0#{m + 6}" 
+                        else
+                             key = "#{@year}/0#{m}"; key2 = "#{@year}/#{m + 6}" 
+                        end
+                         record1 = (r1 = @year_hash[key.to_s]) ? r1[:record] : nil 
+                         record2 = (r2 = @year_hash[key2.to_s]) ? r2[:record] : nil 
+                        %>
+                        
+                        <td> <%=  Date::MONTHNAMES[m] %></td>
+                        <td> <%= record1 != nil ? record1[:evaluate] : "--" %></td>
+                        <td> <%= record1 != nil ? record1[:rank] : "--" %></td>
+                        <td> <%=  Date::MONTHNAMES[m + 6] %></td>
+                        <td> <%= record2 ? record2.evaluate : "--" %></td>
+                        <td> <%= record2 != nil ? record2[:rank] : "--" %></td>
+                    </tr>
+                    <% end %>
+                <% else %> <%# @evaluates.any? %>
+                    <tr>
+                        <td colspan="6">Data None</td>
+                    </tr>
                 <% end %>
                 <tr class="greenbg">
                     <th colspan="3" rowspan="2" class="text-center align-middle font1_5rem">
@@ -96,14 +102,12 @@
                 </tr>
                 <tr class="greenbg">
                     <td class="text-center font1_5rem fw-bold">
-                        <%= @ranking %>
+                        <%= @evaluates.any? ? @ranking : "DATA NONE" %> 
                     </td>
                     <td colspan="2" class="text-center font1_5rem fw-bold">
-                        <%= safetyavg = @average %>
+                        <%= @evaluates.any? ? (safetyavg = @average) : "DATA NONE" %>
                     </td>
                 </tr>
-
-                
              </table>
 
            <table class="table table-bordered table-striped monthlyeval">
@@ -201,7 +205,8 @@
                         <% fuel_ary << mlg if mlg %>
                     </td>
                     <td> <%= @year_hash.keys.include?(key) ?
-                            @driver.conv_fuel_to_ranking(mlg, @target_fuel_mlg) : "--" %></td>
+                            @driver.conv_fuel_to_ranking(mlg, @target_fuel_mlg) : "--" %>
+                    </td>
                     <td> <%=  Date::MONTHNAMES[m + 6] %></td>
                     <td>
                          <%= @year_hash.keys.include?(key2) ?
@@ -210,7 +215,7 @@
                     </td>
                     <td>
                           <%= @year_hash.keys.include?(key2) ?
-                            @driver.conv_fuel_to_ranking(mlg2, @target_fuel_mlg) : "--" %></td>
+                            @driver.conv_fuel_to_ranking(mlg2, @target_fuel_mlg) : "--" %>
                     </td>
                 </tr>
             <% end %>            
@@ -245,8 +250,13 @@
 
 </div> <!-- col-12 bg-white -->
 
+<% if !@evaluates.any? %>
+<script>
+   $('#totalval').text('--');
+   $('#totalrank').text('DATA NONE');
+</script>
 
-<% if @displayflag.driverfuel? %>
+<% elsif @displayflag.driverfuel? %>
     <% 
         evalparam = Evalparam.find_by(company_id: @driver.company)
         if (evalparam)

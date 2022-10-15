@@ -85,6 +85,68 @@ class CardEvalsController < ApplicationController
             driverfuel: true 
             )
         end
+        @listhash = {}
+        @branches.each do |branch_id|
+             driverslist = Driver.where(company: @company_id, branch: branch_id)
+             if driverslist.any?
+                 resultarray = []
+                 driverslist.each do |driver|
+                    (safetylist, safetyPts) = driver.get_year_eval(@year)
+                    if (safetylist.any?)
+                        oneresult = {
+                         id: driver.id,
+                         name: driver.name, safety:  safetyPts.ceil(2),
+                         safetyrank:  driver.conv_dvalue_to_ranking(safetyPts),
+                         check:  (checkp = driver.get_yearly_checkitempoint(@year)),
+                         checkrank: driver.conv_dvalue_to_ranking(checkp)
+                        }
+                        if (@displayflag.driverfuel?)
+                            oneresult[:fuel] = mlg = driver.get_yearly_fuelcomsamption(@year) 
+                            oneresult[:fuelrank] = fuelrank = driver.conv_fuel_to_ranking(mlg, driver.get_fuel_target)
+                            evalparam = Evalparam.find_by(company_id: driver.company)
+                            if (evalparam)
+                                balanceSafety = evalparam.balanceSafety / 100.0
+                                balanceCheck = evalparam.balanceCheck / 100.0
+                                balanceFuel = evalparam.balanceFuel / 100.0
+                            else
+                                balanceSafety = (33.30 / 100.0)
+                                balanceCheck = (33.40 / 100.0)
+                                balanceFuel = (33.30 / 100.0)
+                            end
+                            fuelpoint_hash = {A: 100, B: 80, C: 60, E: 40, F:20, G: 0}
+                            fuelpoint = fuelpoint_hash[fuelrank.to_sym]  
+                            if (safetyPts)
+                                totalval = safetyPts * balanceSafety + 
+                                        (checkp ? checkp : 0.0) * balanceCheck + fuelpoint * balanceFuel
+                                oneresult[:totalval] = totalval.ceil(2)
+                                oneresult[:totalrank] = driver.conv_dvalue_to_ranking(totalval)
+                            end
+                        else
+                            evp = Evalparam.find(driver.company)
+                            if (evalparam)
+                                balanceSafety = evp.balanceSafety / (evp.balanceSafety + evp.balanceCheck)
+                                balanceCheck =  evp.balanceCheck /  (evp.balanceSafety + evp.balanceCheck)
+                            else
+                                balanceSafety = 0.5
+                                balanceCheck = 0.5
+                            end
+                            if (safetyPts)
+                                totalval = safetyPts.evaluate * balanceSafety +  checkp * balanceCheck
+                                oneresult[:totalval] = totalval.ceil(2)
+                                onereuslt[:totalrank]= driver.conv_dvalue_to_ranking(totalval)
+                            end
+                        end
+                        resultarray << OpenStruct.new(oneresult)
+                    else
+                        oneresult = { id: driver.id, name: driver.name,
+                                      safety:  "NONE", saftyrank: "NONE" }
+                        resultarray << OpenStruct.new(oneresult)
+                    end
+                 end
+                 resultarray.sort! {|a, b| b.totalval.to_f <=> a.totalval.to_f}
+                 @listhash[branch_id] = resultarray
+             end
+        end
     end
  
     
