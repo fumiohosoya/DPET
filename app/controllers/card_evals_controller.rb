@@ -70,10 +70,16 @@ class CardEvalsController < ApplicationController
     end
         
     def summary
+        @year_array = []
         get_companies_and_target_with_param
-        @year = Time.now.year.to_i
+        @now = params[:year] ? Time.gm(params[:year].to_i) : Time.now
+        @year = @now.year.to_i
         @drivers = Driver.where(company: @company_id).order(:branch, :name)
         if @drivers.any?
+            @year_array =  CardEval.where(driver_id: @drivers.ids).pluck(:recordmonth).map{|r| r.year}.uniq.sort 
+            unless (@year_array.include?(@year))
+                 @year = @year_array.first
+            end
             @branches = @drivers.pluck(:branch).uniq!.delete_if{|x| x == nil}
         else
             @branches = []
@@ -100,14 +106,16 @@ class CardEvalsController < ApplicationController
                          check:  (checkp = driver.get_yearly_checkitempoint(@year)),
                          checkrank: driver.conv_dvalue_to_ranking(checkp)
                         }
+                        evp = Evalparam.find_by(company_id: driver.company)
+
                         if (@displayflag.driverfuel?)
                             oneresult[:fuel] = mlg = driver.get_yearly_fuelcomsamption(@year) 
                             oneresult[:fuelrank] = fuelrank = driver.conv_fuel_to_ranking(mlg, driver.get_fuel_target)
-                            evalparam = Evalparam.find_by(company_id: driver.company)
-                            if (evalparam)
-                                balanceSafety = evalparam.balanceSafety / 100.0
-                                balanceCheck = evalparam.balanceCheck / 100.0
-                                balanceFuel = evalparam.balanceFuel / 100.0
+                            evp = Evalparam.find_by(company_id: driver.company)
+                            if (evp)
+                                balanceSafety = evp.balanceSafety / 100.0
+                                balanceCheck = evp.balanceCheck / 100.0
+                                balanceFuel = evp.balanceFuel / 100.0
                             else
                                 balanceSafety = (33.30 / 100.0)
                                 balanceCheck = (33.40 / 100.0)
@@ -122,8 +130,7 @@ class CardEvalsController < ApplicationController
                                 oneresult[:totalrank] = driver.conv_dvalue_to_ranking(totalval)
                             end
                         else
-                            evp = Evalparam.find(driver.company)
-                            if (evalparam)
+                            if (evp)
                                 balanceSafety = evp.balanceSafety / (evp.balanceSafety + evp.balanceCheck)
                                 balanceCheck =  evp.balanceCheck /  (evp.balanceSafety + evp.balanceCheck)
                             else
@@ -131,9 +138,9 @@ class CardEvalsController < ApplicationController
                                 balanceCheck = 0.5
                             end
                             if (safetyPts)
-                                totalval = safetyPts.evaluate * balanceSafety +  checkp * balanceCheck
+                                totalval = safetyPts * balanceSafety +  checkp * balanceCheck
                                 oneresult[:totalval] = totalval.ceil(2)
-                                onereuslt[:totalrank]= driver.conv_dvalue_to_ranking(totalval)
+                                oneresult[:totalrank]= driver.conv_dvalue_to_ranking(totalval)
                             end
                         end
                         resultarray << OpenStruct.new(oneresult)

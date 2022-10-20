@@ -207,7 +207,7 @@ class DriversController < ApplicationController
 
    if (@evaluates.any?)
     @evaluates.each do |e|
-      key = e.updated_at.strftime("%Y/%m")
+      key = e.recordmonth.strftime("%Y/%m")
       @year_hash[key] = {record: e }
     end
    end

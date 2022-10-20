@@ -12,6 +12,17 @@
 </div>
 <h2><%=  find_company(@company_id).name_e %></h2> 
 
+    <div class="row mx-2 my-3">
+        <% if @year_array.any? %>
+        <% @year_array.each do |y| %>
+            <div class="col-md-4">
+                <% colorcls = (y == @now.year.to_i) ? 'btn-danger': 'btn-secondary' %>
+                <%= link_to y.to_s, summary_card_evals_path(year: y), class:"btn btn-xs #{colorcls}" %>
+            </div>
+        <% end %>
+        <% end %>
+    </div>    
+    
 <div class="bgwhite row mt-4">
     
     <% if @drivers.any? %>
