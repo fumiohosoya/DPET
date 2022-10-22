@@ -20,7 +20,7 @@
     
       <%= f.hidden_field :company_id, value: @company_id %>
       <div class="row mt-4">
-          <%= date_select(:card_eval, :yearmonth, {selected: Date.today.ago(18.days), discard_day: true}, {class: "form-control"} ) %>
+          <%= date_select(:card_eval, :yearmonth, {selected: Date.today.ago(18.days), discard_day: true, start_year:2022}, {class: "form-control"} ) %>
       </div>
       <div class="row mt-4">
            <%= label :card_eval, :branch, "Select branch" %>
