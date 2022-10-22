@@ -233,6 +233,8 @@ class DriversController < ApplicationController
    @year = params[:year] || Time.now.localtime.year.to_s
    @now = params[:year] ? Time.gm(params[:year].to_i) : Time.now
    
+   @year_array = @driver.evaluates.pluck(:recordmonth).map{|r| r.year}.uniq.sort
+   
    (@evaluates, @average) = @driver.get_year_eval(@now.year.to_i)
    @ranking = @driver.conv_dvalue_to_ranking(@average)
    
