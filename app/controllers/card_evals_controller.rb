@@ -163,7 +163,7 @@ class CardEvalsController < ApplicationController
         if (!drv.persisted?)
             drv.password = SecureRandom.hex(5)
             drv.email = "xxx@example.com"
-            drv.save!
+            drv.save(validate: false)
         end
         # op_count = record[1] empty_conv = record[2] occupied_conv = record[3] mileage = record[4]
         (op_count, empty_conv, occupied_conv, mileage) = record[1..4]

@@ -80,6 +80,9 @@ class DriversController < ApplicationController
   
  def edit
    @driver = Driver.find(params[:id])
+   if (@driver.email == "xxx@example.com")
+    @driver.email = ""
+   end
  end  
  
  def update
