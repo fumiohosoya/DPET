@@ -17,7 +17,7 @@ class Driver < ApplicationRecord
     
     has_many :truckrelations, dependent: :destroy
     has_many :trucks, through: :truckrelations, source: :truck
-    has_many :checkitems
+    has_many :checkitems, dependent: :destroy
     has_many :meters
     has_many :brakes
     has_many :lamp_stopper_tires
@@ -28,9 +28,9 @@ class Driver < ApplicationRecord
     has_many :oil_tanks
     has_many :cabups
     has_many :greaseups
-    has_many :evaluates
-    has_many :mileageproofs
-    has_many :dailyresults
+    has_many :evaluates, dependent: :destroy
+    has_many :mileageproofs, dependent: :destroy
+    has_many :dailyresults, dependent: :destroy
     
     def addtruck(truck)
         self.truckrelations.find_or_create_by(truck_id: truck.id)
