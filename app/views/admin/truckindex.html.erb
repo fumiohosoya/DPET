@@ -30,6 +30,7 @@
         <th class="w-10">vehicleid</th>
         <th>Driver Count</th>
         <th>Fuel Target</th>
+        <th>List</th>
     </tr>
     <% @trucks.each do |truck| %>
      
@@ -54,6 +55,10 @@
                 <%= link_to truck.fueltarget.fuel.ceil(2).to_s + "Km/l",
                     edit_fueltarget_path(truck.fueltarget), class:"btn btn-warning btn-xs" %>
             <% end %>
+        </td>
+        <td>
+           <%= link_to "DELETE", truck, method: :delete, class: 'btn btn-secondary btn-xs',
+              data: { confirm: "Delete OK?" }%>
         </td>
       </tr>
     

@@ -14,6 +14,8 @@
          </td>
          <td>
              <%= link_to 'View profile', driver_path(driver), class:"btn btn-primary" %>
+             <%= link_to 'Delete', driver_path(driver), method: :delete, class:"btn btn-warning",
+                 data: { confirm: "Delete OK?" } %>
          </td>
      </tr>
       <% end %>

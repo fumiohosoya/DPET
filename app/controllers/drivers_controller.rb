@@ -103,8 +103,9 @@ class DriversController < ApplicationController
  
  def destroy
    @driver = Driver.find(params[:id])
+   company = @driver.company
     @driver.destroy if (@driver)
-    redirect_to drivers_url
+    redirect_to drivers_url(company: company)
  end
  
  def topmenu

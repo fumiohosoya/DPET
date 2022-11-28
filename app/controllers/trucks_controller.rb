@@ -48,6 +48,10 @@ class TrucksController < ApplicationController
   end
 
   def destroy
+    @truck = Truck.find(params[:id])
+    company = @truck.company_id
+    @truck.destroy if (@truck)
+    redirect_to truckindex_admin_index_url(company: company)
   end
   
   private
