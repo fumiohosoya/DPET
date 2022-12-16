@@ -10,14 +10,45 @@ module DriversHelper
   def driverlogged_in?
     !!current_driver
   end
+  
+   def get_json(location, limit = 10)
+    raise ArgumentError, 'too many HTTP redirects' if limit == 0
+    uri = URI.parse(location)
+ 
+    begin
+      response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
+        http.open_timeout = 5
+        http.read_timeout = 10
+        http.get(uri.request_uri)
+      end
+ 
+      case response
+      when Net::HTTPSuccess
+        json = response.body
+        JSON.parse(json)
+      when Net::HTTPRedirection
+        location = response['location']
+        warn "redirected to #{location}"
+        get_json(location, limit - 1)
+      else
+        puts [uri.to_s, response.value].join(" : ")
+        nil
+      end
+    rescue => e
+      puts [uri.to_s, e.class, e].join(" : ")
+      nil
+    end
+  end
+ 
 
 
 
 def allcompanies
     url = 'https://logiccs.herokuapp.com/companies/all'
-    uri = URI.parse(url)
-    json = Net::HTTP.get(uri)
-    result = JSON.parse(json)
+    result = get_json(url)
+#    uri = URI.parse(url)
+#    json = Net::HTTP.get(uri)
+#    result = JSON.parse(json)
 end
 
 def allcompanies_model
@@ -33,9 +64,10 @@ end
 
 def allbranches(id)
     url = "http://logiccs.herokuapp.com/branches/#{id}/all.json"
-    uri = URI.parse(url)
-    json = Net::HTTP.get(uri)
-    result = JSON.parse(json)
+    result = get_json(url)
+#    uri = URI.parse(url)
+#    json = Net::HTTP.get(uri)
+#    result = JSON.parse(json)
 end
 
 def branches_by_cid_model(id)
@@ -47,9 +79,11 @@ end
 
 def allbranchesmodel
     url = "http://logiccs.herokuapp.com/branches/allall"
-    uri = URI.parse(url)
-    json = Net::HTTP.get(uri)
-    parsed_json = JSON.parse(json)
+    
+    parsed_json = get_json(url)
+#    uri = URI.parse(url)
+#    json = Net::HTTP.get(uri)
+#    parsed_json = JSON.parse(json)
     return parsedjson.map{|e| Branch.new(e.symbolize_keys)}
 end
 
@@ -58,9 +92,11 @@ end
 def alltrucks(branchid)
 #  if (@alltrucks == nil)
     url = "http://logiccs.herokuapp.com/trucks/#{branchid}/all.json"
-    uri = URI.parse(url)
-    json = Net::HTTP.get(uri)
-    @alltrucks = JSON.parse(json)
+    @alltrucks = get_json(url)
+#    uri = URI.parse(url)
+#   json = Net::HTTP.get(uri)
+    
+#    @alltrucks = JSON.parse(json)
 #  else
 #    @alltrucks
 #  end
@@ -87,16 +123,27 @@ end
       uritrucknumber = URI.encode(trucknumber)
       url = "http://logiccs.herokuapp.com/trucks/numbershow.json?number=#{uritrucknumber}"
       uri = URI.parse(url)
-      json = Net::HTTP.get(uri)
-      result = JSON.parse(json)    
+      return get_json(url)
+      
+#      json = Net::HTTP.get(uri)
+#      result = JSON.parse(json)    
   end
 
   def gettruck_by_id(id)
     uri_id = URI.encode(id.to_s)
     url = "http://logiccs.herokuapp.com/trucks/#{uri_id}/json"
-    uri = URI.parse(url)
-    json = Net::HTTP.get(uri)
-    result = JSON.parse(json)    
+    
+    return get_json(url)
+    
+    
+#    uri = URI.parse(url)
+#    json = Net::HTTP.get(uri)
+#    status = json.code
+#    if (status.to_i == 404)
+#      result = nil
+#    else
+#      result = JSON.parse(json)    
+#    end
   end
 
   def find_company(id)
