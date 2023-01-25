@@ -131,7 +131,7 @@
                 <% check_year_hash = 
                    @driver.checkitems.pluck(:created_at).map{|e|
                        "#{e.year}/#{sprintf('%02d', e.month)}"
-                    }
+                    }.uniq
                 %>
                 <% totalcheck = 0 %>
                 <% (1..6).each do |m| %>
