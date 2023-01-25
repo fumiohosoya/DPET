@@ -247,6 +247,7 @@
                 </tr>
                 <tr class="greenbg">
                     <%#= avg = fuel_ary.sum / fuel_ary.count %>
+                    fulerank = nil
                     <% fuelavg = (fuel_ary.sum(0.0) / fuel_ary.count.to_f).ceil(2) %>
                     <td class="text-center font1_5rem fw-bold">
                         <%= fuelrank = @driver.conv_fuel_to_ranking(fuelavg, @target_fuel_mlg) %>
@@ -265,7 +266,7 @@
 
 </div> <!-- col-12 bg-white -->
 
-<% if !@evaluates.any? %>
+<% if !@evaluates.any? && !@driver.checkitems.any? %>
 <script>
    $('#totalval').text('--');
    $('#totalrank').text('DATA NONE');
@@ -287,9 +288,10 @@
         fuelpoint_hash = {A: 100, B: 80, C: 60, E: 40, F:20, G: 0}
         fuelpoint = fuelpoint_hash[fuelrank.to_sym]
     
-        totalval = safetyavg * balanceSafety
-        totalval = totalval + avgcheck * balanceCheck 
-        totalval = totalval + fuelpoint * balanceFuel 
+        totalval = 0.0
+        totalval = safetyavg * balanceSafety if (safetyavg != nil)
+        totalval = totalval + avgcheck * balanceCheck if (avgcheck != nil)
+        totalval = totalval + fuelpoint * balanceFuel if (fuelpoint != nil)
                     
         totalrank = @driver.conv_dvalue_to_ranking(totalval)
                     
