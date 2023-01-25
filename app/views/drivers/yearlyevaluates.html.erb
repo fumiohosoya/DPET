@@ -128,6 +128,11 @@
                     <th class="w-10">Month</th> <th  class="w-25">Score</th> <th>Grade</th>
                     <th class="w-10">Month</th> <th  class="w-25">Score</th> <th>Grade</th>
                 </tr>
+                <% check_year_hash = 
+                   @driver.checkitems.pluck(:created_at).map{|e|
+                       "#{e.year}/#{sprintf('%02d', e.month)}"
+                    }
+                %>
                 <% totalcheck = 0 %>
                 <% (1..6).each do |m| %>
                 <tr class="w-100">
@@ -141,22 +146,22 @@
                     
                     <td> <%=  Date::MONTHNAMES[m] %></td>
                     <td> 
-                        <%= @year_hash.keys.include?(key) ? 
+                        <%= check_year_hash.include?(key) ? 
                             val1 = @driver.get_checkitempoint(key) : "--" %>
                         <% totalcheck += val1.to_f %>
                     </td>
                     <td>
-                        <%= @year_hash.keys.include?(key) ? 
+                        <%= check_year_hash.include?(key) ? 
                             @driver.conv_dvalue_to_ranking(val1) : "--" %>
                     </td>
                     <td> <%=  Date::MONTHNAMES[m + 6] %></td>
                     <td>
-                         <%= @year_hash.keys.include?(key2) ?
+                         <%= check_year_hash.include?(key2) ?
                             val2 = @driver.get_checkitempoint(key2) : "--" %>
                         <% totalcheck += val2.to_f %>
                     </td>
                     <td>
-                        <%= @year_hash.keys.include?(key2) ? 
+                        <%= check_year_hash.include?(key2) ? 
                             @driver.conv_dvalue_to_ranking(val2) : "--" %>
                         </td>
                 </tr>
