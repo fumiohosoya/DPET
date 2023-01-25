@@ -300,18 +300,19 @@
    $('#totalval').text('<%= totalval.ceil(2) %>');
    $('#totalrank').text('<%= totalrank %>');
 </script>
-<% else %>
+<% else   # if displayflag.fuel? %>
     <% 
-        evp = Evalparam.find(@driver.company)
-        if (evalparam)
+        evp = Evalparam.find_by(company_id: @driver.company)
+        if (evp)
             balanceSafety = evp.balanceSafety / (evp.balanceSafety + evp.balanceCheck)
             balanceCheck =  evp.balanceCheck /  (evp.balanceSafety + evp.balanceCheck)
         else
             balanceSafety = 0.5
             balanceCheck = 0.5
         end
+        totalval = 0.0
+        safetyavg = 0.0 if (safetyavg == nil)
         avgcheck = 0.0 if (avgcheck == nil)
-        fuelpoint = 0.0 if (fuelpoint == nil)
         totalval = safetyavg * balanceSafety +  avgcheck * balanceCheck
         totalrank = @driver.conv_dvalue_to_ranking(totalval)
     %>
