@@ -252,7 +252,7 @@
                         <%= fuelrank = @driver.conv_fuel_to_ranking(fuelavg, @target_fuel_mlg) %>
                     </td>
                     <td colspan="2" class="text-center font1_5rem fw-bold">
-                        <%= fuelavg %>
+                        <%= fuel_ary.count != 0 ? fuelavg : "--" %>
                     </td>
                 </tr>
         </table>
