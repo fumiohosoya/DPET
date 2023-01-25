@@ -178,7 +178,7 @@
                     </th>
                 </tr>
                 <tr class="greenbg">
-                    <% avgcheck= totalcheck / @year_hash.keys.count.to_f  %>
+                    <% avgcheck= totalcheck / check_year_hash.count.to_f  %>
                     <td class="text-center font1_5rem fw-bold">
                         <%= @driver.conv_dvalue_to_ranking(avgcheck) %>
                     </td>
