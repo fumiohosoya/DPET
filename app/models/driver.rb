@@ -215,7 +215,7 @@ def conv_fuel_to_ranking(value, target)
  end
  
  def get_year_eval(year)
-  t = Time.gm(year)
+  t = year != nil ? Time.gm(year)  : Time.now
   startdate = t.beginning_of_year
   enddate = t.end_of_year
   evaluateslist = self.evaluates.where(recordmonth: startdate..enddate).order(:updated_at)

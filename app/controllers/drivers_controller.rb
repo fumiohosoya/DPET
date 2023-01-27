@@ -306,28 +306,7 @@ class DriversController < ApplicationController
  end
  
  
- 
- 
  private
- 
-  # def get_target_fuel(driver)
-  #    target_fuel_mlg = 4.5
-  #    lastr =  driver.dailyresults.last
-  #    if (lastr != nil && (truck = Truck.find_by(id: lastr.truck_id)))
-  #     if truck.fueltarget == nil
-  #      target_fuel_mlg = Fueltarget.makedefault(truck)
-  #     else
-  #      target_fuel_mlg = truck.fueltarget
-  #     end
-  #    else
-  #     if ((tr = @driver.truckrelations).any? && (truckrel = tr.last.truck))
-  #      target_fuel_mlg = truckrel.fueltarget.fuel
-  #     end
-  #    end
-  #    return target_fuel_mlg
-  # end
- 
-   
      
    def driver_params
     params.require(:driver).permit(:name, :sex, :date_birth, :age,

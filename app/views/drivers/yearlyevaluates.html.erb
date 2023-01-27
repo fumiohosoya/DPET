@@ -128,7 +128,7 @@
                     <th class="w-10">Month</th> <th  class="w-25">Score</th> <th>Grade</th>
                     <th class="w-10">Month</th> <th  class="w-25">Score</th> <th>Grade</th>
                 </tr>
-                <% check_year_hash = 
+                <% check_year_array = 
                    @driver.checkitems.pluck(:created_at).map{|e|
                        "#{e.year}/#{sprintf('%02d', e.month)}"
                     }.uniq
@@ -146,22 +146,22 @@
                     
                     <td> <%=  Date::MONTHNAMES[m] %></td>
                     <td> 
-                        <%= check_year_hash.include?(key) ? 
+                        <%= check_year_array.include?(key) ? 
                             val1 = @driver.get_checkitempoint(key) : "--" %>
                         <% totalcheck += val1.to_f %>
                     </td>
                     <td>
-                        <%= check_year_hash.include?(key) ? 
+                        <%= check_year_array.include?(key) ? 
                             @driver.conv_dvalue_to_ranking(val1) : "--" %>
                     </td>
                     <td> <%=  Date::MONTHNAMES[m + 6] %></td>
                     <td>
-                         <%= check_year_hash.include?(key2) ?
+                         <%= check_year_array.include?(key2) ?
                             val2 = @driver.get_checkitempoint(key2) : "--" %>
                         <% totalcheck += val2.to_f %>
                     </td>
                     <td>
-                        <%= check_year_hash.include?(key2) ? 
+                        <%= check_year_array.include?(key2) ? 
                             @driver.conv_dvalue_to_ranking(val2) : "--" %>
                         </td>
                 </tr>
@@ -178,7 +178,7 @@
                     </th>
                 </tr>
                 <tr class="greenbg">
-                    <% avgcheck= totalcheck / check_year_hash.count.to_f  %>
+                    <% avgcheck= totalcheck / check_year_array.count.to_f  %>
                     <td class="text-center font1_5rem fw-bold">
                         <%= @driver.conv_dvalue_to_ranking(avgcheck) %>
                     </td>

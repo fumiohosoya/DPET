@@ -20,7 +20,8 @@
         <div class="btn btn-danger w-100 mb-2"><%= find_branch(@company_id, branch.to_i).name %></div>
             <div class="row">
                 <% @drivers.each do |driver| %>
-                    <% if !driver.evaluates.empty? || !driver.checkitems.empty? %>
+                    <% if !driver.evaluates.empty? ||     
+                          !driver.checkitems.empty? %>
                         <div class="col-md-4 text-center mb-2">
                             <%#= link_to driver.name, evaluates_driver_path(driver.id), class:"btn btn-xs btn-primary w-75" %>
                             <%= link_to driver.name, yearlyevaluates_driver_path(driver.id), class:"btn btn-xs btn-primary w-75" %>
