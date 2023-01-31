@@ -19,6 +19,7 @@
         </div>
         <div class="col-4">
             <div class="card dphoto col-12 vh-50" style="height:auto;">
+                <!-- Driver's Photo info -->
                 <div class="offset-1 col-10">
                 <% if @driver.photo.url %>
                    <%= image_tag @driver.photo.thumb.url, class:'img-fluid img-thumbnail' %>
@@ -30,6 +31,7 @@
                 </div>
             </div>
             <div class="card col-12">
+              <!-- Driver's basic profile -->
               <div class="card-body">
                 <h4 class="card-subtitle mb-2 text-muted">Name: <%= @driver.name %></h4>
                 <p class="card-text"><%= @company.name_e %></p>
@@ -40,6 +42,7 @@
                 <!--<a href="#" class="card-link">Card link</a>-->
                 <!--<a href="#" class="card-link">Another link</a>-->
               </div>
+ 
             </div>
                <table class="table table-bordered table-striped">
                         <tr class="bg-warning">
@@ -62,6 +65,19 @@
                             </td>
                         </tr>                
                     </table>
+                    
+                    <hr>
+             <div class="mt-4 col-12">
+                <h3 class="bgwhite text-center">Check Status</h3>
+                <% prev_begin = @now.prev_year.beginning_of_year %>
+                <% end_now = @now.end_of_year %>
+                <%= month_calendar do |date| %>
+                  <%= date.day %><br>
+                  <% check_date_array = @driver.checkitems.where(created_at: prev_begin..end_now).
+                    pluck(:created_at).map {|e| e.to_date } %>
+                  <%= check_date_array.include?(date) ? "●":"☓" %>
+                <% end %>
+              </div>
         </div>
         <div class="col-8">
             <table class="table table-bordered table-striped monthlyeval">
@@ -128,7 +144,7 @@
                     <th class="w-10">Month</th> <th  class="w-25">Score</th> <th>Grade</th>
                     <th class="w-10">Month</th> <th  class="w-25">Score</th> <th>Grade</th>
                 </tr>
-                <% check_year_array = 
+                <% check_month_array = 
                    @driver.checkitems.pluck(:created_at).map{|e|
                        "#{e.year}/#{sprintf('%02d', e.month)}"
                     }.uniq
@@ -146,22 +162,22 @@
                     
                     <td> <%=  Date::MONTHNAMES[m] %></td>
                     <td> 
-                        <%= check_year_array.include?(key) ? 
+                        <%= check_month_array.include?(key) ? 
                             val1 = @driver.get_checkitempoint(key) : "--" %>
                         <% totalcheck += val1.to_f %>
                     </td>
                     <td>
-                        <%= check_year_array.include?(key) ? 
+                        <%= check_month_array.include?(key) ? 
                             @driver.conv_dvalue_to_ranking(val1) : "--" %>
                     </td>
                     <td> <%=  Date::MONTHNAMES[m + 6] %></td>
                     <td>
-                         <%= check_year_array.include?(key2) ?
+                         <%= check_month_array.include?(key2) ?
                             val2 = @driver.get_checkitempoint(key2) : "--" %>
                         <% totalcheck += val2.to_f %>
                     </td>
                     <td>
-                        <%= check_year_array.include?(key2) ? 
+                        <%= check_month_array.include?(key2) ? 
                             @driver.conv_dvalue_to_ranking(val2) : "--" %>
                         </td>
                 </tr>
@@ -178,7 +194,7 @@
                     </th>
                 </tr>
                 <tr class="greenbg">
-                    <% avgcheck= totalcheck / check_year_array.count.to_f  %>
+                    <% avgcheck= totalcheck / check_month_array.count.to_f  %>
                     <td class="text-center font1_5rem fw-bold">
                         <%= @driver.conv_dvalue_to_ranking(avgcheck) %>
                     </td>
@@ -247,7 +263,7 @@
                 </tr>
                 <tr class="greenbg">
                     <%#= avg = fuel_ary.sum / fuel_ary.count %>
-                    fulerank = nil
+                    
                     <% fuelavg = (fuel_ary.sum(0.0) / fuel_ary.count.to_f).ceil(2) %>
                     <td class="text-center font1_5rem fw-bold">
                         <%= fuelrank = @driver.conv_fuel_to_ranking(fuelavg, @target_fuel_mlg) %>

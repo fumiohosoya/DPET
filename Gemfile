@@ -78,3 +78,5 @@ gem 'pg', group: :production
 #end
 
 gem 'business_time'
+
+gem 'simple_calendar'
