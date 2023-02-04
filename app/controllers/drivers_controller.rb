@@ -234,8 +234,15 @@ class DriversController < ApplicationController
    @company = find_company(@driver.company)
    
    #@now = Time.now
-   @year = params[:year] || Time.now.localtime.year.to_s
-   @now = params[:year] ? Time.gm(params[:year].to_i) : Time.now
+   #@year = params[:year] || Time.now.localtime.year.to_s
+   #@now = params[:year] ? Time.gm(params[:year].to_i) : Time.now
+   if params[:start_date]
+    @now = Date.parse(params[:start_date]).since(6.days) # compensate calendar's start as 6days
+    @year = @now.year.to_s
+   else
+    @now = Time.now
+    @year = @now.localtime.year.to_s
+   end
    
    @year_array = @driver.evaluates.pluck(:recordmonth).map{|r| r.year}.uniq.sort
    
