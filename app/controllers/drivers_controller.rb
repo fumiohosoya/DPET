@@ -312,6 +312,15 @@ class DriversController < ApplicationController
    render json: @subhtml
  end
  
+ def popupcheckitems
+   @title = "CheckItems"
+   @driver = Driver.find(params[:id])
+   @date = Date.parse(params[:date])
+   day_begin = @date.to_time
+   day_end = day_begin.end_of_day
+   @items = @driver.checkitems.where(created_at: day_begin..day_end)
+ end
+ 
  
  private
      

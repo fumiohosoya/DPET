@@ -1,0 +1,9 @@
+
+<%= driver.name %> Checks at <%= @date %>
+<br>
+<% items.each do |item| %>
+    <%= item.type %>
+    <%= image_tag item.checkimages.first.image.url, class:'w-50 img-fluid' %>
+
+    <hr>
+<% end %>

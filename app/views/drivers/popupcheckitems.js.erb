@@ -1,0 +1,3 @@
+$("#modal-body").html("<%= escape_javascript(render('checkitems', 
+            {driver:@driver, date: @date, items: @items})) %>"); 
+$("#exampleModal").modal("show")

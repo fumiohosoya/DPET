@@ -1,3 +1,4 @@
+<%= render 'modal' %>
 <%= render 'admin/backtoadmin' %>
     <div class="row mx-2 my-3">
         <% if @year_array.any? %>
@@ -24,8 +25,6 @@
                 <div class="offset-1 col-10">
                 <% if @driver.photo.url %>
                    <%= image_tag @driver.photo.thumb.url, class:'img-fluid img-thumbnail' %>
-
-                   image exist
                 <% else %>
                     <%= image_tag 'no_image.png', class:'img-fluid img-thumbnail' %>
                 <% end %>
@@ -73,6 +72,11 @@
                 <% prev_begin = @now.prev_year.beginning_of_year %>
                 <% end_now = @now.end_of_year %>
                 <% firstflag = true %>
+                <% check_date_hash = @driver.checkitems.where(created_at: prev_begin..end_now).
+                    pluck(:created_at).map {|e| e.to_date }.
+                    group_by(&:itself).map {|key, value| [key, value.count]}.to_h
+                %>
+                <%# check_date_hash has  {Date.parse("2023-02-10"), 3} like key is Date, value count %>
                 <%= month_calendar do |date| %>
                   <% if firstflag %>
                       <% if Date.new(date.year, date.month, date.day) < prev_begin %>
@@ -83,9 +87,20 @@
                       <% firstflag = false %>
                   <% end %>
                   <%= date.day %><br>
-                  <% check_date_array = @driver.checkitems.where(created_at: prev_begin..end_now).
-                    pluck(:created_at).map {|e| e.to_date } %>
-                  <%= check_date_array.include?(date) ? "●":"☓" %>
+                  <% if (!check_date_hash.has_key?(date)) %>
+                    <%= "☓" %>
+                  <% else %>
+                    <%= link_to "#{check_date_hash[date]}", popupcheckitems_driver_path(@driver, date: date),
+                       data:{"toggle": "modal", "target":"#exampleModal"},
+                       class:'btn btn-xs btn-primary px-2 text-light',
+                       remote: true
+                       %>
+                       
+                       <!--<a href="/drivers/78/popupcheckitems?date=2023-01-25"-->
+                       <!--class="btn btn-xs btn-primary" data-toggle="modal" data-target="#exampleModal">-->
+                       <!--modal-->
+                       <!--</a>-->
+                  <% end %>
                 <% end %>
               </div>
         </div>

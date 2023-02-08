@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     member do
       get :summary
       get :yearlyevaluates
+      get :popupcheckitems
     end
   end
   
