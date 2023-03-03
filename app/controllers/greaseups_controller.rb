@@ -18,13 +18,10 @@ class GreaseupsController < ApplicationController
            flash[:success] = "Photo saved"
            redirect_to topmenu_url(@current_driver.id)
        else
-           
-           #binding.pry
-           #if (params[:lamp_stopper_tire][:checkimages_attributes].present?) 
-           #   @greaseup.checkimages.build(params[:lamp_stopper_tire][:checkimages_attributes])
-           #end
-
            flash[:error] = "Photo/Data not Saved, Please Set Again"
+           unless (@greaseup.checkimages.any?)
+               @greaseup.checkimages.build
+           end
            render :new
        end
     end

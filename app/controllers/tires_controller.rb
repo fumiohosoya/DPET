@@ -17,13 +17,10 @@ class TiresController < ApplicationController
            flash[:success] = "Photo saved"
            redirect_to topmenu_url(@current_driver.id)
        else
-           
-           #binding.pry
-           #if (params[:lamp_stopper_tire][:checkimages_attributes].present?) 
-           #   @tire.checkimages.build(params[:lamp_stopper_tire][:checkimages_attributes])
-           #end
-
            flash[:error] = "Photo/Data not Saved, Please Set Again"
+           unless (@tire.checkimages.any?)
+               @tire.checkimages.build
+           end
            render :new
        end
     end
@@ -31,7 +28,7 @@ class TiresController < ApplicationController
     private
     
     def tire_params
-       params.require(:tire).permit(:driver_id, checkimages_attributes:[:id, :checkitem_id, :image])
+       params.require(:tire).permit(:driver_id, checkimages_attributes:[:id, :checkitem_id, :image, :image_cache])
     end
     
 end

@@ -17,6 +17,7 @@ class MetersController < ApplicationController
            redirect_to topmenu_url(@current_driver.id)
        else
            flash[:error] = "Photo not Saved, Please Set Again"
+           @meter.checkimages.build
            render :new
        end
     end
@@ -24,6 +25,6 @@ class MetersController < ApplicationController
     private
     
     def meter_params
-       params.require(:meter).permit(:driver_id, checkimages_attributes:[:image])
+       params.require(:meter).permit(:driver_id, checkimages_attributes:[:image, :image_cache])
     end
 end

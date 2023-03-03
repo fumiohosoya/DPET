@@ -35,5 +35,8 @@ module DPET
     # Don't generate system test files.
     config.generators.system_tests = nil
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
+    
+    # add custom validators path
+    config.autoload_paths += Dir["#{config.root}/app/validators"]
   end
 end

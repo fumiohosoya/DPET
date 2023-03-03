@@ -1,5 +1,8 @@
 class LampStopperTire < Checkitem
-    validates :lamp, numericality: true
-    validates :stopper, numericality: true
-    validates :oilDrops, numericality: true
+    
+    validates :checkimages, image2_count: true
+
+    validates :lamp, presence: true, numericality: true
+    validates :stopper, presence: true, numericality: true
+    validates :oilDrops, presence: true, numericality: true
 end

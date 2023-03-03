@@ -59,6 +59,7 @@ Rails.application.routes.draw do
   resources :other_cost
   resources :special_cost
   
+  resources :destinations
   
   
   get  'admin/:number/listdrivers', to: "admin#listdrivers", as: :listdrivers

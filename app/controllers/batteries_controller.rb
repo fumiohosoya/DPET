@@ -12,11 +12,14 @@ class BatteriesController < ApplicationController
        @battery = Battery.new(battery_params)
        @battery.type = "Battery"
        if (@battery.save)
-           flash[:success] = "Photo saved"
-           redirect_to topmenu_url(@current_driver.id)
+         flash[:success] = "Photo saved"
+         redirect_to topmenu_url(@current_driver.id)
        else
-           flash[:error] = "Photo not Saved, Please Set Again"
-           render :new
+         flash[:error] = "Photo not Saved, Please Set Again"
+         unless (@battery.checkimages.any?)
+             @battery.checkimages.build
+         end
+         render :new
        end
     end
     

@@ -17,6 +17,9 @@ class CabupsController < ApplicationController
            redirect_to topmenu_url(@current_driver.id)
        else
            flash[:error] = "Photo not Saved, Please Set Again"
+           unless (@cabup.checkimages.any?)
+               @cabup.checkimages.build
+           end
            render :new
        end
     end
@@ -24,7 +27,7 @@ class CabupsController < ApplicationController
     private
     
     def cabup_params
-       params.require(:cabup).permit(:driver_id, checkimages_attributes:[:image])
+       params.require(:cabup).permit(:driver_id, checkimages_attributes:[:image, image_cache])
     end
 end
 

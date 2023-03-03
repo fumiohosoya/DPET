@@ -1,47 +1,49 @@
 <h3>Lamp Stopper Tire Easy Check</h3>
 
      <%= form_with(model: @lampStopperTire, local:true, multipart: true, 
-     
-        
          id:'lampStopperTire', class: "form-horizontal") do |f|  %>
     
         <%= render 'layouts/error_messages', model: f.object %>
     
       <%= f.hidden_field :driver_id, value: @current_driver.id %>
       <div class="col-4">
-          <%= image_tag '/images/GuidanceLampStopperTire1.png', alt: 'GuidanceLamp1', class: 'img-fluid' %>
-
-          <%= f.fields_for :checkimages do |q| %>
-              <%= q.file_field :image, accept:'image/*', capture:'environment' %>
-              
-              
+           <%= f.fields_for :checkimages do |q| %>
+            <% if f.object.checkimages.first.image.present? %>
+              <%= image_tag f.object.checkimages.first.image.url(:thumb) %>
+              <%= q.hidden_field :image_cache %>
+            <% else %>
+                <%= image_tag '/images/GuidanceLampStopperTire1.png', alt: 'GuidanceLamp1', class: 'img-fluid' %>
+                <%= q.file_field :image, accept:'image/*', capture:'environment' %>
+            <% end %>
           <% end %>
       </div>
       <div class="col-4">
-          <%= image_tag '/images/GuidanceLampStopperTire2.png', alt: 'GuidanceLamp2', class: 'img-fluid' %>
-
-          <%= f.fields_for :checkimages do |q| %>
-              <%= q.file_field :image, accept:'image/*', capture:'environment' %>
-              
-              
+           <%= f.fields_for :checkimages do |q| %>
+            <% if f.object.checkimages.second&.image.present? %>
+              <%= image_tag f.object.checkimages.second&.image.url(:thumb) %>
+              <%= q.hidden_field :image_cache %>
+            <% else %>
+                <%= image_tag '/images/GuidanceLampStopperTire2.png', alt: 'GuidanceLamp2', class: 'img-fluid' %>
+                <%= q.file_field :image, accept:'image/*', capture:'environment' %>
+            <% end %>
           <% end %>
       </div>
       <div class="col-12 row">
           <%= f.label :lamp, "Lamp", class:'col-12' %>
           <div class="col-10">
-              <%= f.radio_button :lamp, 1 %>OK <%= f.radio_button :lamp, 0 %>NG
+              <%= f.radio_button :lamp, 1 %>OK <%= f.radio_button :lamp, 0, checked: true %>NG
           </div>
       </div>
       <div class="col-12 row">
           <%= f.label :stopper, "Stopper", class:'col-12' %>
           <div class="col-10">
-              <%= f.radio_button :stopper, 1 %>OK <%= f.radio_button :stopper, 0 %>NG
+              <%= f.radio_button :stopper, 1 %>OK <%= f.radio_button :stopper, 0, checked: true %>NG
           </div>
       </div>
       <div class="col-12 row">
           <%= f.label :oilDrops, "OilDrops", class:'col-12' %>
           <div class="col-10">
-              <%= f.radio_button :oilDrops, 1 %>OK <%= f.radio_button :oilDrops, 0 %>NG
+              <%= f.radio_button :oilDrops, 1 %>OK <%= f.radio_button :oilDrops, 0, checked: true %>NG
           </div>
       </div>
       

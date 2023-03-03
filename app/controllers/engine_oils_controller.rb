@@ -18,6 +18,9 @@ class EngineOilsController < ApplicationController
            redirect_to topmenu_url(@current_driver.id)
        else
            flash[:error] = "Photo not Saved, Please Set Again"
+           unless (@engineoil.checkimages.any?)
+               @engineoil.checkimages.build
+           end
            render :new
        end
     end
@@ -25,6 +28,6 @@ class EngineOilsController < ApplicationController
     private
     
     def engineoil_params
-       params.require(:engine_oil).permit(:driver_id, checkimages_attributes:[:image])
+       params.require(:engine_oil).permit(:driver_id, checkimages_attributes:[:image, :image_cache])
     end
 end

@@ -24,6 +24,10 @@ class OilTanksController < ApplicationController
            #end
         
            flash[:error] = "Photo/Data not Saved, Please Set Again"
+           #unless (@oilTank.checkimages.any? && @oilTank.checkimages.count > 1)
+           unless (@oilTank.checkimages.any?)
+               @oilTank.checkimages.build
+           end
            render :new
         end
     end
@@ -31,7 +35,7 @@ class OilTanksController < ApplicationController
     private
     
     def tire_params
-       params.require(:oil_tank).permit(:driver_id, checkimages_attributes:[:id, :checkitem_id, :image])
+       params.require(:oil_tank).permit(:driver_id, checkimages_attributes:[:id, :checkitem_id, :image, :image_cache])
     end
     
 end

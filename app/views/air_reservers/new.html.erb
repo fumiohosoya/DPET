@@ -10,7 +10,14 @@
     
       <%= f.hidden_field :driver_id, value: @current_driver.id %>
       <%= f.fields_for :checkimages do |q| %>
-          <%= q.file_field :image, accept:'image/*', capture:'environment' %>
+            <% if q.object.image.present? %>
+              <%= image_tag q.object.image.url(:thumb) %>
+              <%= q.hidden_field :image_cache %>
+            <% else %>
+                <%= image_tag '/images/GuidanceBrake1.png', alt: 'GuidanceMeter1', class: 'img-fluid' %>
+                <%= q.file_field :image, accept:'image/*', capture:'environment' %>
+            <% end %>
+
           
           
             <!--<input type="file" name="image" accept="video/*" capture="environment">-->

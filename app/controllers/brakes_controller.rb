@@ -18,6 +18,9 @@ class BrakesController < ApplicationController
            redirect_to topmenu_url(@current_driver.id)
        else
            flash[:error] = "Photo not Saved, Please Set Again"
+           unless (@brake.checkimages.any?)
+               @brake.checkimages.build
+           end
            render :new
        end
     end
@@ -25,7 +28,7 @@ class BrakesController < ApplicationController
     private
     
     def brake_params
-       params.require(:brake).permit(:driver_id, checkimages_attributes:[:image])
+       params.require(:brake).permit(:driver_id, checkimages_attributes:[:image, :image_cache])
     end
     
 end

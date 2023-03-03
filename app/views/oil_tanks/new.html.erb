@@ -1,4 +1,4 @@
-<h3>Tire Check</h3>
+<h3>Oil And Tank</h3>
 
         <%= form_with(model: @oilTank, local:true, multipart: true, 
              id:'tire', class: "form-horizontal") do |f|  %>
@@ -11,17 +11,17 @@
           <%= image_tag '/images/GuidanceOilAndTank2.png', alt: 'GuidanceOilAndTank2', class: 'img-fluid' %>
 
           <%= f.fields_for :checkimages do |q| %>
-              <%= q.file_field :image, accept:'image/*', capture:'environment' %>
-              
-              
+            <% if f.object.checkimages.first&.image.present? %>
+              <%= image_tag f.object.checkimages.first.image.url(:thumb) %>
+              <%= q.hidden_field :image_cache %>
+            <% else %>
+                <%= q.file_field :image, accept:'image/*', capture:'environment' %>
+            <% end %>
           <% end %>
       </div>
       <div class="col-4">
-
           <%= f.fields_for :checkimages do |q| %>
-              <%= q.file_field :image, accept:'image/*', capture:'environment' %>
-              
-              
+                <%= q.file_field :image, accept:'image/*', capture:'environment' %>
           <% end %>
       </div>
       

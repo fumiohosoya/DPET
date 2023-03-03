@@ -11,19 +11,21 @@
       <div class="col-4">
           <%= image_tag '/images/GuidanceTires1.png', alt: 'GuidanceTire1', class: 'img-fluid' %>
 
-          <%= f.fields_for :checkimages do |q| %>
-              <%= q.file_field :image, accept:'image/*', capture:'environment' %>
-              
-              
+         <%= f.fields_for :checkimages do |q| %>
+            <% if f.object.checkimages.first&.image.present? %>
+              <%= image_tag f.object.checkimages.first.image.url(:thumb) %>
+              <%= q.hidden_field :image_cache %>
+            <% else %>
+                <%= q.file_field :image, accept:'image/*', capture:'environment' %>
+            <% end %>
           <% end %>
       </div>
       <div class="col-4">
-
-          <%= f.fields_for :checkimages do |q| %>
-              <%= q.file_field :image, accept:'image/*', capture:'environment' %>
-              
-              
+          
+           <%= f.fields_for :checkimages do |q| %>
+                <%= q.file_field :image, accept:'image/*', capture:'environment' %>
           <% end %>
+
       </div>
       
       <div class="form-group row">

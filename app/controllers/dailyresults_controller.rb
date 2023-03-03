@@ -23,6 +23,7 @@ class DailyresultsController < ApplicationController
   private
   
   def dailyresult_params
-    params.require(:dailyresult).permit(:driver_id, :truck_id, :mileage, :fuel, :recorddate)
+    params.require(:dailyresult).
+      permit(:driver_id, :truck_id, :mileage, :fuel, :recorddate, :destination)
   end
 end

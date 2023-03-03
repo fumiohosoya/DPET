@@ -7,7 +7,8 @@
 </div>
    <%= form_with(model: @battery, local:true, multipart: true) do |f|  %>
     
-    
+      <%= render 'layouts/error_messages', model: f.object %>
+
       <%= f.hidden_field :driver_id, value: @current_driver.id %>
       <%= f.fields_for :checkimages do |q| %>
           <%= q.file_field :image, accept:'image/*', capture:'environment' %>

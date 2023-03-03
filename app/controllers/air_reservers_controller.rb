@@ -13,11 +13,12 @@ class AirReserversController < ApplicationController
       @airreserver =AirReserver.new(airreserver_params)
       @airreserver.type = "AirReserver"
        if (@airreserver.save)
-           flash[:success] = "Photo saved"
-           redirect_to topmenu_url(@current_driver.id)
+         flash[:success] = "Photo saved"
+         redirect_to topmenu_url(@current_driver.id)
        else
-           flash[:error] = "Photo not Saved, Please Set Again"
-           render :new
+         flash[:error] = "Photo not Saved, Please Set Again"
+         @airreserver.checkimages.build
+         render :new
        end
     end
     

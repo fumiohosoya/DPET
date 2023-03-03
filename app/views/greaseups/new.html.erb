@@ -23,19 +23,14 @@
     
       <%= f.hidden_field :driver_id, value: @current_driver.id %>
       <div class="col-4 form-group">
-    
-          <%= f.fields_for :checkimages do |q| %>
-              <%= q.file_field :image, accept:'image/*', capture:'environment' %>
-              
-              
-          <% end %>
-      </div>
-      <div class="col-4 form-group">
 
           <%= f.fields_for :checkimages do |q| %>
-              <%= q.file_field :image, accept:'image/*', capture:'environment' %>
-              
-              
+            <% if q.object.image.present? %>
+              <%= image_tag q.object.image.url(:thumb) %>
+              <%= q.hidden_field :image_cache %>
+            <% else %>
+                <%= q.file_field :image, accept:'image/*', capture:'environment' %>
+            <% end %>
           <% end %>
       </div>
       
