@@ -154,7 +154,7 @@ class DriversController < ApplicationController
     if (!(@trucks.any?))
        @trucks = alltruckmodels(@driver.branch)
     end
-    @dailyresult = current_driver.dailyresults.last
+    @dailyresult = current_driver.dailyresults&.last
     if (@trucks.count == 1)
       @select = @trucks.last.id
       if (@daylyresult != nil)

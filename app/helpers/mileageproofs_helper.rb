@@ -1,0 +1,2 @@
+module MileageproofsHelper
+end
