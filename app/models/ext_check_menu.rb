@@ -1,2 +1,2 @@
-class ExtCheckMenu < ApplicationRecord
+class ExtCheckMenu < Checkitem
 end

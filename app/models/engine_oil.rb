@@ -1,10 +1,10 @@
 class EngineOil < Checkitem
         
-    validate :imagecheck
+    # validate :imagecheck
     
-    def imagecheck
-        if (checkimages.blank?)
-            errors.add(:checkimages, "No Image saved!")
-        end
-    end
+    # def imagecheck
+    #     if (checkimages.blank?)
+    #         errors.add(:checkimages, "No Image saved!")
+    #     end
+    # end
 end

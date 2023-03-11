@@ -1,9 +1,28 @@
 
 <%= driver.name %> Checks at <%= @date %>
 <br>
-<% items.each do |item| %>
-    <%= item.type %>
-    <%= image_tag item.checkimages.first.image.url, class:'w-50 img-fluid' %>
-
-    <hr>
+<div class="col-12">
+<% if items.any? %>
+    <table class="table table-striped table-bordered">
+    <% items.each do |item| %>
+      <tr>
+    
+        <td class="w-25">
+            <%= item.type %>
+        </td>
+        <td class="w-75">
+            <% if item.checkimages.any? %>
+            <div class="row">
+                <% item.checkimages.each do |e| %>
+                <div class="col-lg-6">
+                    <%= image_tag e.image.url, class:'img-fluid' %>
+                </div>
+                <% end %>
+            </div>
+            <% end %>
+        </td>
+       </tr>
+    <% end %>
+    </table>
 <% end %>
+</div>

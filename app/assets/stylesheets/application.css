@@ -147,3 +147,7 @@ form#lampStopperTire > div:nth-child(8) > label {
     width: 50px;
     text-align: center;
 }
+
+.modal-dialog {
+    max-width: 75vw;
+}
