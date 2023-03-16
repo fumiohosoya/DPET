@@ -36,55 +36,45 @@ class Driver < ApplicationRecord
         self.truckrelations.find_or_create_by(truck_id: truck.id)
     end
     
-    def has_meter?(day = 1)
-      if (self.meters.any?)
-       (Time.now - self.meters.last.created_at ) < (86400 * day)#  24 * 60 * 60
-       end
-    end
-    
-    
-    def has_brake?(day = 1)
-      if (self.brakes.any?)
-       (Time.now - self.brakes.last.created_at  < (86400 * day))  && (self.brakes.last.checkimages.count > 1)#  24 * 60 * 60
-       end
-    end
-    
-    def has_lampStopperTire?(day = 1)
-      if (self.lamp_stopper_tires.any?)
-        (Time.now - self.lamp_stopper_tires.last.created_at ) < (86400 * day) && (self.lamp_stopper_tires.last.checkimages.count > 1)#  24 * 60 * 60
+    def data_exist?(models)
+      if (models.any?)
+          Time.now < models.last.created_at.end_of_day
+      else
+          false
       end
     end
     
-    def has_battery?(day = 1)
-       if (self.batteries.any?)
-         (Time.now - self.batteries.last.created_at ) < (86400  * day)#  24 * 60 * 60
-       end
+    def has_meter?
+      return data_exist?(self.meters)
     end
     
-      def has_greaseup?(day = 1)
-        if (self.greaseups.any?)
-          (Time.now - self.greaseups.last.created_at ) < (86400 * day)  &&
-             (self.greaseups.last.checkimages.count > 1)#  24 * 60 * 60
-        end
-          
-     end
+    
+    def has_brake?
+      return data_exist?(self.brakes)
+    end
+    
+    def has_lampStopperTire?
+      return data_exist?(self.lamp_stopper_tires)
+    end
+    
+    def has_battery?(day = 1)
+      return data_exist?(self.batteries)
+    end
+    
+    def has_greaseup?(day = 1)
+        return data_exist?(self.greaseups)
+    end
      
      def has_engineoil?(day = 1)
-        if (self.engine_oils.any?)
-          (Time.now - self.engine_oils.last.created_at ) < (86400 * day) #  24 * 60 * 60
-        end
+        return data_exist?(self.engine_oils)
      end
      
      def has_airreserver?(day = 1)
-       if (self.air_reservers.any?)
-        (Time.now - self.air_reservers.last.created_at ) < (86400 * day) #  24 * 60 * 60
-       end
+         return data_exist?(self.air_reservers)
      end
      
      def has_tire?(day = 1)
-       if (self.tires.any?)
-        (Time.now - self.tires.last.created_at ) < (86400 * day) && (self.tires.last.checkimages.count > 1)#  24 * 60 * 60
-       end
+         return data_exist?((self.tires))
      end
      
      def has_oil_tank?(day = 1)
@@ -94,9 +84,7 @@ class Driver < ApplicationRecord
      end
      
      def has_cabup?(day = 1)
-        if (self.cabups.any?)
-          (Time.now - self.cabups.last.created_at ) < (86400 * day) #  24 * 60 * 60
-        end
+        return data_exist?(self.cabups)
      end
      
      def has_mlproof?(day = 7)
