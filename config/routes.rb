@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get 'sessions/create'
   get 'sessions/destroy'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root to: 'toppages#index'
+  root to: 'sessions#new'
   
   get 'login', to: 'sessions#new'
   
