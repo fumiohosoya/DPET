@@ -16,12 +16,12 @@ class CheckschedulesController < ApplicationController
             ["Cab Up", 7],
       ] 
       @company_id = params[:company]
-      if (ext1 = Ext1.find_by(company_id: @company_id))
-          @todo << [ext1.name, 8]
-      end
-      if (ext2 = Ext2.find_by(company_id: @company_id))
-          @todo << [ext2.name, 9]
-      end
+    #   if (ext1 = Ext1.find_by(company_id: @company_id))
+    #       @todo << [ext1.name, 8]
+    #   end
+    #   if (ext2 = Ext2.find_by(company_id: @company_id))
+    #       @todo << [ext2.name, 9]
+    #   end
       if (Checkschedule.find_by(company_id: @company_id) == nil)
          Checkschedule.make_default(@company_id) 
       end 

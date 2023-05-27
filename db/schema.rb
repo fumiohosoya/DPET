@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_23_063720) do
+ActiveRecord::Schema.define(version: 2023_05_27_025412) do
 
   create_table "branches", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "company_id"
@@ -224,6 +224,19 @@ ActiveRecord::Schema.define(version: 2023_02_23_063720) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "company_id"
+    t.bigint "branch_id"
+    t.bigint "truck_id"
+    t.bigint "driver_id"
+    t.string "title"
+    t.text "content"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["driver_id"], name: "index_reports_on_driver_id"
+  end
+
   create_table "special_costs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "vehicle_id"
     t.date "date"
@@ -324,6 +337,7 @@ ActiveRecord::Schema.define(version: 2023_02_23_063720) do
   add_foreign_key "dailyresults", "drivers"
   add_foreign_key "evaluates", "drivers"
   add_foreign_key "fueltargets", "trucks"
+  add_foreign_key "reports", "drivers"
   add_foreign_key "truckrelations", "drivers"
   add_foreign_key "truckrelations", "trucks"
 end
