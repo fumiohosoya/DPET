@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_27_025412) do
+ActiveRecord::Schema.define(version: 2023_06_03_062353) do
 
   create_table "branches", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "company_id"
@@ -232,6 +232,8 @@ ActiveRecord::Schema.define(version: 2023_05_27_025412) do
     t.string "title"
     t.text "content"
     t.string "image"
+    t.date "checkdate"
+    t.string "checkperson"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["driver_id"], name: "index_reports_on_driver_id"
@@ -284,6 +286,8 @@ ActiveRecord::Schema.define(version: 2023_05_27_025412) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "company"
+    t.string "branch"
   end
 
   create_table "vehicle_sales", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

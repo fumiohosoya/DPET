@@ -1,0 +1,56 @@
+<h3 class="ml-4 text-white">Trouble Report</h3>
+
+ <div class="offset-1 col-10 bg-white">
+   <%= form_with(model: @report, local: true, multipart: true,
+                 class: "form-horizontal bg-white") do |f| %>
+     <%= render "layouts/error_messages", model: f.object %>
+     
+      <div class="form-group">
+        <%= f.label :truck_id, "Truck Number" %>
+        <%= f.collection_select :truck_id, @trucks, :id, :number,
+                                { selected: @select }, { class: "form-control" } %>
+      </div> 
+      <div class="form-group">
+        <%= f.label :title, "Title" %>
+        <%= f.text_field :title, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :content, "Content" %>
+        <%= f.text_area :content, class: "form-control" %>
+      </div>
+      
+     <div class="form-group">
+        <%= f.label :image, "Photo (if you want)" %>
+        <%= f.file_field :image, class: "form-control" %>
+      </div>
+      
+      
+      <div class="form-group row">
+          <%= f.submit thai_trans("Regist"), class: "btn btn-xs btn-danger" %>
+      </div>
+    <% end %>
+ </div>
+ <div class="offset-1 col-10 bg-white">
+    <h4 class="ml-4">Report History</h3>
+     <div class="row">
+     <% @reports.slice(0, @reports.count).each do |report| %>
+      <div class="col-md-4">
+        <div class="card" style="width: 18rem;">
+          <% # if report.image == nil %>
+          <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect fill="#868e96" width="100%" height="100%"/>
+              <text fill="#dee2e6" dy=".3em" x="50%" y="50%">Image cap</text>
+          </svg>
+          <% # else %>
+            <% #= image_tag(report.image.thumb_url class:'card-img-top bg-placeholder-img img-fluid') %>
+          <% # end %>
+          <div class="card-body">
+            <h5 class="card-title"><%= report.title %></h5>
+            <p class="card-text"><%== report.content.gsub(/\r\n|\r|\n/, "<br>") %></p>
+            <%= link_to "Show more", report, class: "btn btn-primary" %>
+          </div>
+        </div>
+       </div>
+     <% end %>
+     </div>
+
+ </div>

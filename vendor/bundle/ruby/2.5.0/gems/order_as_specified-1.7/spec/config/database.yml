@@ -1,0 +1,19 @@
+sqlite3_test:
+  adapter: sqlite3
+  database: ":memory:"
+  timeout: 500
+
+postgresql_test:
+  adapter: postgresql
+  host: localhost
+  database: order_as_specified_test
+  username: postgres
+  password: postgres
+
+mysql_test:
+  adapter: mysql2
+  host: 127.0.0.1
+  encoding: utf8
+  database: order_as_specified_test
+  username: mysql
+  password: mysql

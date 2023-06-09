@@ -60,6 +60,11 @@
 </div>
  <hr>
  <div class="col-md-6">
+     <%= link_to "Trouble Report", new_report_path, class:"btn btn-secondary" %>
+     <span class="text-white">(if you have)</span>
+ </div>
+ <hr>
+ <div class="col-md-6">
  <div class="card">
   <div class="card-body">
     <h5 class="card-title">Today's Result</h5>
@@ -78,7 +83,9 @@
            <div class="row">
              <%= f.label :truck_id, "Truck Number" %>
              <div class="col-6">
-               <%= f.collection_select :truck_id, @trucks, :id, :number, selected: @select, class:"form-control" %>
+               <%= f.collection_select :truck_id, @trucks, :id, :number, 
+                 html:{class:"form-control"},
+               selected: @select %>
              </div>
            </div> 
            <%= f.label :mileage %>

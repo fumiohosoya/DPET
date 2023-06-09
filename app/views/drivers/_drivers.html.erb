@@ -21,5 +21,7 @@
       <% end %>
      
  </table>
+ <% if controller_name != 'users' %>
  <%= paginate drivers %>
+ <% end %>
 <% end %>

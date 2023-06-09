@@ -81,3 +81,5 @@ gem 'pg', group: :production
 gem 'business_time'
 
 gem 'simple_calendar'
+
+gem 'order_as_specified'

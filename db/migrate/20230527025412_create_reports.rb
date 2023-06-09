@@ -8,7 +8,8 @@ class CreateReports < ActiveRecord::Migration[5.2]
       t.string :title
       t.text :content
       t.string :image
-
+      t.date :checkdate
+      t.string :checkperson
       t.timestamps
     end
   end

@@ -1,0 +1,114 @@
+<%= render 'admin/backtoadmin' %>
+
+<div class="text-center">
+ <h1>Check User regist</h1>
+</div>
+
+<div class="bg-red">
+  <div class="col-sm-6 offset-sm-3">
+  
+   <%= form_with(model: @user, url: branchusercreate_admin_index_path, local: true) do |f| %>
+    <%= render 'layouts/error_messages', model: f.object %>
+
+    <div class="form-group">
+      <%= f.label :name, 'Name' %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+    
+    <div class="form-group">
+        <%= f.label :company, "Company" %>
+        <% @companies = allcompanies %>
+        <%= select("user", "company",
+            @companies.collect { |p| [ p["name_e"], p["id"] ] },
+            { include_blank: true }, class:"form-control") %>
+    </div>
+     
+    <div class="form-group">
+        <%= f.label :branch, "Branch" %>
+        <% @branches = allbranches(1) %>
+        <%= select("user", "branch",
+            @branches.collect { |p| [ p["name"], p["id"] ] },
+            { include_blank: true }, class:"form-control", required: true) %>
+    </div>
+    
+    <div class="form-group">
+      <%= f.label :email, 'Email' %>
+      <%= f.email_field :email, class: 'form-control' %>
+    </div>
+    
+    <div class="form-group">
+      <%= f.label :password, 'Password' %>
+      <%= f.password_field :password, class: 'form-control' %>
+    </div>
+    
+    <div class="form-group">
+      <%= f.label :password_confirmation, 'Comfirmation' %>
+      <%= f.password_field :password_confirmation, class: 'form-control' %>
+    </div>
+    
+    <div class="form-group">
+      <%= f.submit 'Sign up', class: 'btn btn-primary btn-block' %>
+    </div>
+    
+     
+   <% end %>
+  </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    var companyid = $("#user_company").val();
+
+    if (companyid !== "") {
+        debugger;
+        $.ajax({
+            url: "/drivers/update_branch_menus",
+            type: "POST",
+            data: {company : companyid},
+            dataType: "script",
+            //dataType: "html",
+            cache: false,
+            success: function(data, textStatus){
+                
+                // console.log(`${data}`);
+                
+                $("#user_branch").html(`${data}`);
+          // 成功したとき
+          // data にサーバーから返された html が入る
+            },
+            error: function(xhr, textStatus, errorThrown){
+              // エラー処理
+            }
+        });
+    }
+});
+
+$("#user_company").change(function(){
+    
+
+   var id = this.value;
+   $.ajax({
+        url: "/drivers/update_branch_menus",
+        type: "POST",
+        data: {company : id},
+        dataType: "script",
+        //dataType: "html",
+        cache: false,
+        success: function(data, textStatus){
+            
+            // console.log(`${data}`);
+            
+            $("#user_branch").html(`${data}`);
+      // 成功したとき
+      // data にサーバーから返された html が入る
+        },
+        error: function(xhr, textStatus, errorThrown){
+          // エラー処理
+        }
+    });
+    
+    
+});
+
+      
+</script>

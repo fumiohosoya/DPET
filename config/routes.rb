@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       get :summary
       get :yearlyevaluates
       get :popupcheckitems
+      get :checkstatus
     end
   end
   
@@ -68,12 +69,15 @@ Rails.application.routes.draw do
     
     collection do
       get :truckindex
+      get :branchusernew, as: :branchusernew
+      post :branchusercreate, as: :branchusercreate
+      get :branchuserlist
     end
-    
-    # member do
-    #   get :listdrivers
-      
-    # end
+     member do
+       get :branchuseredit
+       put :branchuserupdate
+       patch :branchuserupdate
+     end
   end
   
   resources :batteries
@@ -135,4 +139,11 @@ Rails.application.routes.draw do
   
   post 'driverfuelset', to: "displayflags#driverfuelset"
   patch 'driverfuelset', to: "displayflags#driverfuelchange"
+  
+  
+  resources :reports do
+    member do
+      post :confirm
+    end
+  end
 end

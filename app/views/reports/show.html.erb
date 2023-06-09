@@ -1,0 +1,67 @@
+<%= render 'users/backtouser' %>
+<h3 class="ml-4 text-white">Trouble Report</h3>
+
+<div class="row bg-white">
+    <div class="offset-lg-3 col-lg-6">
+        <table class="table table-striped table-bordered">
+            <tr>
+               <td>
+               Date: <%= @report.created_at.strftime("%Y%m%d") %> 
+               </td>
+            </tr>
+            <tr>
+               <td>
+               Driver: <%= @report.driver.name %> 
+               </td>
+            </tr>
+            <tr>
+               <td>
+               Truck: <%= @report.truck.number %> 
+               </td>
+            </tr>
+            <tr>
+               <td>
+               VehicleID: <%= @report.truck.vehicleid %> 
+               </td>
+            </tr>
+            <tr>
+               <td>
+               Maker-Model: <%= @report.truck.maker %> / <%= @report.truck.model %>
+               </td>
+            </tr>
+            <tr>
+               <td>
+               Title: <%= @report.title %> 
+               </td>
+            </tr>
+            <tr>
+               <td>
+               Report Details: <%= @report.content %> 
+               </td>
+            </tr>
+            <tr>
+               <td>
+                   <% # if @report.image %>
+                   <% #= image_tag @report.image %> 
+                   <% # else %>
+                     no Image
+                   <% # end %>
+               </td>
+            </tr>
+            <tr>
+               <td>
+               <%= link_to "Confirm", confirm_report_path(@report), method: "post", class: "btn btn-xs btn-danger" %>
+               </td>
+            </tr>
+            
+            
+            
+            
+            
+        </table>
+        
+        
+        
+    </div>
+    
+</div>

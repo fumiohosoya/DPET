@@ -1,26 +1,104 @@
-<div class="row">
- <aside class="col-sm-4">
-    <div class="card">
-        <div class="card-header">
-            <h5 class="card-title"><%= @user.name %></h5>
+<%= render 'backtouser' %>
+<div class="row bg-white">
+     <aside class="offset-1 col-sm-4">
+        <div class="card border-primary">
+            <div class="card-header">
+                <h5 class="card-title">Login User:<%= @user.name %></h5>
+            </div>
+            <div class="card-body">
+              <h6>Company: <%= array_find_by(@companies,@user.company.to_i).name_e %></h6>
+              <h6>Branch: <%= array_find_by(@branches,@user.branch.to_i).name %></h6>
+                <!--<img class="rounded img-fluid" src="<%#= gravatar_url(@user, { size: 40 }) %>" alt="">-->
+            </div>
         </div>
-        <div class="card-body">
-            <img class="rounded img-fluid" src="<%= gravatar_url(@user, { size: 40 }) %>" alt="">
+    </aside>
+</div>
+<div class="row bg-white mt-2">
+        <% checklist = ["Meters", "Brake & Side Brake",
+                        "Lamps & Stopper & Tire Easy Check"] %>
+        <div class="offset-1 col-10">
+
+          <h3>Today's check List</h3>
+          <table class="table table-striped table-bordered">
+             <% checklist.each do |check| %>
+                <tr><td><%= thai_trans(check) %></td></tr>
+             <% end %>
+             <% @todos.each do |todo| %>
+               <tr><td><%= thai_trans(todo.checkmenu.name) %></td></tr>
+             <% end %>
+          </table>
         </div>
-    </div>
-</aside>
-<div class="row">
-    <div class="col-10">
-        <%= link_to "Vehicle Sales", new_vehicle_sale_path , class: 'btn btn-danger width200' %> 
-    </div>
 </div>
-<div class="row">
-    <div class="col-10">
-        <%= link_to "Driver's Evaluation", "#" , class: 'btn btn-danger width200' %> 
+<div class="row bg-white mt-2">
+    <div class="offset-1 col-10">
+        <h3>Unconfirmed Truck Trouble Report List</h3>
+        <table class="table table-strip table-striped bg-white ">
+            <tr>
+            <th>Report Date</th>
+            <th>Truck Number</th>
+            <th>Truck Maker</th>
+            <th>Truck Model</th>
+            <th>Driver Name</th>
+            <th class="w-25">Title</th>
+            <th>Operation</th>
+            </tr>
+              <% if @reports == nil || @reports.empty? %>
+                <tr>
+                    <td> No Reports Exist</td>
+                </tr>
+              <% end %>
+            <% @reports&.each do |report| %>
+            <tr>
+               <td><%= report.created_at.strftime("%Y%m%d %H:%M:%S") %></td> 
+               <% truck = Truck.find(report.truck_id) %>
+               <td><%= truck.number %></td> 
+               <td><%= truck.maker %></td> 
+               <td><%= truck.model %></td> 
+               <td><%= report.driver.name %></td> 
+               <td><%= report.title.truncate(20) %></td> 
+               <td><%= link_to "Show", report, class: "btn btn-xs btn-primary" %></td>
+            </tr>
+            <% end %>
+            
+        </table>
     </div>
+</div>    
+<div class="row bg-white mt-2">
+  <div class="offset-1 col-10">
+    <h3>Confirmed Last 5 Reports</h3>
+    <table class="table table-strip table-striped bg-white ">
+      <tr>
+        <th>Report Date</th>
+        <th>Truck Number</th>
+        <th>Truck Maker</th>
+        <th>Truck Model</th>
+        <th>Driver Name</th>
+        <th class="w-25">Title</th>
+        <th>Confirmed</th>
+      </tr>
+      <% if @donereports == nil || @donereports.empty? %>
+            <tr>
+                <td> No Reports Exist</td>
+            </tr>
+        <% end %>
+        <% @donereports&.each do |report| %>
+            
+        <tr>
+          <td><%= report.created_at.strftime("%Y%m%d %H:%M:%S") %></td> 
+            <% truck = Truck.find(report.truck_id) %>
+            <td><%= truck.number %></td> 
+            <td><%= truck.maker %></td> 
+            <td><%= truck.model %></td> 
+            <td><%= report.driver.name %></td> 
+            <td><%= report.title.truncate(20) %></td> 
+            <td><%= report.checkdate.strftime("%Y%m%d") %></td>
+          </tr>
+        <% end %>
+        </table>
+    </div>
+      
+
 </div>
-<div class="row">
-    <div class="col-10">
-        <%= link_to "Vahicle Daily Inspection", "#" , class: 'btn btn-danger width200' %> 
-    </div>
+<div class="row bg-white">
+    <%= render 'drivers', drivers: @drivers %>
 </div>

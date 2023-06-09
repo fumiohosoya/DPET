@@ -32,6 +32,8 @@ class Driver < ApplicationRecord
     has_many :mileageproofs, dependent: :destroy
     has_many :dailyresults, dependent: :destroy
     
+    has_many :reports, dependent: :destroy
+    
     def addtruck(truck)
         self.truckrelations.find_or_create_by(truck_id: truck.id)
     end

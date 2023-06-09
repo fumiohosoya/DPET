@@ -1,0 +1,34 @@
+<%= render "users/backtouser" %>
+<div class="row bg-white mt-2">
+    <div class="offset-1 col-md-10">
+        <div class="d-flex justify-content-between mt-2">
+            <%= link_to "Prev", checkstatus_driver_path(@driver, date: @date.prev_month),
+                        class: "btn btn-primary" %>
+            <%= link_to "Next", checkstatus_driver_path(@driver, date: @date.next_month),
+                        class: "btn btn-primary" %>
+            
+        </div>
+    </div>
+    <div class="offset-1 col-md-10 text-center">
+        <h2 class="bg-white">Driver:<%= @driver.name %> Checks at <%= @date.strftime("%Y/%m") %></h2>
+        <br>
+        <div class="col-12">
+        <% if @checks&.any? %>
+            <table class="table table-striped table-bordered">
+            <% @checks.each do |check| %>
+              <tr>
+                <td class="w-25">
+                    <%= check[:date] %>
+                </td>
+                <td class="w-75">
+                    <%= check[:items].pluck(:type).uniq.join(" ") %>
+                </td>
+               </tr>
+            <% end %>
+            </table>
+        <% else %>
+            No Data at this month
+        <% end %>
+        </div>
+    </div>
+</div>

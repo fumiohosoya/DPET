@@ -324,6 +324,35 @@ class DriversController < ApplicationController
    @items = @driver.checkitems.where(created_at: day_begin..day_end)
  end
  
+ def checkstatus
+   @title = "CheckItems"
+   @driver = Driver.find(params[:id])
+   @date = (params[:date]) ? Date.parse(params[:date]): Date.today
+   day_begin = @date.beginning_of_month
+   day_end = day_begin.end_of_month
+   @items = @driver.checkitems.where(created_at: day_begin..day_end)
+   sort_lists = [
+      "Meter", "Brake", "LampStopperTire",
+      "EngineOil", "AirReserver", "Battery", 
+      "Tire",  "OilTank", "Greaseup",
+      "Cabup", 
+     ]
+    days =  @items.map{|e| e.created_at.strftime("%Y-%m-%d") }.uniq
+    @checks = days&.map {|date|
+      p_date = Date.parse(date)
+      d_begin = p_date.beginning_of_day
+      d_end = p_date.end_of_day
+      {date: p_date,
+       items:
+         @driver.checkitems.where(created_at: d_begin..d_end).
+            order_as_specified(type: sort_lists)
+      }
+    
+    }
+
+    #binding.pry
+ end
+ 
  
  private
      

@@ -1,0 +1,26 @@
+<div class="offset-1 col-md-10">
+
+<% if drivers.any? %>
+ <table class="table table-striped table-bordered bg-white">
+     <% for i in 0..(drivers.length/2)  %>
+      <tr>
+         <td class="w-25 pl-4 color-dark">
+             <%= drivers[i].name %>
+         </td>
+         <td>
+             <%= link_to 'View Check Status', checkstatus_driver_path(drivers[i]), class:"btn btn-primary" %>
+         </td>
+         <td class="w-25 pl-4 color-dark">
+             <%= drivers[i+drivers.length/2+1]&.name %>
+         </td>
+         <td>
+             <% if (i < (drivers.length/2)) %>
+             <%= link_to 'View Check Status', checkstatus_driver_path(drivers[i+drivers.length/2+1]), class:"btn btn-primary" %>
+             <% end %>
+         </td>
+     </tr>
+      <% end %>
+     
+ </table>
+<% end %>
+</div>
