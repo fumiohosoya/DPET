@@ -1,8 +1,14 @@
 class UsersController < ApplicationController
   include DriversHelper
+  
   before_action :require_user_logged_in, only: [:index, :show]
+  
   def index
-    @users = User.order(id: :desc).page(params[:page]).per(25)
+    if (adminlogged_in?)
+      redirect_to adminpanel_url
+    else
+      redirect_to current_user
+    end
   end
 
   def show

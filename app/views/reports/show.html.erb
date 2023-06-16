@@ -1,4 +1,8 @@
+<% if current_driver %>
+<%= render 'drivers/backtodriver' %>
+<% else %>
 <%= render 'users/backtouser' %>
+<% end %>
 <h3 class="ml-4 text-white">Trouble Report</h3>
 
 <div class="row bg-white">
@@ -41,16 +45,20 @@
             </tr>
             <tr>
                <td>
-                   <% # if @report.image %>
-                   <% #= image_tag @report.image %> 
-                   <% # else %>
+                   <%  if @report&.image.url %>
+                   <%= image_tag @report.image.url %> 
+                   <%  else %>
                      no Image
-                   <% # end %>
+                   <%  end %>
                </td>
             </tr>
             <tr>
                <td>
-               <%= link_to "Confirm", confirm_report_path(@report), method: "post", class: "btn btn-xs btn-danger" %>
+               <% if current_user && current_driver == nil %>
+                  <%= link_to "Confirm", confirm_report_path(@report), method: "post", class: "btn btn-xs btn-danger" %>
+               <% else %> 
+                  <%= link_to "Back To Home", topmenu_path(current_driver),  class: "btn btn-xs btn-danger" %>
+               <% end %>
                </td>
             </tr>
             

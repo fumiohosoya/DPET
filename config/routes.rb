@@ -1,23 +1,10 @@
 Rails.application.routes.draw do
-  get 'trucks/create'
-  get 'trucks/destroy'
-  get 'truckrelations/create'
-  get 'truckrelations/destroy'
+
+
   get 'displayflags/driverfuelset'
   get 'dailyresults/create'
-  get 'ext2s/new'
-  get 'ext2s/create'
-  get 'ext2s/edit'
-  get 'ext2s/update'
-  get 'ext2s/destroy'
-  get 'ext1s/new'
-  get 'ext1s/create'
-  get 'ext1s/edit'
-  get 'ext1s/update'
-  get 'ext1s/destroy'
-  get 'sessions/new'
-  get 'sessions/create'
-  get 'sessions/destroy'
+
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: 'sessions#new'
   
@@ -26,6 +13,11 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create'
   
   delete 'logout', to: 'sessions#destroy'
+  
+  get 'adminlogin', to: 'adminsessions#new'
+  post 'adminlogin', to: 'adminsessions#create'
+  delete 'adminlogout', to: 'adminsessions#destroy'
+
   
   get 'signup', to: 'users#new'
   
@@ -51,6 +43,7 @@ Rails.application.routes.draw do
   
   
   resources :vehicle_sales
+  
   resources :users, only: [:index, :show, :new, :create]
   
   resources :trucks

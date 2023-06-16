@@ -77,29 +77,32 @@
       </div
       <% else %>
           <%= form_with(model: @dailyresult, url:dailyresults_url(@driver_id), local:true) do |f| %>
-          <div class="row">
-           <%= f.date_field :recorddate, value: Date.today %>
+          <div class="row form-group">
+           <%= f.date_field :recorddate, value: Date.today, class:'form-control' %>
           </div> 
-           <div class="row">
-             <%= f.label :truck_id, "Truck Number" %>
-             <div class="col-6">
+           <div class="row form-group">
+             <%= f.label :truck_id, "Truck Number", class:'col-4 control-form px-0' %>
+             <div class="col-8">
                <%= f.collection_select :truck_id, @trucks, :id, :number, 
-                 html:{class:"form-control"},
-               selected: @select %>
+                 {selected: @select},  {class:"form-control"} %>
              </div>
            </div> 
-           <%= f.label :mileage %>
+           <div class="row form-group">
+             <%= f.label :mileage, class:'col-4 control-form pl-0' %>
            
-           <div class="input-group">
-             <% temp_min =  @min_mileage.present? ? @min_mileage : 0 %>
-             <%= f.number_field :mileage, min:0, step:0.1, min:temp_min , class: "form-control col-10 text-left" %>
-             <span class="input-group-text col-2"> km </span>
+             <div class="col-8 input-group">
+               <% temp_min =  @min_mileage.present? ? @min_mileage : 0 %>
+               <%= f.number_field :mileage, min:0, step:0.1, min:temp_min , class: "form-control col-10 text-left" %>
+               <span class="input-group-text col-3 pr-0"> km </span>
+             </div>
            </div>
-           <%= f.label :fuel %>
-           <div class="input-group">
-             <%= f.number_field :fuel, step:0.1, value: 0, min:0, class: "form-control col-10 text-left" %>
-             <span class="input-group-text col-2">litter</span>
-           </div>
+           <div class="row form-group">
+             <%= f.label :fuel, class:'col-4 control-form pl-0' %>
+             <div class="col-8 input-group">
+               <%= f.number_field :fuel, step:0.1, value: 0, min:0, class: "form-control col-10 text-left" %>
+               <span class="input-group-text col-3 pr-0">litter</span>
+             </div>
+            </div>
            <%= f.label :destination %>
            <div class="input-group">
              <%= f.text_field :destination, 

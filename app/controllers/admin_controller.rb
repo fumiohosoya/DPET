@@ -1,4 +1,6 @@
 class AdminController < ApplicationController
+  
+  before_action :require_admin_logged_in
 
   include  DriversHelper
 
@@ -59,12 +61,30 @@ class AdminController < ApplicationController
     @branches =  allbranches(@user.branch)
   end
   
+  def adminnew
+    @admin = Admin.new
+  end
+  
+  def admincreate
+    @admin = Admin.new(admin_params)
+    if @admin.save
+      flash[:success] = 'AdminUser registered'
+      redirect_to adminpanel_url
+    else
+      flash.now[:danger] = 'Register Failed'
+      render :adminnew
+    end
+  end
+  
   private
   
   def user_params
       params.require(:user).permit(:name, :email, :password, :company, :branch )
   end
   
+  def admin_params
+      params.require(:admin).permit(:name, :email, :password, :company, :branch )
+  end  
   # def getcompany_array
   #   all_c = []
   #   companies = allcompanies

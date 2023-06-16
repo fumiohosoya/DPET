@@ -2,11 +2,12 @@ class ApplicationController < ActionController::Base
   
   include SessionsHelper
   include DriversHelper
+  include AdminsessionsHelper
   
   private
   
   def require_user_logged_in 
-      unless logged_in?
+      unless logged_in? || adminlogged_in?
           redirect_to login_url
       end
   end
@@ -26,4 +27,13 @@ class ApplicationController < ActionController::Base
       return nil
     end
   end
+  
+
+  def require_admin_logged_in
+    unless adminlogged_in?
+      redirect_to adminlogin_url
+    end
+  end
+  
 end 
+

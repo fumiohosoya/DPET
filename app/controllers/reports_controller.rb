@@ -15,10 +15,14 @@ class ReportsController < ApplicationController
     def create
         @driver = current_driver
         @report = @driver.reports.build(report_params)
+        #binding.pry
         if (@report.save)
             flash[:success] = "Report registered"
             redirect_to topmenu_url(id:@driver.id)
         else
+            @trucks = @driver.trucks
+
+            @reports = @driver.reports.where(checkdate:nil)
             render :new
         end
     end
@@ -32,6 +36,7 @@ class ReportsController < ApplicationController
     def confirm
         @report = Report.find(params[:id])
         @report.checkdate = Time.now
+        @report.checkperson = current_user.name
         @report.save
         redirect_to current_user
     end
@@ -39,7 +44,6 @@ class ReportsController < ApplicationController
     private
     
     def report_params
-    
         params.require(:report).permit(:driver_id, :company_id, :branch_id, :truck_id,
                 :title, :content, :image)
     end
