@@ -80,7 +80,7 @@ class CardEvalsController < ApplicationController
             unless (@year_array.include?(@year))
                  @year = @year_array.first
             end
-            @branches = @drivers.pluck(:branch).uniq!.delete_if{|x| x == nil}
+            @branches = @drivers.pluck(:branch).uniq.delete_if{|x| x == nil}
         else
             @branches = []
         end
