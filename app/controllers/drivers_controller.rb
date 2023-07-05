@@ -351,9 +351,58 @@ class DriversController < ApplicationController
           # tmp_items holds current record to be pick last for each type
       )
     }
+ 
+    #binding.pry
+ end
+ 
+ def reportstatus
+   @title = "CheckItems"
+   @driver = Driver.find(params[:id])
+   @date = (params[:date]) ? Date.parse(params[:date]): Date.today
+   @day_begin = @date.beginning_of_month
+   @day_end = @date.end_of_month
+   @items = @driver.checkitems.where(created_at: @day_begin..@day_end)
+   sort_lists = [
+      "Meter", "Brake", "LampStopperTire",
+      "EngineOil", "AirReserver", "Battery", 
+      "Tire",  "OilTank", "Greaseup",
+      "Cabup", 
+     ]
+    @days =  @items.map{|e| e.created_at.strftime("%Y-%m-%d") }.uniq
+    @checks = {}
+    @days&.each {|date|
+      p_date = Date.parse(date)
+      d_begin = p_date.beginning_of_day
+      d_end = p_date.end_of_day
+      @checks.store(p_date,
+          (tmp_items = @driver.checkitems.where(created_at: d_begin..d_end).
+            order_as_specified(type: sort_lists)).pluck(:type).uniq.map {|t|
+            tmp_items.where(type: t).last
+          }
+          # tmp_items holds current record to be pick last for each type
+      )
+    }
+    
+    respond_to do |format|
+      format.html { redirect_to reportstatus_driver_path(id: params[:id], format: :pdf, debug: 1)}
+#      format.html { redirect_to karte_pdf_path(id: params[:id], format: :pdf)}
+
+      format.pdf do
+        render pdf: 'reportstatus',
+               encoding: 'UTF-8',
+               layout: 'pdf.html',
+               orientation: 'Landscape',
+               save_to_file: Rails.root.join('public','pdfs', "driver-#{@driver.name}" + @date.strftime("%B-%Y") + ".pdf"),
+               show_as_html: params[:debug].present?
+      end
+    end
+
 
     #binding.pry
  end
+ 
+ 
+ 
  
  
  private

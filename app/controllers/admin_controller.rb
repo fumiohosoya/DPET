@@ -76,6 +76,20 @@ class AdminController < ApplicationController
     end
   end
   
+  def adminindex
+    @admins = Admin.all.order(:name)
+  end
+  
+  def destroyadmin
+    @admin = Admin.find(params[:id])
+    @admin.destroy if @admin
+    redirect_to :adminpanel_url
+  end
+  
+  def edit
+    @admin = Admin.find(params[:id])
+  end
+  
   private
   
   def user_params

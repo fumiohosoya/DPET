@@ -83,3 +83,6 @@ gem 'business_time'
 gem 'simple_calendar'
 
 gem 'order_as_specified'
+
+gem 'wkhtmltopdf-binary', group: :production
+gem 'wicked_pdf'

@@ -158,8 +158,8 @@ end
   end
   
   def find_branch(c_id, id)
-    branchesarray = getallbranch_array(c_id)
-    return Branch.new(branchesarray.find{|e| e["id"] == id})
+    branchesarray = getallbranch_array(c_id.to_i)
+    return Branch.new(branchesarray.find{|e| e["id"] == id.to_i})
   end
   
   def thai_trans(s)
