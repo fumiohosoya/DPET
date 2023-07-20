@@ -1,6 +1,6 @@
 class DriversController < ApplicationController
  
- #before_action :require_driver_logged_in, only:[:topmenu]
+ before_action :require_driver_logged_in, only:[:topmenu]
  
  include DriversHelper
  
