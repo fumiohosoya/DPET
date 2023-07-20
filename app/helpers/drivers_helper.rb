@@ -38,96 +38,98 @@ module DriversHelper
       puts [uri.to_s, e.class, e].join(" : ")
       nil
     end
-  end
+   end
  
 
 
 
-def allcompanies
-    url = 'https://logiccs.herokuapp.com/companies/all'
-    result = get_json(url)
-#    uri = URI.parse(url)
-#    json = Net::HTTP.get(uri)
-#    result = JSON.parse(json)
-end
-
-def allcompanies_model
-  json = allcompanies
-  return json.map{|e| Company.new(e.symbolize_keys)}
-end
-
-def array_find_by(ar, id)
-    return nil if id == 0
-    return (ar && id) ? ar.find {|e| e && e.id == id.to_i} : nil
-end
-
-
-def allbranches(id)
-    url = "http://logiccs.herokuapp.com/branches/#{id}/all.json"
-    result = get_json(url)
-#    uri = URI.parse(url)
-#    json = Net::HTTP.get(uri)
-#    result = JSON.parse(json)
-end
-
-def branches_by_cid_model(id)
-  json = allbranches(id)
-
-  return json.map{|e| Branch.new(e.symbolize_keys)}
-end
-
-
-def allbranchesmodel
-    url = "http://logiccs.herokuapp.com/branches/allall"
-    
-    parsed_json = get_json(url)
-#    uri = URI.parse(url)
-#    json = Net::HTTP.get(uri)
-#    parsed_json = JSON.parse(json)
-    return parsedjson.map{|e| Branch.new(e.symbolize_keys)}
-end
-
-
-
-def alltrucks(branchid)
-#  if (@alltrucks == nil)
-    url = "http://logiccs.herokuapp.com/trucks/#{branchid}/all.json"
-    @alltrucks = get_json(url)
-#    uri = URI.parse(url)
-#   json = Net::HTTP.get(uri)
-    
-#    @alltrucks = JSON.parse(json)
-#  else
-#    @alltrucks
-#  end
-end
-
-def alltruckmodels(branchid)
-  trucks = []
-  alltrucks = alltrucks(branchid)
-  alltrucks.each do |t|
-    t.delete("dealercompany_id")
-    image_url = t["image"]["url"]
-    thumb_url = t["image"]["thumb"]["url"]
-    t.delete("image")
-    symh = t.symbolize_keys
-    trucks << Truck.new(symh)
-    trucks.last.image_url = image_url
-    trucks.last.thumb_url = thumb_url
+  def allcompanies
+      url = 'https://logiccs.herokuapp.com/companies/all'
+      result = get_json(url)
+      return result
+  #    uri = URI.parse(url)
+  #    json = Net::HTTP.get(uri)
+  #    result = JSON.parse(json)
   end
-  return trucks
-end
 
-  def gettruck(trucknumber)
+  def allcompanies_model
+    json = allcompanies
+    return json.map{|e| Company.new(e.symbolize_keys)}
+  end
+
+  def array_find_by(ar, id)
+      return nil if id == 0
+      return (ar && id) ? ar.find {|e| e && e.id == id.to_i} : nil
+  end
+
+
+  def allbranches(id)
+      url = "http://logiccs.herokuapp.com/branches/#{id}/all.json"
+      result = get_json(url)
+      return result
+  #    uri = URI.parse(url)
+  #    json = Net::HTTP.get(uri)
+  #    result = JSON.parse(json)
+  end
+
+  def branches_by_cid_model(id)
+    json = allbranches(id)
   
-      uritrucknumber = URI.encode(trucknumber)
-      url = "http://logiccs.herokuapp.com/trucks/numbershow.json?number=#{uritrucknumber}"
-      uri = URI.parse(url)
-      return get_json(url)
-      
-#      json = Net::HTTP.get(uri)
-#      result = JSON.parse(json)    
+    return json.map{|e| Branch.new(e.symbolize_keys)}
   end
+
+
+  def allbranchesmodel
+      url = "http://logiccs.herokuapp.com/branches/allall"
+      
+      parsed_json = get_json(url)
+  #    uri = URI.parse(url)
+  #    json = Net::HTTP.get(uri)
+  #    parsed_json = JSON.parse(json)
+      return parsed_json.map{|e| Branch.new(e.symbolize_keys)}
+  end
+
+
+
+  def alltrucks(branchid)
+  #  if (@alltrucks == nil)
+      url = "http://logiccs.herokuapp.com/trucks/#{branchid}/all.json"
+      @alltrucks = get_json(url)
+  #    uri = URI.parse(url)
+  #   json = Net::HTTP.get(uri)
+      
+  #    @alltrucks = JSON.parse(json)
+  #  else
+  #    @alltrucks
+  #  end
+  end
+  
+  def alltruckmodels(branchid)
+    trucks = []
+    alltrucks = alltrucks(branchid)
+    alltrucks.each do |t|
+      t.delete("dealercompany_id")
+      image_url = t["image"]["url"]
+      thumb_url = t["image"]["thumb"]["url"]
+      t.delete("image")
+      symh = t.symbolize_keys
+      trucks << Truck.new(symh)
+      trucks.last.image_url = image_url
+      trucks.last.thumb_url = thumb_url
+    end
+    return trucks
+  end
+
+    def gettruck(trucknumber)
+    
+        uritrucknumber = URI.encode(trucknumber)
+        url = "http://logiccs.herokuapp.com/trucks/numbershow.json?number=#{uritrucknumber}"
+        uri = URI.parse(url)
+        return get_json(uri)
+        
+  #      json = Net::HTTP.get(uri)
+  #      result = JSON.parse(json)    
+    end
 
   def gettruck_by_id(id)
     uri_id = URI.encode(id.to_s)

@@ -8,14 +8,14 @@
         <div class="mb-1">
           
           <% if current_driver.has_meter? %>
-             <span class="btn btn-warning">Meter Checked</span>
+             <span class="btn btn-warning"><%= thai_trans("Meters") %> Checked</span>
           <% else %>
           <%= link_to thai_trans("Meters"), new_meter_path, class:"btn btn-primary" %>
           <% end %>
         </div>
         <div class="mb-1">
           <% if current_driver.has_brake? %>
-            <span class="btn btn-warning">Brake Checked</span>
+            <span class="btn btn-warning"><%= thai_trans("Brake & Side Brake") %> Checked</span>
           <% else %>
             <% word = "Brake & Side Brake" %>
             <%= link_to thai_trans("Brake & Side Brake"), new_brake_path, class:"btn btn-primary" %>
@@ -23,7 +23,7 @@
         </div>
         <div class="mb-1">
           <% if current_driver.has_lampStopperTire? %>
-            <span class="btn btn-warning">Lamp/Stopper/Tire Checked</span>
+            <span class="btn btn-warning"><%= thai_trans("Lamps & Stopper & Tire Easy Check") %> Checked</span>
           <% else %>
             <%= link_to thai_trans("Lamps & Stopper & Tire Easy Check"), new_lamp_stopper_tire_path, class:"btn btn-primary" %></div>
           <% end %>
