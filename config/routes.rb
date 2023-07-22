@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
     end
     member do
+      get :reportstatus
       get :summary
       get :yearlyevaluates
       get :popupcheckitems
@@ -65,11 +66,15 @@ Rails.application.routes.draw do
       get :branchusernew, as: :branchusernew
       post :branchusercreate, as: :branchusercreate
       get :branchuserlist
+      get :adminnew
+      post :admincreate
+      get :adminindex
     end
      member do
        get :branchuseredit
        put :branchuserupdate
        patch :branchuserupdate
+       delete :destroyadmin
      end
   end
   

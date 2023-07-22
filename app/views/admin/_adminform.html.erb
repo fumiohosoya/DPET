@@ -1,0 +1,21 @@
+    <%= form_with(model: admin, url: admincreate_admin_index_path) do |f| %>
+
+      <%= f.label :name, class:'control-label white' %>
+      <%= f.text_field :name, class:'form-control' %>
+
+      <%= f.label :email, class:'control-label white' %>
+      <%= f.email_field :email, class: 'form-control' %>
+
+      <%= f.label :password, class:'control-label white' %>
+      <%= f.password_field :password, class: 'form-control' %>
+
+
+      <%= f.label :password_confirm, class:'control-label white' %>
+      <%= f.password_field :password_confirm, class: 'form-control' %>
+      <% if admin.persisted? %>
+        <%= f.submit "Update Admin", class: "btn btn-primary mt-3" %>
+
+      <% else %>
+        <%= f.submit "Add New Admin", class: "btn btn-primary mt-3" %>
+      <% end %>
+    <% end %>
