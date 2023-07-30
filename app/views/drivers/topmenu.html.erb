@@ -2,7 +2,7 @@
 <div class="col-md-6">
 <div class="card">
   <div class="card-body">
-    <h5 class="card-title">Today's CheckList</h5>
+    <h5 class="card-title"><%= thai_trans("Today's CheckList") %></h5>
  
     <div class="card-text">
         <div class="mb-1">
@@ -60,14 +60,14 @@
 </div>
  <hr>
  <div class="col-md-6">
-     <%= link_to "Trouble Report", new_report_path, class:"btn btn-secondary" %>
+     <%= link_to thai_trans("Trouble Report") ,new_report_path, class:"btn btn-secondary" %>
      <span class="text-white">(if you have)</span>
  </div>
  <hr>
  <div class="col-md-6">
  <div class="card">
   <div class="card-body">
-    <h5 class="card-title">Today's Result</h5>
+    <h5 class="card-title"><%= thai_trans("Today's Result" ) %></h5>
  
     <div class="card-text">
       <%= render 'layouts/flash_messages' %>
@@ -81,14 +81,14 @@
            <%= f.date_field :recorddate, value: Date.today, class:'form-control' %>
           </div> 
            <div class="row form-group">
-             <%= f.label :truck_id, "Truck Number", class:'col-4 control-form px-0' %>
+             <%= f.label :truck_id,  thai_trans("Truck Number"), class:'col-12 control-form px-0' %>
              <div class="col-8">
                <%= f.collection_select :truck_id, @trucks, :id, :number, 
                  {selected: @select},  {class:"form-control"} %>
              </div>
            </div> 
            <div class="row form-group">
-             <%= f.label :mileage, class:'col-4 control-form pl-0' %>
+             <%= f.label :mileage, thai_trans("Mileage"), class:'col-12 control-form pl-0' %>
            
              <div class="col-8 input-group">
                <% temp_min =  @min_mileage.present? ? @min_mileage : 0 %>
@@ -97,13 +97,13 @@
              </div>
            </div>
            <div class="row form-group">
-             <%= f.label :fuel, class:'col-4 control-form pl-0' %>
+             <%= f.label :fuel,  thai_trans("Fuel") , class:'col-12 control-form pl-0' %>
              <div class="col-8 input-group">
                <%= f.number_field :fuel, step:0.1, value: 0, min:0, class: "form-control col-10 text-left" %>
                <span class="input-group-text col-3 pr-0">litter</span>
              </div>
             </div>
-           <%= f.label :destination %>
+           <%= f.label :destination, thai_trans("Destination") %>
            <div class="input-group">
              <%= f.text_field :destination, 
                  {

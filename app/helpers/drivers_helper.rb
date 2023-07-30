@@ -170,6 +170,7 @@ module DriversHelper
       "Meters" => "เครื่องวัด / เมตร",
       "Brake & Side Brake" => "เบรกและเบรกข้าง",
       "Lamps & Stopper & Tire Easy Check" => "หลอดไฟ & จุกปิด & การเช็คยางอย่างง่าย",
+      "Lamps  Stopper  Tire Easy Check" => "หลอดไฟ สต๊อปเปอร์ไฟเบรค ยาง เช็คแบบง่าย",
       "Engine Oil" => "น้ำมันเครื่อง",
       "Air Reserver" => "ถังลม",
       "Battery" => "แบตเตอรี่",
@@ -181,6 +182,17 @@ module DriversHelper
       "Photo saved" => "บันทึกรูปภาพ ",
       "Photo not Saved Please Set Again" => "หากบันทึกรูปภาพไม่ได้ โปรดตั้งค่าอีกครั้ง",
       "Photo/Data not Saved Please Set Again" => "หากบันทึกรูปภาพ / บันทึกข้อมูลไม่ได้ โปรดตั้งค่าอีกครั้ง",
+      "Lamp" => "ไฟ",
+      "Stopper" => "สต๊อปเปอร์ไฟเบรค",
+      "Oil Drops" => "น้ำมันหยดหรือไม่",
+      "Today's CheckList" => "รูปภาพถูกบันทึกแล้ว",
+      "Trouble Report" => "รายงานปัญหา",
+      "Today's Result" => "ผลลัพท์วันนี้",
+      "Truck Number" => "เลขทะเบียน",
+      "Mileage" => "เลขไมล์",
+      "Fuel" => "น้ำมันเชื้อเพลิง",
+      "Destination" => "ปลายทาง",
+      "Login Succeeded" => "ลงชื่อเข้าใช้สำเร็จ",
     }
     
     return (t = thai_hash[s]) ? s + "- " + t : s

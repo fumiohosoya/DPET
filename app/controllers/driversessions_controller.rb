@@ -14,7 +14,7 @@ end
     email = params[:driversession][:email].downcase
     password = params[:driversession][:password]
     if login(email, password)
-      flash[:success] = 'Login Succeeded'
+      flash[:success] = thai_trans('Login Succeeded')
       redirect_to topmenu_path(@user)
     else
       flash.now[:danger] = 'Login Failed'
