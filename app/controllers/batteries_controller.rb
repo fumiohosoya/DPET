@@ -12,7 +12,7 @@ class BatteriesController < ApplicationController
        @battery = Battery.new(battery_params)
        @battery.type = "Battery"
        if (@battery.save)
-         flash[:success] = "Photo saved"
+         flash[:success] = thai_trans("Photo saved")
          redirect_to topmenu_url(@current_driver.id)
        else
          flash[:error] = "Photo not Saved, Please Set Again"

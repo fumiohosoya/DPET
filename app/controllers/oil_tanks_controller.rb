@@ -14,7 +14,7 @@ class OilTanksController < ApplicationController
         @oilTank = OilTank.new(tire_params)
         @oilTank.type = "OilTank"
         if (@oilTank.save)
-           flash[:success] = "Photo saved"
+           flash[:success] = thai_trans("Photo saved")
            redirect_to topmenu_url(@current_driver.id)
         else
            

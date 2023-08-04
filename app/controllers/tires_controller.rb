@@ -14,7 +14,7 @@ class TiresController < ApplicationController
      @tire = Tire.new(tire_params)
      @tire.type = "Tire"
        if (@tire.save)
-           flash[:success] = "Photo saved"
+           flash[:success] = thai_trans("Photo saved")
            redirect_to topmenu_url(@current_driver.id)
        else
            flash[:error] = "Photo/Data not Saved, Please Set Again"

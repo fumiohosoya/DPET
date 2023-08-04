@@ -14,7 +14,7 @@ class EngineOilsController < ApplicationController
        @engineoil = EngineOil.new(engineoil_params)
        @engineoil.type = "EngineOil"
        if (@engineoil.save)
-           flash[:success] = "Photo saved"
+           flash[:success] = thai_trans("Photo saved")
            redirect_to topmenu_url(@current_driver.id)
        else
            flash[:error] = "Photo not Saved, Please Set Again"

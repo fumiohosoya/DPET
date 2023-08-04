@@ -13,7 +13,7 @@ class MetersController < ApplicationController
        @meter = Meter.new(meter_params)
        @meter.type = "Meter"
        if (@meter.save)
-           flash[:success] = "Photo saved"
+           flash[:success] = thai_trans("Photo saved")
            redirect_to topmenu_url(@current_driver.id)
        else
            flash[:error] = "Photo not Saved, Please Set Again"

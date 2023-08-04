@@ -5,7 +5,7 @@ class MileageproofsController < ApplicationController
        @mileageproof = Mileageproof.new(mileageproof_params)
        @mileageproof.type = "Mileageproof"
        if (@mileageproof.save)
-           flash[:success] = "MileageProof Photo saved"
+           flash[:success] = thai_trans("Photo saved")
            redirect_to topmenu_url(@mileageproof.driver_id)
        else
            

@@ -17,7 +17,7 @@ class LampStopperTiresController < ApplicationController
       @lampStopperTire = LampStopperTire.new(lampStopperTire_params)
       @lampStopperTire.type = "LampStopperTire"
        if (@lampStopperTire.save)
-           flash[:success] = "Photo saved"
+           flash[:success] = thai_trans("Photo saved")
            redirect_to topmenu_url(@current_driver.id)
        else
            
