@@ -8,8 +8,8 @@ class MileageproofsController < ApplicationController
            flash[:success] = thai_trans("Photo saved")
            redirect_to topmenu_url(@mileageproof.driver_id)
        else
-           
-           flash[:error] = "MileageProof Photo not Saved, Please Set Again"
+           flash[:error] =  thai_trans("Photo/Data not Saved, Please Set Again")
+
            unless (@mileageproof.checkimages.any?)
                @mileageproof.checkimages.build
            end

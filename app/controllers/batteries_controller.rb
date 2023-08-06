@@ -15,7 +15,8 @@ class BatteriesController < ApplicationController
          flash[:success] = thai_trans("Photo saved")
          redirect_to topmenu_url(@current_driver.id)
        else
-         flash[:error] = "Photo not Saved, Please Set Again"
+         flash[:error] =  thai_trans("Photo/Data not Saved, Please Set Again")
+
          unless (@battery.checkimages.any?)
              @battery.checkimages.build
          end

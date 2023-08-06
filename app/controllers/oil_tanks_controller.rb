@@ -23,7 +23,7 @@ class OilTanksController < ApplicationController
            #   @oilTank.checkimages.build(params[:lamp_stopper_tire][:checkimages_attributes])
            #end
         
-           flash[:error] = "Photo/Data not Saved, Please Set Again"
+           flash[:error] = thai_trans("Photo/Data not Saved, Please Set Again")
            #unless (@oilTank.checkimages.any? && @oilTank.checkimages.count > 1)
            unless (@oilTank.checkimages.any?)
                @oilTank.checkimages.build

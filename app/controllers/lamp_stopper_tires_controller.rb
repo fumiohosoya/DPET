@@ -26,7 +26,7 @@ class LampStopperTiresController < ApplicationController
            #    @lampStopperTire.checkimages.build(params[:lamp_stopper_tire][:checkimages_attributes])
            #end
 
-           flash[:error] = "Photo/Data not Saved, Please Set Again"
+           flash[:error] = thai_trans("Photo/Data not Saved, Please Set Again")
            unless (@lampStopperTire.checkimages.any?)
             @lampStopperTire.checkimages.build
            end
