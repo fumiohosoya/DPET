@@ -15,7 +15,9 @@
          </td>
          <td>
              <% if (i < (drivers.length/2)) %>
-             <%= link_to 'View Check Status', checkstatus_driver_path(drivers[i+drivers.length/2+1]), class:"btn btn-primary" %>
+              <% if drivers[i+driveres.length/2+1] %>
+                <%= link_to 'View Check Status', checkstatus_driver_path(drivers[i+drivers.length/2+1]), class:"btn btn-primary" %>
+              <% end %>
              <% end %>
          </td>
      </tr>
