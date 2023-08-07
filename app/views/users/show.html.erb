@@ -9,7 +9,7 @@
             <div class="card-body">
               <h6>Company: <%= array_find_by(@companies,@user.company.to_i).name_e %></h6>
               <%# binding.pry %>
-              <!-- <h6>Branch: <%#= array_find_by(@branches,@user.branch.to_i)&.name %></h6> -->
+              <h6>Branch: <%= array_find_by(@branches,@user.branch.to_i)&.name %></h6>
                 <!--<img class="rounded img-fluid" src="<%#= gravatar_url(@user, { size: 40 }) %>" alt="">-->
             </div>
         </div>

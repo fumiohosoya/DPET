@@ -13,10 +13,11 @@ class UsersController < ApplicationController
 
   def show
     @companies = allcompanies_model
-    @branches = @companies.map {|c|  branches_by_cid_model(c.id.to_s)[0] }
 
     @user = User.find(params[:id])
     @company = @user.company
+    @branches = branches_by_cid_model(@company)
+#    binding.pry
     @reports = Report.where(company_id: @user.company, branch_id: @user.branch, checkdate:nil)
     @donereports = Report.where(company_id: @user.company, branch_id: @user.branch).where.not(checkdate:nil).order(:created_at).limit(5)
     @todos = Checkschedule.checkItem(Time.now, @user.company)
