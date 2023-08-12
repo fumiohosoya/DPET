@@ -8,7 +8,8 @@
              <%= drivers[i].name %>
          </td>
          <td>
-             <%= link_to 'View Check Status', checkstatus_driver_path(drivers[i]), class:"btn btn-primary" %>
+             <%= link_to 'Check Status', checkstatus_driver_path(drivers[i]), class:"btn btn-primary" %>
+             <%= link_to 'Evaluate', yearlyevaluates_driver_path(drivers[i]), class:"btn btn-warning" %>
          </td>
          <td class="w-25 pl-4 color-dark">
              <%= drivers[i+drivers.length/2+1]&.name %>
@@ -16,7 +17,8 @@
          <td>
              <% if (i < (drivers.length/2)) %>
               <% if drivers[i+drivers.length/2+1] %>
-                <%= link_to 'View Check Status', checkstatus_driver_path(drivers[i+drivers.length/2+1]), class:"btn btn-primary" %>
+                <%= link_to 'Check Status', checkstatus_driver_path(drivers[i+drivers.length/2+1]), class:"btn btn-primary" %>
+                <%= link_to 'Evaluate', yearlyevaluates_driver_path(drivers[i+drivers.length/2+1]), class:"btn btn-warning" %>
               <% end %>
              <% end %>
          </td>
