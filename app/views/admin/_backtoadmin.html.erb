@@ -1,5 +1,11 @@
 <div class="row">
-    <div class="col-12 text-right">
-        <%= link_to "Back To AdminPanel", adminpanel_url, class:"btn btn-primary" %>
-    </div>
+    <% if current_user %>
+       <div class="col-12 text-right">
+            <%= link_to "Back To Home", current_user, class:"btn btn-primary" %>
+        </div> 
+    <% else %>
+        <div class="col-12 text-right">
+            <%= link_to "Back To AdminPanel", adminpanel_url, class:"btn btn-primary" %>
+        </div>
+    <% end %>
 </div>
